@@ -198,6 +198,20 @@
     .wbtn{width:100%;padding:11px;background:#25d366;color:#fff;border:none;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;margin-top:4px;transition:background .15s}
     .wbtn:hover{background:#1da851}
     .vti{display:inline-block;padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;margin:2px}
+    .ltbs{display:flex;border-bottom:1px solid var(--bo);margin-bottom:14px}
+    .ltb{flex:1;padding:9px;font-size:12px;font-weight:600;text-align:center;cursor:pointer;border:none;background:transparent;font-family:"DM Sans",sans-serif;color:var(--mu);border-bottom:2px solid transparent}
+    .ltb.on{color:var(--g);border-bottom-color:var(--g)}
+    .lp{display:none}.lp.on{display:block}
+    .ldv{display:flex;align-items:center;gap:8px;margin:12px 0;font-size:10px;color:var(--mu)}
+    .ldv::before,.ldv::after{content:"";flex:1;height:1px;background:var(--bo)}
+    .bsoc{width:100%;padding:9px;border:1px solid var(--bo);border-radius:8px;background:#fff;font-family:"DM Sans",sans-serif;font-size:12px;font-weight:500;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:8px;color:var(--tx);transition:background .15s}
+    .bsoc:hover{background:var(--cr)}
+    .tpsl{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
+    .tpb{padding:12px;border:1px solid var(--bo);border-radius:10px;text-align:center;cursor:pointer;font-family:"DM Sans",sans-serif;background:#fff;transition:all .15s}
+    .tpb.on{border-color:var(--g);background:#f0f9f4}
+    .tpi{font-size:22px;margin-bottom:4px}
+    .tpl{font-size:11px;font-weight:600;color:var(--tx)}
+    .tps{font-size:9px;color:var(--mu);margin-top:2px}
     .empty{text-align:center;padding:40px 20px;color:var(--mu);font-size:13px}
     .empty div{font-size:36px;margin-bottom:10px}
     @media(min-width:768px){.hi{padding:20px 24px 0}.cw{padding:0 24px 16px}.main{padding:20px 24px 110px}}
@@ -211,8 +225,8 @@
     <div class="ht">
       <div><div class="ls">cidade de codó · ma</div><div class="lm">Guia <span>Codoense</span></div></div>
       <div style="display:flex;gap:8px;align-items:center">
-        <button class="bh" style="background:transparent;border:1px solid rgba(255,255,255,.3);color:#fff" onclick="oM('planos')">Anuncie aqui</button>
-        <button class="bh" style="background:var(--gl);color:#fff" onclick="oM('cadastro')">Cadastrar empresa</button>
+        <button class="bh" style="background:transparent;border:1px solid rgba(255,255,255,.3);color:#fff" onclick="oM('planos')">Planos</button>
+        <button class="bh" style="background:var(--gl);color:#fff" onclick="oM('login')">Entre ou cadastre-se</button>
       </div>
     </div>
     <div class="sw"><input type="text" id="si" placeholder="Buscar empresa, serviço ou profissional..." oninput="filtrar()" autocomplete="off"><button onclick="filtrar()">Buscar</button></div>
@@ -271,7 +285,47 @@
   <button class="tab" onclick="irP('ofertas',this)"><div class="ti">🔥</div><div class="tl">Ofertas</div><div class="td"></div></button>
   <button class="tab" onclick="irP('vagas',this)"><div class="ti">💼</div><div class="tl">Vagas</div><div class="td"></div></button>
   <button class="tab" onclick="irP('emp',this)"><div class="ti">🏪</div><div class="tl">Empresas</div><div class="td"></div></button>
-  <button class="tab" onclick="oM('cadastro')"><div class="ti">➕</div><div class="tl">Cadastrar</div><div class="td"></div></button>
+  <button class="tab" onclick="oM('login')"><div class="ti">👤</div><div class="tl">Entrar</div><div class="td"></div></button>
+</div>
+
+<!-- MODAL LOGIN / CADASTRO USUÁRIO -->
+<div class="mbg" id="m-login">
+  <div class="modal">
+    <div class="mhd"><div class="mtt">Guia <span style="color:var(--gl)">Codoense</span></div><button class="mcl" onclick="cM('login')">×</button></div>
+    <div class="mbod" style="padding-top:0">
+      <div style="text-align:center;padding:14px 0 12px"><div style="font-size:9px;letter-spacing:2px;color:var(--mu);text-transform:uppercase">cidade de codó · ma</div></div>
+      <div class="ltbs">
+        <button class="ltb on" onclick="ltab('e',this)">Entrar</button>
+        <button class="ltb" onclick="ltab('c',this)">Criar conta</button>
+      </div>
+      <div class="lp on" id="lp-e">
+        <button class="bsoc">🌐 Continuar com Google</button>
+        <button class="bsoc">📘 Continuar com Facebook</button>
+        <div class="ldv">ou use seu e-mail</div>
+        <div class="fi"><label>E-mail</label><input type="email" placeholder="seu@email.com"></div>
+        <div class="fi"><label>Senha</label><input type="password" placeholder="••••••••"></div>
+        <div style="text-align:right;margin-bottom:14px"><span style="font-size:11px;color:var(--g);cursor:pointer;font-weight:600">Esqueci minha senha</span></div>
+        <button class="bm bcf" style="width:100%;margin-bottom:10px" onclick="simL()">Entrar</button>
+        <div style="text-align:center;font-size:12px;color:var(--mu)">Não tem conta? <span style="color:var(--g);cursor:pointer;font-weight:600" onclick="ltab('c',null)">Criar grátis</span></div>
+        <div style="border-top:1px solid var(--bo);margin-top:16px;padding-top:12px;text-align:center"><span style="font-size:11px;color:var(--mu)">É empresa? </span><span style="font-size:11px;color:var(--g);cursor:pointer;font-weight:600" onclick="cM('login');oM('cadastro')">Cadastre seu negócio aqui</span></div>
+      </div>
+      <div class="lp" id="lp-c">
+        <div style="font-size:12px;color:var(--mu);margin-bottom:12px">Você é:</div>
+        <div class="tpsl">
+          <div class="tpb on" id="tp-p" onclick="selT('p')"><div class="tpi">👤</div><div class="tpl">Pessoa física</div><div class="tps">Buscar vagas e ofertas</div></div>
+          <div class="tpb" id="tp-e" onclick="selT('e')"><div class="tpi">🏪</div><div class="tpl">Empresa</div><div class="tps">Divulgar meu negócio</div></div>
+        </div>
+        <button class="bsoc">🌐 Cadastrar com Google</button>
+        <div class="ldv">ou preencha os dados</div>
+        <div class="fi"><label>Nome completo</label><input type="text" placeholder="Seu nome"></div>
+        <div class="fi"><label>E-mail</label><input type="email" placeholder="seu@email.com"></div>
+        <div class="fi"><label>WhatsApp</label><input type="text" placeholder="(99) 99999-9999"></div>
+        <div class="fi"><label>Senha</label><input type="password" placeholder="Mín. 6 caracteres"></div>
+        <button class="bm bcf" style="width:100%;margin-top:6px" onclick="simL()">Criar conta grátis</button>
+        <div style="text-align:center;font-size:11px;color:var(--mu);margin-top:12px">É empresa? <span style="color:var(--g);cursor:pointer;font-weight:600" onclick="cM('login');oM('cadastro')">Cadastre seu negócio aqui</span></div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- MODAL CADASTRO DE EMPRESA -->
@@ -484,6 +538,17 @@ function selPlano(val,label){
   document.getElementById('plano-disp').value=label;
 }
 
+// LOGIN
+function ltab(id,el){
+  document.querySelectorAll(".ltb").forEach(t=>t.classList.remove("on"));
+  if(el)el.classList.add("on");
+  else document.querySelectorAll(".ltb").forEach((t,i)=>{if((i===0&&id==="e")||(i===1&&id==="c"))t.classList.add("on")});
+  document.querySelectorAll(".lp").forEach(p=>p.classList.remove("on"));
+  document.getElementById("lp-"+id).classList.add("on");
+}
+function selT(t){document.getElementById("tp-p").classList.toggle("on",t==="p");document.getElementById("tp-e").classList.toggle("on",t==="e")}
+function simL(){cM("login");alert("Em breve! O sistema de login completo será ativado na próxima versão do Guia Codoense.")}
+
 // NAVEGAÇÃO
 let catAtual='',busca='',view='inicio';
 function filtrar(){busca=document.getElementById('si').value.toLowerCase();rView()}
@@ -499,6 +564,12 @@ function rView(){
 
 // MODAIS
 function oM(id){
+  if(id==='login'){document.querySelectorAll('.ltb').forEach((t,i)=>{t.classList.toggle('on',i===0)});document.querySelectorAll('.lp').forEach(p=>p.classList.remove('on'));document.getElementById('lp-e').classList.add('on')}
+  if(id==='cadastro'){showFS('cadastro',false);document.getElementById('form-cadastro').reset()}
+  if(id==='planos'){showFS('planos',false);document.getElementById('form-planos').reset()}
+  document.getElementById('m-'+id).classList.add('on');
+  document.body.style.overflow='hidden';
+}
   if(id==='cadastro'){showFS('cadastro',false);document.getElementById('form-cadastro').reset()}
   if(id==='planos'){showFS('planos',false);document.getElementById('form-planos').reset()}
   document.getElementById('m-'+id).classList.add('on');

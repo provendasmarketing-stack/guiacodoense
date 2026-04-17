@@ -17,8 +17,6 @@ body{font-family:'DM Sans',sans-serif;background:#faf7f2;color:#1c2b22;overflow-
   --cr:#faf7f2;--dk:#0f1f16;--tx:#1c2b22;--mu:#6b7f72;
   --bo:rgba(26,107,60,.15);--fd:'Playfair Display',serif
 }
-
-/* === HERO === */
 .hero{background:var(--dk);position:relative;overflow:hidden}
 .hp{position:absolute;inset:0;opacity:.07;background-image:repeating-linear-gradient(0deg,transparent,transparent 28px,rgba(200,146,42,.5) 28px,rgba(200,146,42,.5) 29px),repeating-linear-gradient(90deg,transparent,transparent 28px,rgba(200,146,42,.5) 28px,rgba(200,146,42,.5) 29px)}
 .hi{position:relative;z-index:1;padding:14px 20px 0;max-width:960px;margin:0 auto}
@@ -31,8 +29,6 @@ body{font-family:'DM Sans',sans-serif;background:#faf7f2;color:#1c2b22;overflow-
 .sw input{flex:1;background:transparent;border:none;outline:none;font-size:14px;color:#fff;padding:3px 6px;font-family:'DM Sans',sans-serif}
 .sw input::placeholder{color:rgba(255,255,255,.4)}
 .sw button{background:var(--gl);color:#fff;border:none;border-radius:7px;padding:9px 18px;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif}
-
-/* === BANNER PRINCIPAL === */
 .bm{overflow:hidden;height:150px;position:relative;margin:0 -20px}
 @media(min-width:640px){.bm{margin:0}}
 .bt{display:flex;height:100%;transition:transform .55s cubic-bezier(.4,0,.2,1)}
@@ -49,8 +45,6 @@ body{font-family:'DM Sans',sans-serif;background:#faf7f2;color:#1c2b22;overflow-
 .bd.on{width:16px;border-radius:3px;background:#fff}
 .ba{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.15);border:none;color:#fff;width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;z-index:10}
 .ba:hover{background:rgba(255,255,255,.25)}
-
-/* === CATEGORIAS === */
 .cw{background:var(--dk);padding:0 20px 14px;border-bottom:1px solid rgba(255,255,255,.06)}
 .ci{max-width:960px;margin:0 auto}
 .cs{display:flex;gap:8px;overflow-x:auto;padding-top:12px;scrollbar-width:none}
@@ -60,21 +54,15 @@ body{font-family:'DM Sans',sans-serif;background:#faf7f2;color:#1c2b22;overflow-
 .cpi{font-size:16px;line-height:1}
 .cpl{font-size:8px;color:rgba(255,255,255,.6);font-weight:500;white-space:nowrap}
 .cp.on .cpl{color:#fff}
-
-/* === STATS === */
 .stb{display:grid;grid-template-columns:repeat(3,1fr);background:#fff;border-bottom:1px solid var(--bo)}
 .sti{padding:10px;text-align:center;border-right:1px solid var(--bo)}
 .sti:last-child{border-right:none}
 .stn{font-family:var(--fd);font-size:clamp(16px,4vw,20px);font-weight:700;color:var(--g)}
 .stl{font-size:9px;color:var(--mu)}
-
-/* === MAIN === */
 .main{padding:16px 16px 110px;max-width:960px;margin:0 auto}
 .sh{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
 .stt{font-family:var(--fd);font-size:clamp(14px,3.5vw,17px);font-weight:700;color:var(--tx)}
 .svm{font-size:11px;color:var(--g);font-weight:600;cursor:pointer;background:none;border:none;font-family:'DM Sans',sans-serif}
-
-/* === CARDS OFERTAS === */
 .osc{display:flex;gap:10px;overflow-x:auto;padding-bottom:4px;margin-bottom:22px;scrollbar-width:none}
 .osc::-webkit-scrollbar{display:none}
 .ocard{min-width:148px;background:#fff;border:1px solid var(--bo);border-radius:10px;overflow:hidden;cursor:pointer;flex-shrink:0;transition:transform .15s}
@@ -88,8 +76,6 @@ body{font-family:'DM Sans',sans-serif;background:#faf7f2;color:#1c2b22;overflow-
 .oprc{display:flex;align-items:baseline;gap:5px}
 .ode{font-size:9px;color:var(--mu);text-decoration:line-through}
 .opor{font-size:13px;font-weight:700;color:#e11d48}
-
-/* === CARDS VAGAS === */
 .vlist{display:flex;flex-direction:column;gap:8px;margin-bottom:22px}
 .vcard{background:#fff;border:1px solid var(--bo);border-radius:10px;padding:11px;cursor:pointer;display:flex;align-items:center;gap:10px;transition:all .15s}
 .vcard:hover{border-color:var(--gl);box-shadow:0 2px 12px rgba(26,107,60,.1)}
@@ -103,8 +89,6 @@ body{font-family:'DM Sans',sans-serif;background:#faf7f2;color:#1c2b22;overflow-
 .vright{text-align:right;flex-shrink:0}
 .vsal{font-size:11px;font-weight:600;color:var(--g);margin-bottom:2px}
 .varr{font-size:10px;color:var(--mu)}
-
-/* === CARDS DESTAQUE === */
 .dgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin-bottom:22px}
 .dcard{background:var(--dk);border-radius:10px;overflow:hidden;cursor:pointer;transition:transform .15s}
 .dcard:hover{transform:translateY(-2px)}
@@ -121,8 +105,6 @@ body{font-family:'DM Sans',sans-serif;background:#faf7f2;color:#1c2b22;overflow-
 .df{display:flex;align-items:center;justify-content:space-between;padding-top:6px;border-top:1px solid rgba(255,255,255,.08)}
 .drat{font-size:9px;color:var(--gol)}
 .dbtn{font-size:9px;padding:4px 10px;background:var(--gl);color:#fff;border:none;border-radius:5px;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:500}
-
-/* === CARDS NORMAIS === */
 .ngrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px;margin-bottom:22px}
 .ncard{background:#fff;border:1px solid var(--bo);border-radius:10px;padding:11px;cursor:pointer;transition:all .15s}
 .ncard:hover{border-color:var(--gl);box-shadow:0 3px 14px rgba(26,107,60,.1)}
@@ -137,8 +119,6 @@ body{font-family:'DM Sans',sans-serif;background:#faf7f2;color:#1c2b22;overflow-
 .nft{padding-top:7px;border-top:1px solid var(--bo)}
 .nbtn{width:100%;font-size:11px;padding:6px;border-radius:6px;border:1px solid var(--g);background:transparent;cursor:pointer;font-family:'DM Sans',sans-serif;color:var(--g);font-weight:600;transition:all .15s}
 .nbtn:hover{background:var(--g);color:#fff}
-
-/* === BANNER RODAPÉ === */
 .bfw{position:fixed;bottom:54px;left:0;right:0;z-index:49;overflow:hidden;height:50px;background:var(--dk);border-top:1px solid rgba(255,255,255,.06)}
 .bftr{display:flex;height:100%;transition:transform .5s cubic-bezier(.4,0,.2,1)}
 .bfs{min-width:100%;height:100%;display:flex;align-items:center;padding:0 16px;gap:10px;flex-shrink:0;position:relative;overflow:hidden;cursor:pointer}
@@ -151,8 +131,6 @@ body{font-family:'DM Sans',sans-serif;background:#faf7f2;color:#1c2b22;overflow-
 .bfds{position:absolute;right:8px;bottom:4px;display:flex;gap:3px}
 .bfdt{width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,.25);transition:all .3s;border:none}
 .bfdt.on{width:12px;border-radius:2px;background:rgba(255,255,255,.7)}
-
-/* === TAB BAR === */
 .tabbar{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--bo);display:flex;z-index:50;box-shadow:0 -4px 20px rgba(0,0,0,.06)}
 .tab{flex:1;padding:10px 4px 8px;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;border:none;background:transparent;font-family:'DM Sans',sans-serif}
 .tab-i{font-size:18px;line-height:1}
@@ -160,8 +138,6 @@ body{font-family:'DM Sans',sans-serif;background:#faf7f2;color:#1c2b22;overflow-
 .tab.on .tab-l{color:var(--g)}
 .tab-d{width:4px;height:4px;border-radius:50%;background:var(--g);margin:2px auto 0;display:none}
 .tab.on .tab-d{display:block}
-
-/* === MODAIS === */
 .mbg{display:none;position:fixed;inset:0;background:rgba(10,20,14,.65);z-index:200;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(4px)}
 .mbg.on{display:flex}
 .modal{background:#fff;border-radius:16px;width:100%;max-width:480px;max-height:88vh;overflow-y:auto;animation:popin .22s ease}
@@ -176,8 +152,6 @@ body{font-family:'DM Sans',sans-serif;background:#faf7f2;color:#1c2b22;overflow-
 .bcn:hover{background:#eee}
 .bcf{background:var(--g);color:#fff}
 .bcf:hover{background:#1a5c35}
-
-/* === FORMULÁRIOS === */
 .fi{margin-bottom:12px}
 .fi label{display:block;font-size:10px;font-weight:600;color:var(--mu);margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px}
 .fi input,.fi select,.fi textarea{width:100%;padding:10px 12px;border:1px solid var(--bo);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--tx);background:#fff;outline:none;transition:border .15s;-webkit-appearance:none;appearance:none}
@@ -186,16 +160,12 @@ body{font-family:'DM Sans',sans-serif;background:#faf7f2;color:#1c2b22;overflow-
 .fi select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b7f72' d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px}
 .fi-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .fi-hint{font-size:10px;color:var(--mu);margin-top:4px;line-height:1.4}
-
-/* === ESTADO SUCESSO FORMULÁRIO === */
 .form-body.hide{display:none}
 .form-success{display:none;text-align:center;padding:32px 20px}
 .form-success.on{display:block}
 .fs-icon{font-size:48px;margin-bottom:12px}
 .fs-title{font-family:var(--fd);font-size:18px;font-weight:700;color:var(--tx);margin-bottom:8px}
 .fs-msg{font-size:13px;color:var(--mu);line-height:1.6}
-
-/* === LOGIN === */
 .ltbs{display:flex;border-bottom:1px solid var(--bo);margin-bottom:14px}
 .ltb{flex:1;padding:9px;font-size:12px;font-weight:600;text-align:center;cursor:pointer;border:none;background:transparent;font-family:'DM Sans',sans-serif;color:var(--mu);border-bottom:2px solid transparent}
 .ltb.on{color:var(--g);border-bottom-color:var(--g)}
@@ -211,8 +181,6 @@ body{font-family:'DM Sans',sans-serif;background:#faf7f2;color:#1c2b22;overflow-
 .tpi{font-size:22px;margin-bottom:4px}
 .tpl{font-size:11px;font-weight:600;color:var(--tx)}
 .tps{font-size:9px;color:var(--mu);margin-top:2px}
-
-/* === PLANOS === */
 .plano{border:1px solid var(--bo);border-radius:12px;padding:14px;margin-bottom:10px;position:relative;cursor:pointer;transition:all .2s}
 .plano:hover{border-color:var(--gl)}
 .plano.ft{border:2px solid var(--g);background:#f0f9f4}
@@ -221,8 +189,6 @@ body{font-family:'DM Sans',sans-serif;background:#faf7f2;color:#1c2b22;overflow-
 .pld{font-size:11px;color:var(--mu);margin-bottom:7px;line-height:1.5}
 .plp{font-family:var(--fd);font-size:20px;font-weight:700;color:var(--g)}
 .plp span{font-size:11px;font-weight:400;color:var(--mu);font-family:'DM Sans',sans-serif}
-
-/* === DETALHE EMPRESA === */
 .dth{background:var(--dk);padding:16px 18px}
 .dtav{width:50px;height:50px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-size:16px;font-weight:700;margin-bottom:8px}
 .dtnm{font-family:var(--fd);font-size:17px;font-weight:700;color:#fff;margin-bottom:3px}
@@ -236,21 +202,17 @@ body{font-family:'DM Sans',sans-serif;background:#faf7f2;color:#1c2b22;overflow-
 .wbtn{width:100%;padding:11px;background:#25d366;color:#fff;border:none;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;margin-top:4px;transition:background .15s}
 .wbtn:hover{background:#1da851}
 .vti{display:inline-block;padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;margin:2px}
-
-/* === EMPTY === */
 .empty{text-align:center;padding:40px 20px;color:var(--mu);font-size:13px}
 .empty div{font-size:36px;margin-bottom:10px}
-
-@media(min-width:768px){
-  .hi{padding:20px 24px 0}
-  .cw{padding:0 24px 16px}
-  .main{padding:20px 24px 110px}
-}
+.loading{text-align:center;padding:40px 20px;color:var(--mu);font-size:13px}
+.loading div{font-size:32px;margin-bottom:10px;animation:spin 1s linear infinite;display:inline-block}
+@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+@media(min-width:768px){.hi{padding:20px 24px 0}.cw{padding:0 24px 16px}.main{padding:20px 24px 110px}}
 </style>
 </head>
 <body>
 
-<!-- ======== HERO ======== -->
+<!-- HERO -->
 <div class="hero">
   <div class="hp"></div>
   <div class="hi">
@@ -268,82 +230,40 @@ body{font-family:'DM Sans',sans-serif;background:#faf7f2;color:#1c2b22;overflow-
       <input type="text" id="si" placeholder="Buscar empresa, serviço ou profissional..." oninput="filtrar()" autocomplete="off">
       <button onclick="filtrar()">Buscar</button>
     </div>
-    <!-- Banner rotativo abaixo da busca -->
     <div class="bm" id="bmain">
       <div class="bt" id="btrack">
-        <div class="bs" style="background:linear-gradient(135deg,#0f2d1a,#1a5c35)">
-          <div class="bsbg" style="background:radial-gradient(circle at 80% 50%,#2d9e5f,transparent 60%)"></div>
-          <div class="bsc">
-            <div class="bsey" style="color:#5dd98a">Oportunidade</div>
-            <div class="bst" style="color:#fff">Destaque sua<br>empresa em Codó</div>
-            <div class="bss" style="color:rgba(255,255,255,.6)">Apareça primeiro para milhares de clientes</div>
-            <button class="bsb" style="background:var(--go);color:#fff" onclick="oM('planos')">Ver planos</button>
-          </div>
-          <div class="bsl">🏆</div>
-        </div>
-        <div class="bs" style="background:linear-gradient(135deg,#1a1a0f,#3d3000)">
-          <div class="bsbg" style="background:radial-gradient(circle at 80% 50%,#c8922a,transparent 60%)"></div>
-          <div class="bsc">
-            <div class="bsey" style="color:#fbbf24">Destaque</div>
-            <div class="bst" style="color:#fff">Restaurante<br>Sabor da Terra</div>
-            <div class="bss" style="color:rgba(255,255,255,.6)">Culinária regional · Almoço executivo</div>
-            <button class="bsb" style="background:#fff;color:#1a1a0f" onclick="aD(2)">Ver perfil</button>
-          </div>
-          <div class="bsl">🍽️</div>
-        </div>
-        <div class="bs" style="background:linear-gradient(135deg,#0f1a3d,#1a2b5c)">
-          <div class="bsbg" style="background:radial-gradient(circle at 80% 50%,#60a5fa,transparent 60%)"></div>
-          <div class="bsc">
-            <div class="bsey" style="color:#93c5fd">Saúde em Codó</div>
-            <div class="bst" style="color:#fff">Farmácia<br>São João</div>
-            <div class="bss" style="color:rgba(255,255,255,.6)">Delivery · Manipulação · Convênios</div>
-            <button class="bsb" style="background:#60a5fa;color:#0f1a3d" onclick="aD(1)">Ver perfil</button>
-          </div>
-          <div class="bsl">💊</div>
-        </div>
-        <div class="bs" style="background:linear-gradient(135deg,#2e0f2e,#5c1a5c)">
-          <div class="bsbg" style="background:radial-gradient(circle at 80% 50%,#c084fc,transparent 60%)"></div>
-          <div class="bsc">
-            <div class="bsey" style="color:#d8b4fe">Vagas abertas</div>
-            <div class="bst" style="color:#fff">Encontre seu<br>próximo emprego</div>
-            <div class="bss" style="color:rgba(255,255,255,.6)">Vagas disponíveis em Codó agora</div>
-            <button class="bsb" style="background:#c084fc;color:#1a0f1a" onclick="irP('vagas',null)">Ver vagas</button>
-          </div>
-          <div class="bsl">💼</div>
-        </div>
+        <div class="bs" style="background:linear-gradient(135deg,#0f2d1a,#1a5c35)"><div class="bsbg" style="background:radial-gradient(circle at 80% 50%,#2d9e5f,transparent 60%)"></div><div class="bsc"><div class="bsey" style="color:#5dd98a">Oportunidade</div><div class="bst" style="color:#fff">Destaque sua<br>empresa em Codó</div><div class="bss" style="color:rgba(255,255,255,.6)">Apareça primeiro para milhares de clientes</div><button class="bsb" style="background:var(--go);color:#fff" onclick="oM('planos')">Ver planos</button></div><div class="bsl">🏆</div></div>
+        <div class="bs" style="background:linear-gradient(135deg,#1a1a0f,#3d3000)"><div class="bsbg" style="background:radial-gradient(circle at 80% 50%,#c8922a,transparent 60%)"></div><div class="bsc"><div class="bsey" style="color:#fbbf24">Destaque</div><div class="bst" style="color:#fff">Restaurante<br>Sabor da Terra</div><div class="bss" style="color:rgba(255,255,255,.6)">Culinária regional · Almoço executivo</div><button class="bsb" style="background:#fff;color:#1a1a0f" onclick="abrirEmpresa(2)">Ver perfil</button></div><div class="bsl">🍽️</div></div>
+        <div class="bs" style="background:linear-gradient(135deg,#0f1a3d,#1a2b5c)"><div class="bsbg" style="background:radial-gradient(circle at 80% 50%,#60a5fa,transparent 60%)"></div><div class="bsc"><div class="bsey" style="color:#93c5fd">Saúde em Codó</div><div class="bst" style="color:#fff">Farmácia<br>São João</div><div class="bss" style="color:rgba(255,255,255,.6)">Delivery · Manipulação · Convênios</div><button class="bsb" style="background:#60a5fa;color:#0f1a3d" onclick="abrirEmpresa(1)">Ver perfil</button></div><div class="bsl">💊</div></div>
+        <div class="bs" style="background:linear-gradient(135deg,#2e0f2e,#5c1a5c)"><div class="bsbg" style="background:radial-gradient(circle at 80% 50%,#c084fc,transparent 60%)"></div><div class="bsc"><div class="bsey" style="color:#d8b4fe">Vagas abertas</div><div class="bst" style="color:#fff">Encontre seu<br>próximo emprego</div><div class="bss" style="color:rgba(255,255,255,.6)">Vagas disponíveis em Codó agora</div><button class="bsb" style="background:#c084fc;color:#1a0f1a" onclick="irP('vagas',null)">Ver vagas</button></div><div class="bsl">💼</div></div>
       </div>
       <button class="ba" style="left:8px" onclick="mvB(-1)">‹</button>
       <button class="ba" style="right:8px" onclick="mvB(1)">›</button>
       <div class="bds" id="bdots"></div>
     </div>
   </div>
-  <!-- Categorias -->
-  <div class="cw">
-    <div class="ci">
-      <div class="cs">
-        <div class="cp on" onclick="sC(this,'','inicio')"><div class="cpi">🏠</div><div class="cpl">Início</div></div>
-        <div class="cp" onclick="sC(this,'ofertas','ofertas')"><div class="cpi">🔥</div><div class="cpl">Ofertas</div></div>
-        <div class="cp" onclick="sC(this,'vagas','vagas')"><div class="cpi">💼</div><div class="cpl">Vagas</div></div>
-        <div class="cp" onclick="sC(this,'Alimentação','emp')"><div class="cpi">🍽️</div><div class="cpl">Alimentação</div></div>
-        <div class="cp" onclick="sC(this,'Saúde','emp')"><div class="cpi">🏥</div><div class="cpl">Saúde</div></div>
-        <div class="cp" onclick="sC(this,'Beleza','emp')"><div class="cpi">💇</div><div class="cpl">Beleza</div></div>
-        <div class="cp" onclick="sC(this,'Educação','emp')"><div class="cpi">📚</div><div class="cpl">Educação</div></div>
-        <div class="cp" onclick="sC(this,'Serviços','emp')"><div class="cpi">🔧</div><div class="cpl">Serviços</div></div>
-        <div class="cp" onclick="sC(this,'Comércio','emp')"><div class="cpi">🛍️</div><div class="cpl">Comércio</div></div>
-        <div class="cp" onclick="sC(this,'Profissionais','emp')"><div class="cpi">👔</div><div class="cpl">Profissionais</div></div>
-      </div>
-    </div>
-  </div>
+  <div class="cw"><div class="ci"><div class="cs">
+    <div class="cp on" onclick="sC(this,'','inicio')"><div class="cpi">🏠</div><div class="cpl">Início</div></div>
+    <div class="cp" onclick="sC(this,'ofertas','ofertas')"><div class="cpi">🔥</div><div class="cpl">Ofertas</div></div>
+    <div class="cp" onclick="sC(this,'vagas','vagas')"><div class="cpi">💼</div><div class="cpl">Vagas</div></div>
+    <div class="cp" onclick="sC(this,'Alimentação','emp')"><div class="cpi">🍽️</div><div class="cpl">Alimentação</div></div>
+    <div class="cp" onclick="sC(this,'Saúde','emp')"><div class="cpi">🏥</div><div class="cpl">Saúde</div></div>
+    <div class="cp" onclick="sC(this,'Beleza','emp')"><div class="cpi">💇</div><div class="cpl">Beleza</div></div>
+    <div class="cp" onclick="sC(this,'Educação','emp')"><div class="cpi">📚</div><div class="cpl">Educação</div></div>
+    <div class="cp" onclick="sC(this,'Serviços','emp')"><div class="cpi">🔧</div><div class="cpl">Serviços</div></div>
+    <div class="cp" onclick="sC(this,'Comércio','emp')"><div class="cpi">🛍️</div><div class="cpl">Comércio</div></div>
+    <div class="cp" onclick="sC(this,'Profissionais','emp')"><div class="cpi">👔</div><div class="cpl">Profissionais</div></div>
+  </div></div></div>
 </div>
 
-<!-- ======== STATS ======== -->
+<!-- STATS -->
 <div class="stb">
-  <div class="sti"><div class="stn" id="total-emp">12</div><div class="stl">empresas</div></div>
+  <div class="sti"><div class="stn" id="total-emp">–</div><div class="stl">empresas</div></div>
   <div class="sti"><div class="stn">8</div><div class="stl">vagas abertas</div></div>
   <div class="sti"><div class="stn" style="color:#e11d48">5</div><div class="stl">ofertas hoje</div></div>
 </div>
 
-<!-- ======== MAIN ======== -->
+<!-- MAIN -->
 <div class="main">
   <div id="so">
     <div class="sh"><div class="stt">🔥 Ofertas do dia</div><button class="svm" onclick="sC(document.querySelector('.cp:nth-child(2)'),'ofertas','ofertas')">Ver todas</button></div>
@@ -362,40 +282,21 @@ body{font-family:'DM Sans',sans-serif;background:#faf7f2;color:#1c2b22;overflow-
     <div class="ngrid" id="cn"></div>
   </div>
   <div class="empty" id="emp-empty" style="display:none"><div>🔍</div>Nenhuma empresa encontrada.</div>
+  <div class="loading" id="loading" style="display:none"><div>⏳</div>Carregando empresas...</div>
 </div>
 
-<!-- ======== BANNER RODAPÉ ======== -->
+<!-- BANNER RODAPÉ -->
 <div class="bfw">
   <div class="bftr" id="bftr">
-    <div class="bfs" style="background:linear-gradient(90deg,#0f2d1a,#1a5c35)" onclick="oM('planos')">
-      <div class="bfbg" style="background:linear-gradient(90deg,transparent,#2d9e5f)"></div>
-      <div class="bfic">⭐</div>
-      <div class="bftx"><div class="bftt">Destaque seu negócio!</div><div class="bfsb">A partir de R$ 49/mês</div></div>
-      <button class="bfct" style="background:var(--go);color:#fff">Ver</button>
-    </div>
-    <div class="bfs" style="background:linear-gradient(90deg,#3d0a0a,#7f1d1d)" onclick="aV(1)">
-      <div class="bfbg" style="background:linear-gradient(90deg,transparent,#dc2626)"></div>
-      <div class="bfic">💼</div>
-      <div class="bftx"><div class="bftt">Vaga: Atendente de Farmácia</div><div class="bfsb">Farmácia São João · Candidate-se já</div></div>
-      <button class="bfct" style="background:#f87171;color:#3d0a0a">Ver</button>
-    </div>
-    <div class="bfs" style="background:linear-gradient(90deg,#1a1a0f,#2e2200)" onclick="oM('cadastro')">
-      <div class="bfbg" style="background:linear-gradient(90deg,transparent,#c8922a)"></div>
-      <div class="bfic">🏪</div>
-      <div class="bftx"><div class="bftt">Cadastre sua empresa grátis</div><div class="bfsb">Apareça para toda Codó agora mesmo</div></div>
-      <button class="bfct" style="background:#fbbf24;color:#1a1a0f">Cadastrar</button>
-    </div>
-    <div class="bfs" style="background:linear-gradient(90deg,#0f1a3d,#0f2a5c)" onclick="irP('vagas',null)">
-      <div class="bfbg" style="background:linear-gradient(90deg,transparent,#1d4ed8)"></div>
-      <div class="bfic">💼</div>
-      <div class="bftx"><div class="bftt">Vagas abertas em Codó</div><div class="bfsb">Confira e candidate-se gratuitamente</div></div>
-      <button class="bfct" style="background:#60a5fa;color:#0f1a3d">Ver vagas</button>
-    </div>
+    <div class="bfs" style="background:linear-gradient(90deg,#0f2d1a,#1a5c35)" onclick="oM('planos')"><div class="bfbg" style="background:linear-gradient(90deg,transparent,#2d9e5f)"></div><div class="bfic">⭐</div><div class="bftx"><div class="bftt">Destaque seu negócio!</div><div class="bfsb">A partir de R$ 49/mês</div></div><button class="bfct" style="background:var(--go);color:#fff">Ver</button></div>
+    <div class="bfs" style="background:linear-gradient(90deg,#3d0a0a,#7f1d1d)" onclick="abrirVaga(1)"><div class="bfbg" style="background:linear-gradient(90deg,transparent,#dc2626)"></div><div class="bfic">💼</div><div class="bftx"><div class="bftt">Vaga: Atendente de Farmácia</div><div class="bfsb">Farmácia São João · Candidate-se já</div></div><button class="bfct" style="background:#f87171;color:#3d0a0a">Ver</button></div>
+    <div class="bfs" style="background:linear-gradient(90deg,#1a1a0f,#2e2200)" onclick="oM('cadastro')"><div class="bfbg" style="background:linear-gradient(90deg,transparent,#c8922a)"></div><div class="bfic">🏪</div><div class="bftx"><div class="bftt">Cadastre sua empresa grátis</div><div class="bfsb">Apareça para toda Codó agora mesmo</div></div><button class="bfct" style="background:#fbbf24;color:#1a1a0f">Cadastrar</button></div>
+    <div class="bfs" style="background:linear-gradient(90deg,#0f1a3d,#0f2a5c)" onclick="irP('vagas',null)"><div class="bfbg" style="background:linear-gradient(90deg,transparent,#1d4ed8)"></div><div class="bfic">💼</div><div class="bftx"><div class="bftt">Vagas abertas em Codó</div><div class="bfsb">Confira e candidate-se gratuitamente</div></div><button class="bfct" style="background:#60a5fa;color:#0f1a3d">Ver vagas</button></div>
   </div>
   <div class="bfds" id="bfds"></div>
 </div>
 
-<!-- ======== TAB BAR ======== -->
+<!-- TAB BAR -->
 <div class="tabbar">
   <button class="tab on" onclick="irP('inicio',this)"><div class="tab-i">🏠</div><div class="tab-l">Início</div><div class="tab-d"></div></button>
   <button class="tab" onclick="irP('ofertas',this)"><div class="tab-i">🔥</div><div class="tab-l">Ofertas</div><div class="tab-d"></div></button>
@@ -404,41 +305,27 @@ body{font-family:'DM Sans',sans-serif;background:#faf7f2;color:#1c2b22;overflow-
   <button class="tab" onclick="oM('login')"><div class="tab-i">👤</div><div class="tab-l">Entrar</div><div class="tab-d"></div></button>
 </div>
 
-<!-- ======== MODAL: LOGIN / CADASTRO USUÁRIO ======== -->
+<!-- MODAL LOGIN -->
 <div class="mbg" id="m-login">
   <div class="modal">
-    <div class="mhd">
-      <div class="mtt">Guia <span style="color:var(--gl)">Codoense</span></div>
-      <button class="mcl" onclick="cM('login')">×</button>
-    </div>
+    <div class="mhd"><div class="mtt">Guia <span style="color:var(--gl)">Codoense</span></div><button class="mcl" onclick="cM('login')">×</button></div>
     <div class="mbod">
-      <div style="text-align:center;margin-bottom:16px">
-        <div style="font-size:9px;letter-spacing:2px;color:var(--mu);text-transform:uppercase">cidade de codó · ma</div>
-      </div>
+      <div style="text-align:center;margin-bottom:16px"><div style="font-size:9px;letter-spacing:2px;color:var(--mu);text-transform:uppercase">cidade de codó · ma</div></div>
       <div class="ltbs">
         <button class="ltb on" onclick="ltab('e',this)">Entrar</button>
         <button class="ltb" onclick="ltab('c',this)">Criar conta</button>
       </div>
-      <!-- Painel Entrar -->
       <div class="lpanel on" id="lp-e">
         <button class="bsoc">🌐 Continuar com Google</button>
         <button class="bsoc">📘 Continuar com Facebook</button>
         <div class="ldiv">ou use seu e-mail</div>
         <div class="fi"><label>E-mail</label><input type="email" placeholder="seu@email.com"></div>
         <div class="fi"><label>Senha</label><input type="password" placeholder="••••••••"></div>
-        <div style="text-align:right;margin-bottom:14px">
-          <span style="font-size:11px;color:var(--g);cursor:pointer;font-weight:600">Esqueci minha senha</span>
-        </div>
+        <div style="text-align:right;margin-bottom:14px"><span style="font-size:11px;color:var(--g);cursor:pointer;font-weight:600">Esqueci minha senha</span></div>
         <button class="bm2 bcf" style="width:100%;margin-bottom:10px" onclick="simL()">Entrar</button>
-        <div style="text-align:center;font-size:12px;color:var(--mu)">
-          Não tem conta? <span style="color:var(--g);cursor:pointer;font-weight:600" onclick="ltab('c',null)">Criar grátis</span>
-        </div>
-        <div style="border-top:1px solid var(--bo);margin-top:16px;padding-top:12px;text-align:center">
-          <span style="font-size:11px;color:var(--mu)">É empresa? </span>
-          <span style="font-size:11px;color:var(--g);cursor:pointer;font-weight:600" onclick="cM('login');oM('cadastro')">Cadastre seu negócio aqui</span>
-        </div>
+        <div style="text-align:center;font-size:12px;color:var(--mu)">Não tem conta? <span style="color:var(--g);cursor:pointer;font-weight:600" onclick="ltab('c',null)">Criar grátis</span></div>
+        <div style="border-top:1px solid var(--bo);margin-top:16px;padding-top:12px;text-align:center"><span style="font-size:11px;color:var(--mu)">É empresa? </span><span style="font-size:11px;color:var(--g);cursor:pointer;font-weight:600" onclick="cM('login');oM('cadastro')">Cadastre seu negócio aqui</span></div>
       </div>
-      <!-- Painel Criar conta -->
       <div class="lpanel" id="lp-c">
         <div style="font-size:12px;color:var(--mu);margin-bottom:12px">Você é:</div>
         <div class="tpsl">
@@ -452,87 +339,69 @@ body{font-family:'DM Sans',sans-serif;background:#faf7f2;color:#1c2b22;overflow-
         <div class="fi"><label>WhatsApp</label><input type="text" placeholder="(99) 99999-9999"></div>
         <div class="fi"><label>Senha</label><input type="password" placeholder="Mín. 6 caracteres"></div>
         <button class="bm2 bcf" style="width:100%;margin-top:6px" onclick="simL()">Criar conta grátis</button>
-        <div style="text-align:center;font-size:11px;color:var(--mu);margin-top:12px">
-          É empresa? <span style="color:var(--g);cursor:pointer;font-weight:600" onclick="cM('login');oM('cadastro')">Cadastre seu negócio aqui</span>
-        </div>
+        <div style="text-align:center;font-size:11px;color:var(--mu);margin-top:12px">É empresa? <span style="color:var(--g);cursor:pointer;font-weight:600" onclick="cM('login');oM('cadastro')">Cadastre seu negócio aqui</span></div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ======== MODAL: CADASTRO DE EMPRESA ======== -->
+<!-- MODAL CADASTRO EMPRESA -->
 <div class="mbg" id="m-cadastro">
   <div class="modal">
     <div class="mhd"><div class="mtt">🏪 Cadastrar empresa</div><button class="mcl" onclick="cM('cadastro')">×</button></div>
     <div class="form-body" id="fb-cadastro">
       <div class="mbod">
-        <p style="font-size:12px;color:var(--mu);margin-bottom:16px;line-height:1.6">Preencha os dados abaixo. O cadastro básico é <strong style="color:var(--g)">100% gratuito</strong> e sua empresa aparecerá no Guia Codoense em até 24h.</p>
-        <form id="form-cadastro" action="https://formspree.io/f/xdayabnv" method="POST" onsubmit="envForm(event,'cadastro')">
-          <input type="hidden" name="_subject" value="Novo cadastro de empresa – Guia Codoense">
-          <div class="fi"><label>Nome da empresa / profissional *</label><input type="text" name="nome_empresa" placeholder="Ex: Padaria Central" required></div>
+        <p style="font-size:12px;color:var(--mu);margin-bottom:16px;line-height:1.6">Preencha os dados abaixo. O cadastro básico é <strong style="color:var(--g)">100% gratuito</strong> e sua empresa aparecerá no Guia Codoense em até 24h após aprovação.</p>
+        <form id="form-cadastro" onsubmit="enviarCadastro(event)">
+          <div class="fi"><label>Nome da empresa / profissional *</label><input type="text" id="c-nome" placeholder="Ex: Padaria Central" required></div>
           <div class="fi"><label>Categoria *</label>
-            <select name="categoria" required>
+            <select id="c-cat" required>
               <option value="">Selecione...</option>
               <option>Alimentação</option><option>Saúde</option><option>Beleza</option>
               <option>Educação</option><option>Serviços</option><option>Comércio</option>
               <option>Profissionais</option><option>Outro</option>
             </select>
           </div>
-          <div class="fi"><label>Descrição do negócio *</label><textarea name="descricao" placeholder="O que sua empresa oferece? Descreva seus principais produtos ou serviços." required></textarea></div>
+          <div class="fi"><label>Descrição do negócio *</label><textarea id="c-desc" placeholder="O que sua empresa oferece?" required></textarea></div>
           <div class="fi-row">
-            <div class="fi"><label>WhatsApp *</label><input type="tel" name="whatsapp" placeholder="(99) 99999-9999" required></div>
-            <div class="fi"><label>Telefone fixo</label><input type="tel" name="telefone" placeholder="(99) 3333-3333"></div>
+            <div class="fi"><label>WhatsApp *</label><input type="tel" id="c-wpp" placeholder="(99) 99999-9999" required></div>
+            <div class="fi"><label>Telefone fixo</label><input type="tel" id="c-tel" placeholder="(99) 3333-3333"></div>
           </div>
-          <div class="fi"><label>Endereço completo *</label><input type="text" name="endereco" placeholder="Rua, número, bairro – Codó/MA" required></div>
-          <div class="fi"><label>Horário de funcionamento *</label><input type="text" name="horario" placeholder="Ex: Seg–Sex 8h–18h / Sáb 8h–12h" required></div>
-          <div class="fi"><label>Instagram (opcional)</label><input type="text" name="instagram" placeholder="@suaempresa"></div>
+          <div class="fi"><label>Endereço completo *</label><input type="text" id="c-end" placeholder="Rua, número, bairro – Codó/MA" required></div>
+          <div class="fi"><label>Horário de funcionamento *</label><input type="text" id="c-hora" placeholder="Ex: Seg–Sex 8h–18h / Sáb 8h–12h" required></div>
+          <div class="fi"><label>Instagram (opcional)</label><input type="text" id="c-insta" placeholder="@suaempresa"></div>
+          <div class="fi"><label>Especialidades / Tags</label><input type="text" id="c-tags" placeholder="Ex: Delivery, Convênios, MEI (separadas por vírgula)"></div>
           <div class="fi"><label>Plano de interesse</label>
-            <select name="plano">
+            <select id="c-plano">
               <option value="Básico (Grátis)">Básico – Listagem gratuita</option>
               <option value="Destaque R$49/mês">Destaque – R$ 49/mês</option>
               <option value="Premium R$129/mês">Premium – R$ 129/mês</option>
             </select>
           </div>
-          <div class="fi"><label>Observações</label>
-            <textarea name="observacoes" placeholder="Alguma informação adicional?"></textarea>
-            <div class="fi-hint">Após o envio, entraremos em contato pelo WhatsApp para confirmar o cadastro.</div>
-          </div>
-          <button type="submit" class="bm2 bcf" style="width:100%;margin-top:4px;padding:12px;font-size:14px">Enviar cadastro grátis ✓</button>
+          <div class="fi-hint" style="margin-bottom:12px">Após o envio, entraremos em contato pelo WhatsApp para confirmar o cadastro.</div>
+          <button type="submit" id="btn-cadastro" class="bm2 bcf" style="width:100%;padding:12px;font-size:14px">Enviar cadastro grátis ✓</button>
         </form>
       </div>
     </div>
     <div class="form-success" id="fs-cadastro">
       <div class="fs-icon">🎉</div>
       <div class="fs-title">Cadastro enviado!</div>
-      <div class="fs-msg">Recebemos os dados da sua empresa.<br>Entraremos em contato pelo WhatsApp em até <strong>24 horas</strong> para confirmar e publicar seu perfil no Guia Codoense.</div>
+      <div class="fs-msg">Recebemos os dados da sua empresa.<br>Entraremos em contato pelo WhatsApp em até <strong>24 horas</strong> para confirmar e publicar no Guia Codoense.</div>
       <button class="bm2 bcf" style="width:100%;margin-top:20px" onclick="cM('cadastro')">Fechar</button>
     </div>
   </div>
 </div>
 
-<!-- ======== MODAL: PLANOS ======== -->
+<!-- MODAL PLANOS -->
 <div class="mbg" id="m-planos">
   <div class="modal">
     <div class="mhd"><div class="mtt">⭐ Planos de destaque</div><button class="mcl" onclick="cM('planos')">×</button></div>
     <div class="form-body" id="fb-planos">
       <div class="mbod">
         <p style="font-size:12px;color:var(--mu);margin-bottom:16px;line-height:1.6">Escolha o plano ideal e apareça primeiro para quem busca em Codó.</p>
-        <div class="plano" onclick="selPlano('Básico (Grátis)','Básico – Gratuito')">
-          <div class="pln">Básico</div>
-          <div class="pld">Listagem com nome, contato, endereço e horário.</div>
-          <div class="plp">Grátis</div>
-        </div>
-        <div class="plano ft" onclick="selPlano('Destaque R$49/mês','Destaque – R$ 49/mês')">
-          <div class="plb">Mais popular</div>
-          <div class="pln">Destaque</div>
-          <div class="pld">Aparece no topo + selo dourado + banner rotativo + publicar vagas e ofertas.</div>
-          <div class="plp">R$ 49<span>/mês</span></div>
-        </div>
-        <div class="plano" onclick="selPlano('Premium R$129/mês','Premium – R$ 129/mês')">
-          <div class="pln">Premium</div>
-          <div class="pld">Tudo do Destaque + banner no rodapé + divulgação nas redes do Guia.</div>
-          <div class="plp">R$ 129<span>/mês</span></div>
-        </div>
+        <div class="plano" onclick="selPlano('Básico (Grátis)','Básico – Gratuito')"><div class="pln">Básico</div><div class="pld">Listagem com nome, contato, endereço e horário.</div><div class="plp">Grátis</div></div>
+        <div class="plano ft" onclick="selPlano('Destaque R$49/mês','Destaque – R$ 49/mês')"><div class="plb">Mais popular</div><div class="pln">Destaque</div><div class="pld">Aparece no topo + selo dourado + banner rotativo + publicar vagas e ofertas.</div><div class="plp">R$ 49<span>/mês</span></div></div>
+        <div class="plano" onclick="selPlano('Premium R$129/mês','Premium – R$ 129/mês')"><div class="pln">Premium</div><div class="pld">Tudo do Destaque + banner no rodapé + divulgação nas redes do Guia.</div><div class="plp">R$ 129<span>/mês</span></div></div>
         <div style="border-top:1px solid var(--bo);margin-top:16px;padding-top:16px">
           <p style="font-size:12px;font-weight:600;color:var(--tx);margin-bottom:12px">Deixe seu contato e te retornamos:</p>
           <form id="form-planos" action="https://formspree.io/f/myklkoyy" method="POST" onsubmit="envForm(event,'planos')">
@@ -557,7 +426,7 @@ body{font-family:'DM Sans',sans-serif;background:#faf7f2;color:#1c2b22;overflow-
   </div>
 </div>
 
-<!-- ======== MODAL: DETALHE EMPRESA ======== -->
+<!-- MODAL DETALHE EMPRESA -->
 <div class="mbg" id="m-detail">
   <div class="modal" style="overflow:hidden">
     <div id="m-din"></div>
@@ -565,7 +434,7 @@ body{font-family:'DM Sans',sans-serif;background:#faf7f2;color:#1c2b22;overflow-
   </div>
 </div>
 
-<!-- ======== MODAL: VAGA + CANDIDATURA ======== -->
+<!-- MODAL VAGA -->
 <div class="mbg" id="m-vaga">
   <div class="modal" style="overflow:hidden">
     <div id="m-vin"></div>
@@ -584,17 +453,12 @@ body{font-family:'DM Sans',sans-serif;background:#faf7f2;color:#1c2b22;overflow-
           <div class="fi"><label>Escolaridade *</label>
             <select name="escolaridade" required>
               <option value="">Selecione...</option>
-              <option>Ensino Fundamental</option>
-              <option>Ensino Médio incompleto</option>
-              <option>Ensino Médio completo</option>
-              <option>Superior incompleto</option>
-              <option>Superior completo</option>
-              <option>Pós-graduação</option>
+              <option>Ensino Fundamental</option><option>Ensino Médio incompleto</option>
+              <option>Ensino Médio completo</option><option>Superior incompleto</option>
+              <option>Superior completo</option><option>Pós-graduação</option>
             </select>
           </div>
-          <div class="fi"><label>Experiência na área</label>
-            <textarea name="experiencia" placeholder="Descreva brevemente. Se não tiver, escreva 'Sem experiência'." style="min-height:60px"></textarea>
-          </div>
+          <div class="fi"><label>Experiência na área</label><textarea name="experiencia" placeholder="Descreva brevemente. Se não tiver, escreva 'Sem experiência'." style="min-height:60px"></textarea></div>
           <button type="submit" class="bm2 bcf" style="width:100%;padding:12px;font-size:14px">Enviar candidatura ✓</button>
         </form>
       </div>
@@ -608,7 +472,7 @@ body{font-family:'DM Sans',sans-serif;background:#faf7f2;color:#1c2b22;overflow-
   </div>
 </div>
 
-<!-- ======== MODAL: OFERTA ======== -->
+<!-- MODAL OFERTA -->
 <div class="mbg" id="m-oferta">
   <div class="modal" style="overflow:hidden">
     <div id="m-oin"></div>
@@ -620,406 +484,492 @@ body{font-family:'DM Sans',sans-serif;background:#faf7f2;color:#1c2b22;overflow-
 </div>
 
 <script>
-// ===== DADOS =====
-const AV=[
+// ===== SUPABASE CONFIG =====
+var SUPA_URL = 'https://xzcqsyqgtmbfsufezuyp.supabase.co';
+var SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh6Y3FzeXFndG1iZnN1ZmV6dXlwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY0NDE5MTYsImV4cCI6MjA5MjAxNzkxNn0.Rw0OSqhlqpczFk0gX7-jSOXa1AOR0M04TAf0BlD-WtU';
+
+function supaFetch(endpoint, options) {
+  var opts = options || {};
+  opts.headers = opts.headers || {};
+  opts.headers['apikey'] = SUPA_KEY;
+  opts.headers['Authorization'] = 'Bearer ' + SUPA_KEY;
+  opts.headers['Content-Type'] = 'application/json';
+  return fetch(SUPA_URL + '/rest/v1/' + endpoint, opts);
+}
+
+// ===== DADOS FIXOS (OFERTAS E VAGAS) =====
+var AV = [
   {bg:'#1a3d2b',c:'#5dd98a'},{bg:'#1a2b4a',c:'#60a5fa'},
   {bg:'#3d1a1a',c:'#f87171'},{bg:'#3d2e1a',c:'#fbbf24'},
   {bg:'#2e1a3d',c:'#c084fc'},{bg:'#1a3d38',c:'#34d399'}
 ];
 
-const dados=[
-  {id:1,nome:"Farmácia São João",cat:"Saúde",desc:"Medicamentos, perfumaria e atendimento farmacêutico personalizado para toda a família.",tel:"99987654321",end:"Rua Coronel Tito, 120 – Centro, Codó/MA",hora:"Seg–Sáb 7h–22h",ini:"FSJ",rating:4.8,premium:true,tags:["Delivery","Manipulação","Convênios"],av:1},
-  {id:2,nome:"Restaurante Sabor da Terra",cat:"Alimentação",desc:"Culinária regional com o melhor do Maranhão. Almoço executivo e bufê completo.",tel:"99991234567",end:"Av. Getúlio Vargas, 340 – Centro, Codó/MA",hora:"Seg–Dom 11h–15h",ini:"ST",rating:4.6,premium:true,tags:["Bufê","Delivery","Marmita"],av:3},
-  {id:3,nome:"Studio Beleza & Estilo",cat:"Beleza",desc:"Corte, coloração, manicure e tratamentos capilares especializados.",tel:"99992345678",end:"Rua Jansen Müller, 55 – Cohab, Codó/MA",hora:"Ter–Sáb 8h–18h",ini:"SB",rating:4.9,premium:true,tags:["Corte","Coloração","Manicure"],av:4},
-  {id:4,nome:"Escola de Idiomas Alpha",cat:"Educação",desc:"Inglês, espanhol e cursos de reforço escolar para todas as idades.",tel:"99988881234",end:"Rua das Flores, 78 – Centro, Codó/MA",hora:"Seg–Sex 7h–21h",ini:"EA",rating:4.5,premium:false,tags:["Inglês","Espanhol","Reforço"],av:5},
-  {id:5,nome:"Dr. Carlos Mendes",cat:"Profissionais",desc:"Clínico geral e médico de família. Consultas particulares e por convênio.",tel:"99993456789",end:"Rua Hospital, 10 – Centro, Codó/MA",hora:"Seg–Sex 8h–17h",ini:"CM",rating:4.7,premium:false,tags:["Clínico Geral","Convênio"],av:0},
-  {id:6,nome:"Açougue do Zé",cat:"Alimentação",desc:"Cortes frescos e selecionados de bovino, suíno e frango todo dia.",tel:"99994567890",end:"Mercado Central, box 12 – Codó/MA",hora:"Seg–Sáb 6h–13h",ini:"AZ",rating:4.4,premium:false,tags:["Boi","Frango","Suíno"],av:3},
-  {id:7,nome:"Elétrica Confiança",cat:"Serviços",desc:"Instalações elétricas residenciais e comerciais. Orçamento gratuito.",tel:"99995678901",end:"Rua Nova, 33 – Jardim, Codó/MA",hora:"Seg–Sáb 8h–18h",ini:"EC",rating:4.3,premium:false,tags:["Residencial","Comercial"],av:1},
-  {id:8,nome:"Loja do Lar",cat:"Comércio",desc:"Utilidades domésticas, decoração e presentes para toda a família.",tel:"99996789012",end:"Av. Principal, 200 – Centro, Codó/MA",hora:"Seg–Sáb 8h–18h",ini:"LL",rating:4.2,premium:false,tags:["Decoração","Presentes"],av:0},
-  {id:9,nome:"Psicóloga Ana Beatriz",cat:"Profissionais",desc:"Atendimento clínico para adultos, adolescentes e casais. Online e presencial.",tel:"99997890123",end:"Rua 14 de Julho, 88 – Centro, Codó/MA",hora:"Seg–Sex 8h–18h",ini:"AB",rating:5.0,premium:false,tags:["Adultos","Casais","Online"],av:2},
-  {id:10,nome:"Academia Força Total",cat:"Saúde",desc:"Musculação, aeróbico e aulas coletivas. Avaliação física gratuita.",tel:"99998901234",end:"Av. dos Esportes, 55 – Codó/MA",hora:"Seg–Sex 5h30–22h / Sáb 7h–12h",ini:"FT",rating:4.6,premium:false,tags:["Musculação","Aeróbico"],av:0},
-  {id:11,nome:"Contabilidade Matos",cat:"Serviços",desc:"MEI, abertura de empresa, declaração de IR e assessoria contábil completa.",tel:"99999012345",end:"Rua do Comércio, 15 – Sala 3, Codó/MA",hora:"Seg–Sex 8h–17h",ini:"CM",rating:4.5,premium:false,tags:["MEI","IR","Empresa"],av:5},
-  {id:12,nome:"Pet Shop Amigo Fiel",cat:"Serviços",desc:"Banho, tosa, vacinas e produtos para pets de estimação.",tel:"99990123456",end:"Rua dos Animais, 22 – Bairro Novo, Codó/MA",hora:"Ter–Dom 8h–18h",ini:"PF",rating:4.8,premium:false,tags:["Banho","Tosa","Vacinas"],av:4}
-];
-
-const ofertas=[
+var ofertas = [
   {id:1,e:"🍱",n:"Marmita Executiva",emp:"Sabor da Terra",de:20,por:16,desc:"Marmita completa com arroz, feijão, carne e salada. Válido para retirada ou delivery.",val:"Hoje até 14h",bg:"#3d2200",tel:"99991234567"},
   {id:2,e:"💊",n:"Kit Vitaminas C+D",emp:"Farmácia São João",de:45,por:32,desc:"Suplementação completa para imunidade. Estoque limitado.",val:"Hoje",bg:"#0f1a3d",tel:"99987654321"},
   {id:3,e:"✂️",n:"Corte + Escova",emp:"Studio Beleza",de:60,por:42,desc:"Corte feminino com escova modeladora. Agendar pelo WhatsApp.",val:"Hoje e amanhã",bg:"#2e0f2e",tel:"99992345678"},
-  {id:4,e:"🐾",n:"Banho + Tosa",emp:"Pet Shop Amigo Fiel",de:55,por:38,desc:"Para cães de pequeno e médio porte. Agendamento necessário.",val:"Hoje",bg:"#1a1a3d",tel:"99990123456"},
-  {id:5,e:"📚",n:"Matrícula 30% OFF",emp:"Escola Alpha",de:200,por:140,desc:"Inglês ou Espanhol. Primeira mensalidade com desconto para novos alunos.",val:"Esta semana",bg:"#0f2d1a",tel:"99988881234"}
+  {id:4,e:"🐾",n:"Banho + Tosa",emp:"Pet Shop Amigo Fiel",de:55,por:38,desc:"Para cães de pequeno e médio porte.",val:"Hoje",bg:"#1a1a3d",tel:"99990123456"},
+  {id:5,e:"📚",n:"Matrícula 30% OFF",emp:"Escola Alpha",de:200,por:140,desc:"Inglês ou Espanhol. Primeira mensalidade com desconto.",val:"Esta semana",bg:"#0f2d1a",tel:"99988881234"}
 ];
 
-const vagas=[
-  {id:1,t:"Atendente de Farmácia",emp:"Farmácia São João",tp:"CLT",tu:"Tarde",sal:"R$ 1.400",nv:true,desc:"Buscamos atendente com ensino médio completo, proativo e com boa comunicação.",req:["Ensino médio completo","Disponibilidade de tarde","Boa comunicação"],e:"💊"},
-  {id:2,t:"Cozinheiro(a)",emp:"Sabor da Terra",tp:"CLT",tu:"Manhã",sal:"R$ 1.600",nv:true,desc:"Restaurante regional busca cozinheiro experiente em culinária maranhense.",req:["Experiência em cozinha","Disponibilidade de manhã","Higiene alimentar"],e:"🍽️"},
-  {id:3,t:"Manicure",emp:"Studio Beleza & Estilo",tp:"Autônoma",tu:"Flexível",sal:"Comissão 50%",nv:false,desc:"Studio em crescimento busca manicure para regime de comissão. Clientela já formada.",req:["Experiência em manicure","Boa apresentação"],e:"💅"},
-  {id:4,t:"Professor de Inglês",emp:"Escola Alpha",tp:"PJ",tu:"Noite",sal:"R$ 40/h",nv:false,desc:"Escola de idiomas contrata professor de inglês com fluência comprovada.",req:["Fluência em inglês","Experiência em ensino"],e:"📚"},
+var vagas = [
+  {id:1,t:"Atendente de Farmácia",emp:"Farmácia São João",tp:"CLT",tu:"Tarde",sal:"R$ 1.400",nv:true,desc:"Buscamos atendente com ensino médio completo e boa comunicação.",req:["Ensino médio completo","Disponibilidade de tarde","Boa comunicação"],e:"💊"},
+  {id:2,t:"Cozinheiro(a)",emp:"Sabor da Terra",tp:"CLT",tu:"Manhã",sal:"R$ 1.600",nv:true,desc:"Restaurante regional busca cozinheiro experiente em culinária maranhense.",req:["Experiência em cozinha","Disponibilidade de manhã"],e:"🍽️"},
+  {id:3,t:"Manicure",emp:"Studio Beleza & Estilo",tp:"Autônoma",tu:"Flexível",sal:"Comissão 50%",nv:false,desc:"Studio busca manicure para regime de comissão. Clientela já formada.",req:["Experiência em manicure","Boa apresentação"],e:"💅"},
+  {id:4,t:"Professor de Inglês",emp:"Escola Alpha",tp:"PJ",tu:"Noite",sal:"R$ 40/h",nv:false,desc:"Escola contrata professor de inglês com fluência comprovada.",req:["Fluência em inglês","Experiência em ensino"],e:"📚"},
   {id:5,t:"Eletricista Residencial",emp:"Elétrica Confiança",tp:"CLT",tu:"Comercial",sal:"R$ 1.800",nv:true,desc:"Contrata eletricista com NR10. Veículo próprio é diferencial.",req:["NR10 atualizado","Experiência residencial"],e:"⚡"},
   {id:6,t:"Vendedor(a)",emp:"Loja do Lar",tp:"CLT",tu:"Comercial",sal:"R$ 1.320 + comissão",nv:false,desc:"Loja de decoração contrata vendedor comunicativo.",req:["Ensino médio","Experiência em vendas"],e:"🛍️"}
 ];
 
-// ===== BANNER PRINCIPAL =====
-var bi=0, bT=4, bTmr;
-function iDots(){
-  var c=document.getElementById('bdots');
-  c.innerHTML='';
-  for(var i=0;i<bT;i++){
-    var d=document.createElement('button');
-    d.className='bd'+(i===0?' on':'');
-    d.setAttribute('data-i',i);
-    d.onclick=function(){gB(parseInt(this.getAttribute('data-i')))};
-    c.appendChild(d);
-  }
-}
-function gB(i){
-  bi=i;
-  document.getElementById('btrack').style.transform='translateX(-'+i*100+'%)';
-  document.querySelectorAll('.bd').forEach(function(d,j){d.classList.toggle('on',j===i)});
-}
-function mvB(dir){
-  bi=(bi+dir+bT)%bT;
-  gB(bi);
-  clearInterval(bTmr);
-  bTmr=setInterval(function(){mvB(1)},4500);
-}
-iDots();
-bTmr=setInterval(function(){mvB(1)},4500);
+// ===== ESTADO =====
+var empresas = [];
+var catAtual = '', busca = '', view = 'inicio';
 
-// ===== BANNER RODAPÉ =====
-var fi=0, fT=4, fTmr;
-function iFD(){
-  var c=document.getElementById('bfds');
-  c.innerHTML='';
-  for(var i=0;i<fT;i++){
-    var d=document.createElement('button');
-    d.className='bfdt'+(i===0?' on':'');
-    c.appendChild(d);
-  }
+// ===== BUSCAR EMPRESAS DO SUPABASE =====
+function carregarEmpresas() {
+  document.getElementById('loading').style.display = 'block';
+  document.getElementById('sd').style.display = 'none';
+  document.getElementById('sn').style.display = 'none';
+
+  supaFetch('empresas?select=*&aprovado=eq.true&order=premium.desc,created_at.asc')
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      document.getElementById('loading').style.display = 'none';
+      if (Array.isArray(data) && data.length > 0) {
+        empresas = data;
+      }
+      // Se Supabase vazio, usa dados de exemplo para demonstração
+      if (empresas.length === 0) {
+        empresas = dadosExemplo;
+      }
+      document.getElementById('total-emp').textContent = empresas.length;
+      rE();
+    })
+    .catch(function() {
+      document.getElementById('loading').style.display = 'none';
+      empresas = dadosExemplo;
+      document.getElementById('total-emp').textContent = empresas.length;
+      rE();
+    });
 }
-function gF(i){
-  fi=i;
-  document.getElementById('bftr').style.transform='translateX(-'+i*100+'%)';
-  document.querySelectorAll('.bfdt').forEach(function(d,j){d.classList.toggle('on',j===i)});
-}
-iFD();
-fTmr=setInterval(function(){fi=(fi+1)%fT;gF(fi)},3800);
+
+// Dados de exemplo enquanto o banco está vazio
+var dadosExemplo = [
+  {id:1,nome:"Farmácia São João",categoria:"Saúde",descricao:"Medicamentos, perfumaria e atendimento farmacêutico personalizado para toda a família.",whatsapp:"99987654321",endereco:"Rua Coronel Tito, 120 – Centro, Codó/MA",horario:"Seg–Sáb 7h–22h",iniciais:"FSJ",rating:4.8,premium:true,tags:"Delivery,Manipulação,Convênios",av_index:1},
+  {id:2,nome:"Restaurante Sabor da Terra",categoria:"Alimentação",descricao:"Culinária regional com o melhor do Maranhão. Almoço executivo e bufê completo.",whatsapp:"99991234567",endereco:"Av. Getúlio Vargas, 340 – Centro, Codó/MA",horario:"Seg–Dom 11h–15h",iniciais:"ST",rating:4.6,premium:true,tags:"Bufê,Delivery,Marmita",av_index:3},
+  {id:3,nome:"Studio Beleza & Estilo",categoria:"Beleza",descricao:"Corte, coloração, manicure e tratamentos capilares especializados.",whatsapp:"99992345678",endereco:"Rua Jansen Müller, 55 – Cohab, Codó/MA",horario:"Ter–Sáb 8h–18h",iniciais:"SB",rating:4.9,premium:true,tags:"Corte,Coloração,Manicure",av_index:4},
+  {id:4,nome:"Escola de Idiomas Alpha",categoria:"Educação",descricao:"Inglês, espanhol e cursos de reforço escolar para todas as idades.",whatsapp:"99988881234",endereco:"Rua das Flores, 78 – Centro, Codó/MA",horario:"Seg–Sex 7h–21h",iniciais:"EA",rating:4.5,premium:false,tags:"Inglês,Espanhol,Reforço",av_index:5},
+  {id:5,nome:"Dr. Carlos Mendes",categoria:"Profissionais",descricao:"Clínico geral e médico de família. Consultas particulares e por convênio.",whatsapp:"99993456789",endereco:"Rua Hospital, 10 – Centro, Codó/MA",horario:"Seg–Sex 8h–17h",iniciais:"CM",rating:4.7,premium:false,tags:"Clínico Geral,Convênio",av_index:0},
+  {id:6,nome:"Açougue do Zé",categoria:"Alimentação",descricao:"Cortes frescos e selecionados de bovino, suíno e frango todo dia.",whatsapp:"99994567890",endereco:"Mercado Central, box 12 – Codó/MA",horario:"Seg–Sáb 6h–13h",iniciais:"AZ",rating:4.4,premium:false,tags:"Boi,Frango,Suíno",av_index:3},
+  {id:7,nome:"Elétrica Confiança",categoria:"Serviços",descricao:"Instalações elétricas residenciais e comerciais. Orçamento gratuito.",whatsapp:"99995678901",endereco:"Rua Nova, 33 – Jardim, Codó/MA",horario:"Seg–Sáb 8h–18h",iniciais:"EC",rating:4.3,premium:false,tags:"Residencial,Comercial",av_index:1},
+  {id:8,nome:"Loja do Lar",categoria:"Comércio",descricao:"Utilidades domésticas, decoração e presentes para toda a família.",whatsapp:"99996789012",endereco:"Av. Principal, 200 – Centro, Codó/MA",horario:"Seg–Sáb 8h–18h",iniciais:"LL",rating:4.2,premium:false,tags:"Decoração,Presentes",av_index:0},
+  {id:9,nome:"Psicóloga Ana Beatriz",categoria:"Profissionais",descricao:"Atendimento clínico para adultos, adolescentes e casais. Online e presencial.",whatsapp:"99997890123",endereco:"Rua 14 de Julho, 88 – Centro, Codó/MA",horario:"Seg–Sex 8h–18h",iniciais:"AB",rating:5.0,premium:false,tags:"Adultos,Casais,Online",av_index:2},
+  {id:10,nome:"Academia Força Total",categoria:"Saúde",descricao:"Musculação, aeróbico e aulas coletivas. Avaliação física gratuita.",whatsapp:"99998901234",endereco:"Av. dos Esportes, 55 – Codó/MA",horario:"Seg–Sex 5h30–22h / Sáb 7h–12h",iniciais:"FT",rating:4.6,premium:false,tags:"Musculação,Aeróbico",av_index:0},
+  {id:11,nome:"Contabilidade Matos",categoria:"Serviços",descricao:"MEI, abertura de empresa, declaração de IR e assessoria contábil.",whatsapp:"99999012345",endereco:"Rua do Comércio, 15 – Sala 3, Codó/MA",horario:"Seg–Sex 8h–17h",iniciais:"CM",rating:4.5,premium:false,tags:"MEI,IR,Empresa",av_index:5},
+  {id:12,nome:"Pet Shop Amigo Fiel",categoria:"Serviços",descricao:"Banho, tosa, vacinas e produtos para pets de estimação.",whatsapp:"99990123456",endereco:"Rua dos Animais, 22 – Bairro Novo, Codó/MA",horario:"Ter–Dom 8h–18h",iniciais:"PF",rating:4.8,premium:false,tags:"Banho,Tosa,Vacinas",av_index:4}
+];
 
 // ===== HELPERS =====
-function avStyle(i,s){
-  var c=AV[i%AV.length];
-  return 'background:'+c.bg+';color:'+c.c+';width:'+s+'px;height:'+s+'px';
+function avStyle(i, s) {
+  var c = AV[i % AV.length];
+  return 'background:' + c.bg + ';color:' + c.c + ';width:' + s + 'px;height:' + s + 'px';
 }
-function stars(r){
-  return '★'.repeat(Math.floor(r))+'☆'.repeat(5-Math.floor(r));
+function stars(r) { return '★'.repeat(Math.floor(r)) + '☆'.repeat(5 - Math.floor(r)); }
+function pct(de, por) { return Math.round((1 - por / de) * 100); }
+function wppLink(tel, msg) { return 'https://wa.me/55' + tel + '?text=' + encodeURIComponent(msg); }
+function getTags(d) {
+  if (!d.tags) return [];
+  if (Array.isArray(d.tags)) return d.tags;
+  return d.tags.split(',').map(function(t) { return t.trim(); });
 }
-function pct(de,por){return Math.round((1-por/de)*100)}
-function wppLink(tel,msg){return 'https://wa.me/55'+tel+'?text='+encodeURIComponent(msg)}
+function getIniciais(d) { return d.iniciais || d.ini || '??'; }
+function getCat(d) { return d.categoria || d.cat || ''; }
 
 // ===== RENDER OFERTAS =====
-function rO(l){
-  document.getElementById('oc').innerHTML=l.map(function(o){
-    return '<div class="ocard" onclick="aO('+o.id+')">'+
-      '<div class="oimg" style="background:'+o.bg+'22">'+
-        '<span style="font-size:32px">'+o.e+'</span>'+
-        '<div class="obdg">-'+pct(o.de,o.por)+'%</div>'+
-        '<div class="otmr">⏱ '+(Math.floor(Math.random()*5)+1)+'h</div>'+
-      '</div>'+
-      '<div class="obody">'+
-        '<div class="oemp">'+o.emp+'</div>'+
-        '<div class="onome">'+o.n+'</div>'+
-        '<div class="oprc"><span class="ode">R$ '+o.de+'</span><span class="opor">R$ '+o.por+'</span></div>'+
-      '</div>'+
-    '</div>';
+function rO(l) {
+  document.getElementById('oc').innerHTML = l.map(function(o) {
+    return '<div class="ocard" onclick="abrirOferta(' + o.id + ')">' +
+      '<div class="oimg" style="background:' + o.bg + '22"><span style="font-size:32px">' + o.e + '</span>' +
+      '<div class="obdg">-' + pct(o.de, o.por) + '%</div>' +
+      '<div class="otmr">⏱ ' + (Math.floor(Math.random() * 5) + 1) + 'h</div></div>' +
+      '<div class="obody"><div class="oemp">' + o.emp + '</div>' +
+      '<div class="onome">' + o.n + '</div>' +
+      '<div class="oprc"><span class="ode">R$ ' + o.de + '</span><span class="opor">R$ ' + o.por + '</span></div>' +
+      '</div></div>';
   }).join('');
 }
 
 // ===== RENDER VAGAS =====
-function rV(l){
-  document.getElementById('vc').innerHTML=l.map(function(v){
-    return '<div class="vcard" onclick="aV('+v.id+')">'+
-      '<div class="vic" style="background:'+AV[v.id%AV.length].bg+'">'+v.e+'</div>'+
-      '<div class="vif">'+
-        '<div class="vtit">'+v.t+'</div>'+
-        '<div class="vemp">'+v.emp+'</div>'+
-        '<div class="vtgs">'+
-          (v.nv?'<span class="vtag nv">Nova</span>':'')+
-          '<span class="vtag">'+v.tp+'</span>'+
-          '<span class="vtag">'+v.tu+'</span>'+
-        '</div>'+
-      '</div>'+
-      '<div class="vright"><div class="vsal">'+v.sal+'</div><div class="varr">Ver ›</div></div>'+
-    '</div>';
+function rV(l) {
+  document.getElementById('vc').innerHTML = l.map(function(v) {
+    return '<div class="vcard" onclick="abrirVaga(' + v.id + ')">' +
+      '<div class="vic" style="background:' + AV[v.id % AV.length].bg + '">' + v.e + '</div>' +
+      '<div class="vif"><div class="vtit">' + v.t + '</div><div class="vemp">' + v.emp + '</div>' +
+      '<div class="vtgs">' + (v.nv ? '<span class="vtag nv">Nova</span>' : '') +
+      '<span class="vtag">' + v.tp + '</span><span class="vtag">' + v.tu + '</span></div></div>' +
+      '<div class="vright"><div class="vsal">' + v.sal + '</div><div class="varr">Ver ›</div></div>' +
+      '</div>';
   }).join('');
 }
 
 // ===== RENDER EMPRESAS =====
-function rE(){
-  var l=dados.filter(function(d){
-    var b=!busca||d.nome.toLowerCase().indexOf(busca)>-1||d.cat.toLowerCase().indexOf(busca)>-1||d.tags.some(function(t){return t.toLowerCase().indexOf(busca)>-1});
-    var c=!catAtual||d.cat===catAtual;
-    return b&&c;
+function rE() {
+  var l = empresas.filter(function(d) {
+    var tags = getTags(d);
+    var cat = getCat(d);
+    var b = !busca ||
+      d.nome.toLowerCase().indexOf(busca) > -1 ||
+      cat.toLowerCase().indexOf(busca) > -1 ||
+      tags.some(function(t) { return t.toLowerCase().indexOf(busca) > -1; });
+    var c = !catAtual || cat === catAtual;
+    return b && c;
   });
-  var p=l.filter(function(d){return d.premium});
-  var n=l.filter(function(d){return !d.premium});
 
-  document.getElementById('cd').innerHTML=p.map(function(d){
-    return '<div class="dcard" onclick="aD('+d.id+')">'+
-      '<div class="dacc"></div>'+
-      '<div class="dbod">'+
-        '<div class="dbdg">⭐ Destaque</div>'+
-        '<div class="dh">'+
-          '<div class="dav" style="'+avStyle(d.av,32)+'">'+d.ini+'</div>'+
-          '<div><div class="dn">'+d.nome+'</div><div class="dct">'+d.cat+'</div></div>'+
-        '</div>'+
-        '<div class="ddesc">'+d.desc+'</div>'+
-        '<div class="dtgs">'+d.tags.map(function(t){return '<span class="dtag">'+t+'</span>'}).join('')+'</div>'+
-        '<div class="df">'+
-          '<div class="drat">'+stars(d.rating)+' '+d.rating+'</div>'+
-          '<button class="dbtn" onclick="event.stopPropagation();aD('+d.id+')">Ver perfil</button>'+
-        '</div>'+
-      '</div>'+
-    '</div>';
+  var p = l.filter(function(d) { return d.premium; });
+  var n = l.filter(function(d) { return !d.premium; });
+
+  document.getElementById('cd').innerHTML = p.map(function(d) {
+    var tags = getTags(d);
+    var ini = getIniciais(d);
+    var av = d.av_index || 0;
+    return '<div class="dcard" onclick="abrirEmpresa(' + d.id + ')">' +
+      '<div class="dacc"></div><div class="dbod">' +
+      '<div class="dbdg">⭐ Destaque</div>' +
+      '<div class="dh"><div class="dav" style="' + avStyle(av, 32) + '">' + ini + '</div>' +
+      '<div><div class="dn">' + d.nome + '</div><div class="dct">' + getCat(d) + '</div></div></div>' +
+      '<div class="ddesc">' + d.descricao + '</div>' +
+      '<div class="dtgs">' + tags.map(function(t) { return '<span class="dtag">' + t + '</span>'; }).join('') + '</div>' +
+      '<div class="df"><div class="drat">' + stars(d.rating) + ' ' + d.rating + '</div>' +
+      '<button class="dbtn" onclick="event.stopPropagation();abrirEmpresa(' + d.id + ')">Ver perfil</button>' +
+      '</div></div></div>';
   }).join('');
 
-  document.getElementById('cn').innerHTML=n.map(function(d){
-    return '<div class="ncard" onclick="aD('+d.id+')">'+
-      '<div class="nh">'+
-        '<div class="nav" style="'+avStyle(d.av,30)+'">'+d.ini+'</div>'+
-        '<div><div class="nn">'+d.nome+'</div><div class="nct">'+d.cat+'</div></div>'+
-      '</div>'+
-      '<div class="nrat">'+stars(d.rating)+' '+d.rating+'</div>'+
-      '<div class="nds">'+d.desc+'</div>'+
-      '<div class="ntgs">'+d.tags.map(function(t){return '<span class="ntag">'+t+'</span>'}).join('')+'</div>'+
-      '<div class="nft"><button class="nbtn" onclick="event.stopPropagation();aD('+d.id+')">Ver perfil</button></div>'+
-    '</div>';
+  document.getElementById('cn').innerHTML = n.map(function(d) {
+    var tags = getTags(d);
+    var ini = getIniciais(d);
+    var av = d.av_index || 0;
+    return '<div class="ncard" onclick="abrirEmpresa(' + d.id + ')">' +
+      '<div class="nh"><div class="nav" style="' + avStyle(av, 30) + '">' + ini + '</div>' +
+      '<div><div class="nn">' + d.nome + '</div><div class="nct">' + getCat(d) + '</div></div></div>' +
+      '<div class="nrat">' + stars(d.rating) + ' ' + d.rating + '</div>' +
+      '<div class="nds">' + d.descricao + '</div>' +
+      '<div class="ntgs">' + tags.map(function(t) { return '<span class="ntag">' + t + '</span>'; }).join('') + '</div>' +
+      '<div class="nft"><button class="nbtn" onclick="event.stopPropagation();abrirEmpresa(' + d.id + ')">Ver perfil</button></div>' +
+      '</div>';
   }).join('');
 
-  document.getElementById('sd').style.display=p.length?'':'none';
-  document.getElementById('sn').style.display=n.length?'':'none';
-  document.getElementById('emp-empty').style.display=l.length?'none':'block';
-  document.getElementById('dcnt').textContent=p.length+' empresa'+(p.length!==1?'s':'');
-  document.getElementById('ncnt').textContent=n.length+' empresa'+(n.length!==1?'s':'');
-  document.getElementById('total-emp').textContent=dados.length;
+  document.getElementById('sd').style.display = p.length ? '' : 'none';
+  document.getElementById('sn').style.display = n.length ? '' : 'none';
+  document.getElementById('emp-empty').style.display = l.length ? 'none' : 'block';
+  document.getElementById('dcnt').textContent = p.length + ' empresa' + (p.length !== 1 ? 's' : '');
+  document.getElementById('ncnt').textContent = n.length + ' empresa' + (n.length !== 1 ? 's' : '');
+  document.getElementById('total-emp').textContent = empresas.length;
 }
 
-// ===== ABRIR DETALHE EMPRESA =====
-function aD(id){
-  var d=dados.find(function(x){return x.id===id});
-  var c=AV[d.av%AV.length];
-  var msg='Olá, '+d.nome+'! Vi seu perfil no Guia Codoense e gostaria de mais informações.';
-  document.getElementById('m-din').innerHTML=
-    '<div class="dth">'+
-      '<div class="dtav" style="background:'+c.bg+';color:'+c.c+'">'+d.ini+'</div>'+
-      (d.premium?'<div style="display:inline-flex;align-items:center;background:var(--go);color:#fff;font-size:9px;font-weight:600;padding:2px 9px;border-radius:20px;margin-bottom:6px;text-transform:uppercase">⭐ Destaque</div><br>':'')+
-      '<div class="dtnm">'+d.nome+'</div>'+
-      '<div class="dtct">'+d.cat+' · <span style="color:var(--gol)">'+stars(d.rating)+' '+d.rating+'</span></div>'+
-    '</div>'+
-    '<div class="dsec"><h4>Sobre</h4><p>'+d.desc+'</p></div>'+
-    '<div class="dsec"><h4>Contato &amp; Localização</h4>'+
-      '<div class="crow"><div class="cico">📍</div>'+d.end+'</div>'+
-      '<div class="crow"><div class="cico">⏰</div>'+d.hora+'</div>'+
-    '</div>'+
-    '<div class="dsec" style="border-bottom:none"><h4>Especialidades</h4>'+
-      '<div>'+d.tags.map(function(t){return '<span class="ntd">'+t+'</span>'}).join('')+'</div>'+
-    '</div>'+
-    '<div style="padding:12px 18px">'+
-      '<button class="wbtn" onclick="window.open(\''+wppLink(d.tel,msg)+'\',\'_blank\')">💬 Entrar em contato pelo WhatsApp</button>'+
+// ===== ABRIR EMPRESA =====
+function abrirEmpresa(id) {
+  var d = empresas.find(function(x) { return x.id === id; });
+  if (!d) return;
+  var av = d.av_index || 0;
+  var c = AV[av % AV.length];
+  var ini = getIniciais(d);
+  var tags = getTags(d);
+  var tel = d.whatsapp || '';
+  var msg = 'Olá, ' + d.nome + '! Vi seu perfil no Guia Codoense e gostaria de mais informações.';
+  document.getElementById('m-din').innerHTML =
+    '<div class="dth">' +
+      '<div class="dtav" style="background:' + c.bg + ';color:' + c.c + '">' + ini + '</div>' +
+      (d.premium ? '<div style="display:inline-flex;align-items:center;background:var(--go);color:#fff;font-size:9px;font-weight:600;padding:2px 9px;border-radius:20px;margin-bottom:6px;text-transform:uppercase">⭐ Destaque</div><br>' : '') +
+      '<div class="dtnm">' + d.nome + '</div>' +
+      '<div class="dtct">' + getCat(d) + ' · <span style="color:var(--gol)">' + stars(d.rating) + ' ' + d.rating + '</span></div>' +
+    '</div>' +
+    '<div class="dsec"><h4>Sobre</h4><p>' + d.descricao + '</p></div>' +
+    '<div class="dsec"><h4>Contato &amp; Localização</h4>' +
+      '<div class="crow"><div class="cico">📍</div>' + d.endereco + '</div>' +
+      '<div class="crow"><div class="cico">⏰</div>' + d.horario + '</div>' +
+      (d.instagram ? '<div class="crow"><div class="cico">📷</div>' + d.instagram + '</div>' : '') +
+    '</div>' +
+    '<div class="dsec" style="border-bottom:none"><h4>Especialidades</h4>' +
+      '<div>' + tags.map(function(t) { return '<span class="ntd">' + t + '</span>'; }).join('') + '</div>' +
+    '</div>' +
+    '<div style="padding:12px 18px">' +
+      '<button class="wbtn" onclick="window.open(\'' + wppLink(tel, msg) + '\',\'_blank\')">💬 Entrar em contato pelo WhatsApp</button>' +
     '</div>';
   oM('detail');
 }
 
 // ===== ABRIR OFERTA =====
-function aO(id){
-  var o=ofertas.find(function(x){return x.id===id});
-  var msg='Olá! Vi a oferta "'+o.n+'" no Guia Codoense e tenho interesse.';
-  document.getElementById('m-oin').innerHTML=
-    '<div style="background:'+o.bg+'22;padding:22px 18px;text-align:center;border-bottom:1px solid var(--bo)">'+
-      '<div style="font-size:50px;margin-bottom:8px">'+o.e+'</div>'+
-      '<div style="display:inline-block;background:#e11d48;color:#fff;font-size:9px;font-weight:700;padding:3px 12px;border-radius:20px;margin-bottom:8px">OFERTA DO DIA</div>'+
-      '<div style="font-family:var(--fd);font-size:18px;font-weight:700;color:var(--tx);margin-bottom:3px">'+o.n+'</div>'+
-      '<div style="font-size:12px;color:var(--mu)">'+o.emp+'</div>'+
-    '</div>'+
-    '<div style="padding:14px 18px">'+
-      '<div style="display:flex;align-items:baseline;gap:10px;margin-bottom:8px">'+
-        '<span style="font-size:13px;color:var(--mu);text-decoration:line-through">De R$ '+o.de+'</span>'+
-        '<span style="font-family:var(--fd);font-size:28px;font-weight:700;color:#e11d48">Por R$ '+o.por+'</span>'+
-      '</div>'+
-      '<p style="font-size:13px;color:var(--tx);line-height:1.6;margin-bottom:10px">'+o.desc+'</p>'+
-      '<div style="font-size:11px;color:var(--mu)">⏱ Válido: <strong style="color:var(--tx)">'+o.val+'</strong></div>'+
+function abrirOferta(id) {
+  var o = ofertas.find(function(x) { return x.id === id; });
+  var msg = 'Olá! Vi a oferta "' + o.n + '" no Guia Codoense e tenho interesse.';
+  document.getElementById('m-oin').innerHTML =
+    '<div style="background:' + o.bg + '22;padding:22px 18px;text-align:center;border-bottom:1px solid var(--bo)">' +
+      '<div style="font-size:50px;margin-bottom:8px">' + o.e + '</div>' +
+      '<div style="display:inline-block;background:#e11d48;color:#fff;font-size:9px;font-weight:700;padding:3px 12px;border-radius:20px;margin-bottom:8px">OFERTA DO DIA</div>' +
+      '<div style="font-family:var(--fd);font-size:18px;font-weight:700;color:var(--tx);margin-bottom:3px">' + o.n + '</div>' +
+      '<div style="font-size:12px;color:var(--mu)">' + o.emp + '</div>' +
+    '</div>' +
+    '<div style="padding:14px 18px">' +
+      '<div style="display:flex;align-items:baseline;gap:10px;margin-bottom:8px">' +
+        '<span style="font-size:13px;color:var(--mu);text-decoration:line-through">De R$ ' + o.de + '</span>' +
+        '<span style="font-family:var(--fd);font-size:28px;font-weight:700;color:#e11d48">Por R$ ' + o.por + '</span>' +
+      '</div>' +
+      '<p style="font-size:13px;color:var(--tx);line-height:1.6;margin-bottom:10px">' + o.desc + '</p>' +
+      '<div style="font-size:11px;color:var(--mu)">⏱ Válido: <strong style="color:var(--tx)">' + o.val + '</strong></div>' +
     '</div>';
-  document.getElementById('btn-oferta-w').onclick=function(){
-    window.open(wppLink(o.tel,msg),'_blank');
+  document.getElementById('btn-oferta-w').onclick = function() {
+    window.open(wppLink(o.tel, msg), '_blank');
   };
   oM('oferta');
 }
 
 // ===== ABRIR VAGA =====
-function aV(id){
-  var v=vagas.find(function(x){return x.id===id});
-  var c=AV[v.id%AV.length];
-  document.getElementById('vaga-n').value=v.t;
-  document.getElementById('vaga-e').value=v.emp;
+function abrirVaga(id) {
+  var v = vagas.find(function(x) { return x.id === id; });
+  var c = AV[v.id % AV.length];
+  document.getElementById('vaga-n').value = v.t;
+  document.getElementById('vaga-e').value = v.emp;
   document.getElementById('form-vaga').reset();
-  document.getElementById('vaga-n').value=v.t;
-  document.getElementById('vaga-e').value=v.emp;
-  showFS('vaga',false);
-  document.getElementById('m-vin').innerHTML=
-    '<div style="background:var(--dk);padding:14px 18px">'+
-      '<div style="width:44px;height:44px;border-radius:9px;background:'+c.bg+';display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:8px">'+v.e+'</div>'+
-      (v.nv?'<div style="display:inline-block;background:#fef3c7;color:#92400e;font-size:9px;font-weight:700;padding:2px 9px;border-radius:20px;margin-bottom:6px">Nova vaga</div><br>':'')+
-      '<div style="font-family:var(--fd);font-size:17px;font-weight:700;color:#fff;margin-bottom:3px">'+v.t+'</div>'+
-      '<div style="font-size:12px;color:rgba(255,255,255,.45)">'+v.emp+'</div>'+
-    '</div>'+
-    '<div style="padding:10px 18px;border-bottom:1px solid var(--bo);display:flex;gap:7px;flex-wrap:wrap">'+
-      '<span class="vti" style="background:#f0f9f4;color:var(--g);border:1px solid rgba(26,107,60,.2)">💰 '+v.sal+'</span>'+
-      '<span class="vti" style="background:#f0f7ff;color:#1e40af;border:1px solid rgba(30,64,175,.2)">📋 '+v.tp+'</span>'+
-      '<span class="vti" style="background:#fff7ed;color:#9a3412;border:1px solid rgba(154,52,18,.2)">🕐 '+v.tu+'</span>'+
-    '</div>'+
-    '<div style="padding:12px 18px;border-bottom:1px solid var(--bo)">'+
-      '<div style="font-size:10px;font-weight:600;color:var(--mu);text-transform:uppercase;letter-spacing:.8px;margin-bottom:7px">Sobre a vaga</div>'+
-      '<p style="font-size:13px;color:var(--tx);line-height:1.6">'+v.desc+'</p>'+
-    '</div>'+
-    '<div style="padding:12px 18px;border-bottom:1px solid var(--bo)">'+
-      '<div style="font-size:10px;font-weight:600;color:var(--mu);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px">Requisitos</div>'+
-      v.req.map(function(r){
-        return '<div style="display:flex;align-items:center;gap:7px;font-size:13px;color:var(--tx);margin-bottom:6px"><span style="color:var(--g);font-size:14px">✓</span>'+r+'</div>';
-      }).join('')+
+  document.getElementById('vaga-n').value = v.t;
+  document.getElementById('vaga-e').value = v.emp;
+  showFS('vaga', false);
+  document.getElementById('m-vin').innerHTML =
+    '<div style="background:var(--dk);padding:14px 18px">' +
+      '<div style="width:44px;height:44px;border-radius:9px;background:' + c.bg + ';display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:8px">' + v.e + '</div>' +
+      (v.nv ? '<div style="display:inline-block;background:#fef3c7;color:#92400e;font-size:9px;font-weight:700;padding:2px 9px;border-radius:20px;margin-bottom:6px">Nova vaga</div><br>' : '') +
+      '<div style="font-family:var(--fd);font-size:17px;font-weight:700;color:#fff;margin-bottom:3px">' + v.t + '</div>' +
+      '<div style="font-size:12px;color:rgba(255,255,255,.45)">' + v.emp + '</div>' +
+    '</div>' +
+    '<div style="padding:10px 18px;border-bottom:1px solid var(--bo);display:flex;gap:7px;flex-wrap:wrap">' +
+      '<span class="vti" style="background:#f0f9f4;color:var(--g);border:1px solid rgba(26,107,60,.2)">💰 ' + v.sal + '</span>' +
+      '<span class="vti" style="background:#f0f7ff;color:#1e40af;border:1px solid rgba(30,64,175,.2)">📋 ' + v.tp + '</span>' +
+      '<span class="vti" style="background:#fff7ed;color:#9a3412;border:1px solid rgba(154,52,18,.2)">🕐 ' + v.tu + '</span>' +
+    '</div>' +
+    '<div style="padding:12px 18px;border-bottom:1px solid var(--bo)">' +
+      '<div style="font-size:10px;font-weight:600;color:var(--mu);text-transform:uppercase;letter-spacing:.8px;margin-bottom:7px">Sobre a vaga</div>' +
+      '<p style="font-size:13px;color:var(--tx);line-height:1.6">' + v.desc + '</p>' +
+    '</div>' +
+    '<div style="padding:12px 18px;border-bottom:1px solid var(--bo)">' +
+      '<div style="font-size:10px;font-weight:600;color:var(--mu);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px">Requisitos</div>' +
+      v.req.map(function(r) {
+        return '<div style="display:flex;align-items:center;gap:7px;font-size:13px;color:var(--tx);margin-bottom:6px"><span style="color:var(--g);font-size:14px">✓</span>' + r + '</div>';
+      }).join('') +
     '</div>';
   oM('vaga');
 }
 
-// ===== FORMULÁRIOS =====
-function showFS(id,ok){
-  document.getElementById('fb-'+id).classList.toggle('hide',ok);
-  document.getElementById('fs-'+id).classList.toggle('on',ok);
+// ===== ENVIAR CADASTRO NO SUPABASE =====
+function enviarCadastro(e) {
+  e.preventDefault();
+  var btn = document.getElementById('btn-cadastro');
+  btn.disabled = true;
+  btn.textContent = 'Enviando...';
+
+  var nome = document.getElementById('c-nome').value;
+  var iniciais = nome.split(' ').slice(0,2).map(function(w){return w[0]}).join('').toUpperCase();
+
+  var dados = {
+    nome: nome,
+    categoria: document.getElementById('c-cat').value,
+    descricao: document.getElementById('c-desc').value,
+    whatsapp: document.getElementById('c-wpp').value.replace(/\D/g,''),
+    telefone: document.getElementById('c-tel').value,
+    endereco: document.getElementById('c-end').value,
+    horario: document.getElementById('c-hora').value,
+    instagram: document.getElementById('c-insta').value,
+    tags: document.getElementById('c-tags').value,
+    plano: document.getElementById('c-plano').value,
+    iniciais: iniciais,
+    aprovado: false,
+    premium: false,
+    rating: 5.0,
+    av_index: Math.floor(Math.random() * 6)
+  };
+
+  supaFetch('empresas', {
+    method: 'POST',
+    body: JSON.stringify(dados),
+    headers: { 'Prefer': 'return=minimal' }
+  })
+  .then(function(r) {
+    if (r.ok || r.status === 201) {
+      showFS('cadastro', true);
+    } else {
+      return r.text().then(function(txt) { throw new Error(txt); });
+    }
+  })
+  .catch(function(err) {
+    console.error(err);
+    alert('Erro ao enviar. Tente novamente ou entre em contato pelo WhatsApp.');
+    btn.disabled = false;
+    btn.textContent = 'Enviar cadastro grátis ✓';
+  });
 }
 
-function envForm(e,id){
+// ===== FORMULÁRIOS FORMSPREE =====
+function showFS(id, ok) {
+  document.getElementById('fb-' + id).classList.toggle('hide', ok);
+  document.getElementById('fs-' + id).classList.toggle('on', ok);
+}
+function envForm(e, id) {
   e.preventDefault();
-  var form=e.target;
-  var btn=form.querySelector('button[type=submit]');
-  var txt=btn.textContent;
-  btn.disabled=true;
-  btn.textContent='Enviando...';
-  fetch(form.action,{
-    method:'POST',
-    body:new FormData(form),
-    headers:{'Accept':'application/json'}
-  }).then(function(r){
-    if(r.ok){showFS(id,true)}
-    else{alert('Erro ao enviar. Tente novamente.');btn.disabled=false;btn.textContent=txt}
-  }).catch(function(){
-    alert('Erro de conexão. Verifique sua internet.');btn.disabled=false;btn.textContent=txt;
+  var form = e.target;
+  var btn = form.querySelector('button[type=submit]');
+  var txt = btn.textContent;
+  btn.disabled = true;
+  btn.textContent = 'Enviando...';
+  fetch(form.action, {
+    method: 'POST',
+    body: new FormData(form),
+    headers: { 'Accept': 'application/json' }
+  }).then(function(r) {
+    if (r.ok) { showFS(id, true); }
+    else { alert('Erro ao enviar. Tente novamente.'); btn.disabled = false; btn.textContent = txt; }
+  }).catch(function() {
+    alert('Erro de conexão.'); btn.disabled = false; btn.textContent = txt;
   });
 }
 
 // ===== PLANOS =====
-function selPlano(val,label){
-  document.getElementById('plano-val').value=val;
-  document.getElementById('plano-disp').value=label;
+function selPlano(val, label) {
+  document.getElementById('plano-val').value = val;
+  document.getElementById('plano-disp').value = label;
 }
 
 // ===== LOGIN =====
-function ltab(id,el){
-  document.querySelectorAll('.ltb').forEach(function(t){t.classList.remove('on')});
-  if(el){
-    el.classList.add('on');
-  } else {
-    document.querySelectorAll('.ltb').forEach(function(t,i){
-      if((i===0&&id==='e')||(i===1&&id==='c')) t.classList.add('on');
-    });
-  }
-  document.querySelectorAll('.lpanel').forEach(function(p){p.classList.remove('on')});
-  document.getElementById('lp-'+id).classList.add('on');
+function ltab(id, el) {
+  document.querySelectorAll('.ltb').forEach(function(t) { t.classList.remove('on'); });
+  if (el) { el.classList.add('on'); }
+  else { document.querySelectorAll('.ltb').forEach(function(t, i) { if ((i===0&&id==='e')||(i===1&&id==='c')) t.classList.add('on'); }); }
+  document.querySelectorAll('.lpanel').forEach(function(p) { p.classList.remove('on'); });
+  document.getElementById('lp-' + id).classList.add('on');
 }
-function selT(t){
-  document.getElementById('tp-p').classList.toggle('on',t==='p');
-  document.getElementById('tp-e').classList.toggle('on',t==='e');
+function selT(t) {
+  document.getElementById('tp-p').classList.toggle('on', t === 'p');
+  document.getElementById('tp-e').classList.toggle('on', t === 'e');
 }
-function simL(){
+function simL() {
   cM('login');
   alert('Em breve! O sistema de login completo será ativado na próxima versão do Guia Codoense.');
 }
 
-// ===== NAVEGAÇÃO =====
-var catAtual='', busca='', view='inicio';
-
-function filtrar(){
-  busca=document.getElementById('si').value.toLowerCase();
-  rView();
+// ===== BANNER PRINCIPAL =====
+var bi = 0, bT = 4, bTmr;
+function iDots() {
+  var c = document.getElementById('bdots');
+  c.innerHTML = '';
+  for (var i = 0; i < bT; i++) {
+    var d = document.createElement('button');
+    d.className = 'bd' + (i === 0 ? ' on' : '');
+    d.setAttribute('data-i', i);
+    d.onclick = function() { gB(parseInt(this.getAttribute('data-i'))); };
+    c.appendChild(d);
+  }
 }
-function irP(v,el){
-  view=v;
-  document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('on')});
-  if(el) el.classList.add('on');
-  catAtual='';
-  document.querySelectorAll('.cp').forEach(function(c){c.classList.remove('on')});
+function gB(i) {
+  bi = i;
+  document.getElementById('btrack').style.transform = 'translateX(-' + i * 100 + '%)';
+  document.querySelectorAll('.bd').forEach(function(d, j) { d.classList.toggle('on', j === i); });
+}
+function mvB(dir) {
+  bi = (bi + dir + bT) % bT;
+  gB(bi);
+  clearInterval(bTmr);
+  bTmr = setInterval(function() { mvB(1); }, 4500);
+}
+iDots();
+bTmr = setInterval(function() { mvB(1); }, 4500);
+
+// ===== BANNER RODAPÉ =====
+var fi = 0, fT = 4, fTmr;
+function iFD() {
+  var c = document.getElementById('bfds');
+  c.innerHTML = '';
+  for (var i = 0; i < fT; i++) {
+    var d = document.createElement('button');
+    d.className = 'bfdt' + (i === 0 ? ' on' : '');
+    c.appendChild(d);
+  }
+}
+function gF(i) {
+  fi = i;
+  document.getElementById('bftr').style.transform = 'translateX(-' + i * 100 + '%)';
+  document.querySelectorAll('.bfdt').forEach(function(d, j) { d.classList.toggle('on', j === i); });
+}
+iFD();
+fTmr = setInterval(function() { fi = (fi + 1) % fT; gF(fi); }, 3800);
+
+// ===== NAVEGAÇÃO =====
+function filtrar() { busca = document.getElementById('si').value.toLowerCase(); rView(); }
+function irP(v, el) {
+  view = v;
+  document.querySelectorAll('.tab').forEach(function(t) { t.classList.remove('on'); });
+  if (el) el.classList.add('on');
+  catAtual = '';
+  document.querySelectorAll('.cp').forEach(function(c) { c.classList.remove('on'); });
   document.querySelector('.cp').classList.add('on');
   rView();
-  window.scrollTo({top:0,behavior:'smooth'});
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
-function sC(el,cat,v){
-  document.querySelectorAll('.cp').forEach(function(c){c.classList.remove('on')});
-  if(el) el.classList.add('on');
-  view=v;
-  catAtual=cat;
+function sC(el, cat, v) {
+  document.querySelectorAll('.cp').forEach(function(c) { c.classList.remove('on'); });
+  if (el) el.classList.add('on');
+  view = v; catAtual = cat;
   rView();
-  window.scrollTo({top:0,behavior:'smooth'});
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
-function rView(){
-  var so=document.getElementById('so');
-  var sv=document.getElementById('sv');
-  var sd=document.getElementById('sd');
-  var sn=document.getElementById('sn');
-  if(view==='inicio'){
-    so.style.display=''; sv.style.display=''; sd.style.display=''; sn.style.display='';
-    rO(ofertas); rV(vagas.slice(0,3)); rE();
-  } else if(view==='ofertas'){
-    so.style.display=''; sv.style.display='none'; sd.style.display='none'; sn.style.display='none';
+function rView() {
+  var so = document.getElementById('so');
+  var sv = document.getElementById('sv');
+  var sd = document.getElementById('sd');
+  var sn = document.getElementById('sn');
+  if (view === 'inicio') {
+    so.style.display = ''; sv.style.display = ''; sd.style.display = ''; sn.style.display = '';
+    rO(ofertas); rV(vagas.slice(0, 3)); rE();
+  } else if (view === 'ofertas') {
+    so.style.display = ''; sv.style.display = 'none'; sd.style.display = 'none'; sn.style.display = 'none';
     rO(ofertas);
-  } else if(view==='vagas'){
-    so.style.display='none'; sv.style.display=''; sd.style.display='none'; sn.style.display='none';
+  } else if (view === 'vagas') {
+    so.style.display = 'none'; sv.style.display = ''; sd.style.display = 'none'; sn.style.display = 'none';
     rV(vagas);
   } else {
-    so.style.display='none'; sv.style.display='none'; sd.style.display=''; sn.style.display='';
+    so.style.display = 'none'; sv.style.display = 'none'; sd.style.display = ''; sn.style.display = '';
     rE();
   }
 }
 
 // ===== MODAIS =====
-function oM(id){
-  if(id==='login'){
-    document.querySelectorAll('.ltb').forEach(function(t,i){t.classList.toggle('on',i===0)});
-    document.querySelectorAll('.lpanel').forEach(function(p){p.classList.remove('on')});
+function oM(id) {
+  if (id === 'login') {
+    document.querySelectorAll('.ltb').forEach(function(t, i) { t.classList.toggle('on', i === 0); });
+    document.querySelectorAll('.lpanel').forEach(function(p) { p.classList.remove('on'); });
     document.getElementById('lp-e').classList.add('on');
   }
-  if(id==='cadastro'){
-    showFS('cadastro',false);
+  if (id === 'cadastro') {
+    showFS('cadastro', false);
     document.getElementById('form-cadastro').reset();
   }
-  if(id==='planos'){
-    showFS('planos',false);
+  if (id === 'planos') {
+    showFS('planos', false);
     document.getElementById('form-planos').reset();
   }
-  document.getElementById('m-'+id).classList.add('on');
-  document.body.style.overflow='hidden';
+  document.getElementById('m-' + id).classList.add('on');
+  document.body.style.overflow = 'hidden';
 }
-function cM(id){
-  document.getElementById('m-'+id).classList.remove('on');
-  document.body.style.overflow='';
+function cM(id) {
+  document.getElementById('m-' + id).classList.remove('on');
+  document.body.style.overflow = '';
 }
-document.querySelectorAll('.mbg').forEach(function(m){
-  m.addEventListener('click',function(e){
-    if(e.target===this){
-      var id=this.id.replace('m-','');
-      cM(id);
-    }
+document.querySelectorAll('.mbg').forEach(function(m) {
+  m.addEventListener('click', function(e) {
+    if (e.target === this) { cM(this.id.replace('m-', '')); }
   });
 });
 
 // ===== INICIAR =====
-rView();
+carregarEmpresas();
+rO(ofertas);
+rV(vagas.slice(0, 3));
 </script>
 </body>
 </html>

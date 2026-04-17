@@ -1,343 +1,483 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Guia Codoense – Encontre empresas, serviços, vagas de emprego e ofertas em Codó, Maranhão.">
-  <meta name="theme-color" content="#0f1f16">
-  <title>Guia Codoense – Codó, MA</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <style>
-    *{box-sizing:border-box;margin:0;padding:0}
-    html{scroll-behavior:smooth}
-    body{font-family:'DM Sans',sans-serif;background:#faf7f2;color:#1c2b22;overflow-x:hidden}
-    :root{--g:#1a6b3c;--gl:#2d9e5f;--go:#c8922a;--gol:#e8b04a;--cr:#faf7f2;--dk:#0f1f16;--tx:#1c2b22;--mu:#6b7f72;--bo:rgba(26,107,60,.15);--fd:'Playfair Display',serif}
-    /* HERO */
-    .hero{background:var(--dk);position:relative;overflow:hidden}
-    .hp{position:absolute;inset:0;opacity:.07;background-image:repeating-linear-gradient(0deg,transparent,transparent 28px,rgba(200,146,42,.5) 28px,rgba(200,146,42,.5) 29px),repeating-linear-gradient(90deg,transparent,transparent 28px,rgba(200,146,42,.5) 28px,rgba(200,146,42,.5) 29px)}
-    .hi{position:relative;z-index:1;padding:14px 20px 0;max-width:960px;margin:0 auto}
-    .ht{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px}
-    .ls{font-size:9px;letter-spacing:2.5px;color:var(--gol);text-transform:uppercase;font-weight:300}
-    .lm{font-family:var(--fd);font-size:clamp(20px,5vw,28px);font-weight:900;color:#fff;line-height:1}
-    .lm span{color:var(--gol)}
-    .bh{font-size:11px;padding:7px 14px;border-radius:5px;cursor:pointer;font-weight:600;border:none;white-space:nowrap;font-family:'DM Sans',sans-serif}
-    .sw{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);border-radius:10px;padding:10px;display:flex;gap:8px;margin-bottom:0}
-    .sw input{flex:1;background:transparent;border:none;outline:none;font-size:14px;color:#fff;padding:3px 6px;font-family:'DM Sans',sans-serif}
-    .sw input::placeholder{color:rgba(255,255,255,.4)}
-    .sw button{background:var(--gl);color:#fff;border:none;border-radius:7px;padding:9px 18px;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif}
-    /* BANNER */
-    .bm{overflow:hidden;height:150px;cursor:pointer;position:relative;margin:0 -20px}
-    @media(min-width:640px){.bm{margin:0}}
-    .bt{display:flex;height:100%;transition:transform .55s cubic-bezier(.4,0,.2,1)}
-    .bs{min-width:100%;height:100%;position:relative;display:flex;align-items:center;padding:0 24px;flex-shrink:0}
-    .bsbg{position:absolute;inset:0;opacity:.2}
-    .bsc{position:relative;z-index:1;flex:1}
-    .bsey{font-size:9px;letter-spacing:2px;text-transform:uppercase;font-weight:600;margin-bottom:4px;opacity:.8}
-    .bst{font-family:var(--fd);font-size:clamp(16px,4vw,22px);font-weight:900;line-height:1.2;margin-bottom:4px}
-    .bss{font-size:11px;opacity:.65;line-height:1.4;margin-bottom:10px}
-    .bsb{display:inline-block;font-size:11px;font-weight:600;padding:5px 14px;border-radius:5px;cursor:pointer;border:none;font-family:'DM Sans',sans-serif}
-    .bsl{position:relative;z-index:1;width:64px;height:64px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:30px;flex-shrink:0;margin-left:16px;background:rgba(255,255,255,.08)}
-    .bds{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);display:flex;gap:5px;z-index:10}
-    .bd{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.3);transition:all .3s;cursor:pointer;border:none}
-    .bd.on{width:16px;border-radius:3px;background:#fff}
-    .ba{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.15);border:none;color:#fff;width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;z-index:10}
-    .ba:hover{background:rgba(255,255,255,.25)}
-    /* CATS */
-    .cw{background:var(--dk);padding:0 20px 14px;border-bottom:1px solid rgba(255,255,255,.06)}
-    .ci{max-width:960px;margin:0 auto}
-    .cs{display:flex;gap:8px;overflow-x:auto;padding-top:12px;scrollbar-width:none}
-    .cs::-webkit-scrollbar{display:none}
-    .cp{display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 12px;border-radius:10px;cursor:pointer;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);min-width:58px;flex-shrink:0;transition:all .2s}
-    .cp.on{background:var(--gl);border-color:var(--gl)}
-    .cpi{font-size:16px;line-height:1}
-    .cpl{font-size:8px;color:rgba(255,255,255,.6);font-weight:500;white-space:nowrap}
-    .cp.on .cpl{color:#fff}
-    /* STATS */
-    .st-bar{display:grid;grid-template-columns:repeat(3,1fr);background:#fff;border-bottom:1px solid var(--bo)}
-    .sti{padding:10px;text-align:center;border-right:1px solid var(--bo)}
-    .sti:last-child{border-right:none}
-    .stn{font-family:var(--fd);font-size:clamp(16px,4vw,20px);font-weight:700;color:var(--g)}
-    .stl{font-size:9px;color:var(--mu)}
-    /* MAIN */
-    .main{padding:16px 16px 110px;max-width:960px;margin:0 auto}
-    .sh{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
-    .stt{font-family:var(--fd);font-size:clamp(14px,3.5vw,17px);font-weight:700;color:var(--tx)}
-    .svm{font-size:11px;color:var(--g);font-weight:600;cursor:pointer;background:none;border:none;font-family:'DM Sans',sans-serif}
-    /* OFERTAS */
-    .osc{display:flex;gap:10px;overflow-x:auto;padding-bottom:4px;margin-bottom:22px;scrollbar-width:none}
-    .osc::-webkit-scrollbar{display:none}
-    .oc2{min-width:148px;background:#fff;border:1px solid var(--bo);border-radius:10px;overflow:hidden;cursor:pointer;flex-shrink:0;transition:transform .15s}
-    .oc2:hover{transform:translateY(-2px)}
-    .oi{height:72px;display:flex;align-items:center;justify-content:center;position:relative}
-    .obg{position:absolute;top:5px;left:5px;background:#e11d48;color:#fff;font-size:8px;font-weight:700;padding:2px 6px;border-radius:20px}
-    .otm{position:absolute;top:5px;right:5px;background:rgba(0,0,0,.55);color:#fff;font-size:8px;padding:2px 5px;border-radius:20px}
-    .ob{padding:8px}
-    .oe{font-size:8px;color:var(--mu);margin-bottom:1px}
-    .on2{font-size:11px;font-weight:600;color:var(--tx);margin-bottom:4px;line-height:1.3}
-    .op{display:flex;align-items:baseline;gap:5px}
-    .od{font-size:9px;color:var(--mu);text-decoration:line-through}
-    .op2{font-size:13px;font-weight:700;color:#e11d48}
-    /* VAGAS */
-    .vl{display:flex;flex-direction:column;gap:8px;margin-bottom:22px}
-    .vc{background:#fff;border:1px solid var(--bo);border-radius:10px;padding:11px;cursor:pointer;display:flex;align-items:center;gap:10px;transition:all .15s}
-    .vc:hover{border-color:var(--gl);box-shadow:0 2px 12px rgba(26,107,60,.1)}
-    .vic{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
-    .vif{flex:1;min-width:0}
-    .vt{font-size:13px;font-weight:600;color:var(--tx);margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    .ve{font-size:10px;color:var(--mu);margin-bottom:3px}
-    .vtg{display:flex;gap:3px;flex-wrap:wrap}
-    .vt2{font-size:8px;padding:2px 6px;border-radius:20px;background:#f0f7f3;color:var(--g);border:1px solid rgba(26,107,60,.15)}
-    .vt2.nv{background:#fef3c7;color:#92400e}
-    .vr{text-align:right;flex-shrink:0}
-    .vs{font-size:11px;font-weight:600;color:var(--g);margin-bottom:2px}
-    .va{font-size:10px;color:var(--mu)}
-    /* DEST */
-    .dg{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin-bottom:22px}
-    .dc{background:var(--dk);border-radius:10px;overflow:hidden;cursor:pointer;transition:transform .15s}
-    .dc:hover{transform:translateY(-2px)}
-    .da{height:3px;background:linear-gradient(90deg,var(--gl),var(--go))}
-    .db{padding:11px}
-    .dbg{display:inline-flex;align-items:center;background:var(--go);color:#fff;font-size:8px;font-weight:600;padding:2px 7px;border-radius:20px;margin-bottom:6px;text-transform:uppercase}
-    .dh{display:flex;align-items:center;gap:8px;margin-bottom:5px}
-    .dav{width:32px;height:32px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-size:11px;font-weight:700;flex-shrink:0}
-    .dn{font-size:12px;font-weight:600;color:#fff;line-height:1.2;margin-bottom:2px}
-    .dct{font-size:9px;color:rgba(255,255,255,.45)}
-    .dd{font-size:10px;color:rgba(255,255,255,.5);line-height:1.45;margin-bottom:6px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-    .dtg{display:flex;flex-wrap:wrap;gap:3px;margin-bottom:7px}
-    .dtag{font-size:8px;padding:2px 6px;border-radius:20px;border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.45)}
-    .df{display:flex;align-items:center;justify-content:space-between;padding-top:6px;border-top:1px solid rgba(255,255,255,.08)}
-    .dr{font-size:9px;color:var(--gol)}
-    .dbt{font-size:9px;padding:4px 10px;background:var(--gl);color:#fff;border:none;border-radius:5px;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:500}
-    /* NORMAL */
-    .ng{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px;margin-bottom:22px}
-    .nc{background:#fff;border:1px solid var(--bo);border-radius:10px;padding:11px;cursor:pointer;transition:all .15s}
-    .nc:hover{border-color:var(--gl);box-shadow:0 3px 14px rgba(26,107,60,.1)}
-    .nh{display:flex;align-items:center;gap:8px;margin-bottom:7px}
-    .nav2{width:30px;height:30px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-size:10px;font-weight:700;flex-shrink:0}
-    .nn{font-size:12px;font-weight:600;color:var(--tx);line-height:1.2;margin-bottom:1px}
-    .nct{font-size:9px;color:var(--mu)}
-    .nr{font-size:9px;color:var(--go);margin-bottom:5px}
-    .nds{font-size:10px;color:var(--mu);line-height:1.45;margin-bottom:6px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-    .ntg{display:flex;flex-wrap:wrap;gap:3px;margin-bottom:7px}
-    .ntag{font-size:8px;padding:2px 6px;border-radius:20px;background:#f0f7f3;color:var(--g);border:1px solid rgba(26,107,60,.15)}
-    .nft{padding-top:7px;border-top:1px solid var(--bo)}
-    .nb{width:100%;font-size:11px;padding:6px;border-radius:6px;border:1px solid var(--g);background:transparent;cursor:pointer;font-family:'DM Sans',sans-serif;color:var(--g);font-weight:600;transition:all .15s}
-    .nb:hover{background:var(--g);color:#fff}
-    /* BANNER RODAPÉ */
-    .bfw{position:fixed;bottom:54px;left:0;right:0;z-index:49;overflow:hidden;height:50px;background:var(--dk);border-top:1px solid rgba(255,255,255,.06)}
-    .bfr{display:flex;height:100%;transition:transform .5s cubic-bezier(.4,0,.2,1)}
-    .bfs{min-width:100%;height:100%;display:flex;align-items:center;padding:0 16px;gap:10px;flex-shrink:0;position:relative;overflow:hidden;cursor:pointer}
-    .bfbg{position:absolute;inset:0;opacity:.15}
-    .bfi{font-size:20px;flex-shrink:0;position:relative;z-index:1}
-    .bftx{flex:1;position:relative;z-index:1}
-    .bftt{font-size:11px;font-weight:600;color:#fff;line-height:1.2}
-    .bfsb{font-size:9px;color:rgba(255,255,255,.5)}
-    .bfc{font-size:10px;font-weight:600;padding:5px 12px;border-radius:5px;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;flex-shrink:0;position:relative;z-index:1}
-    .bfds{position:absolute;right:8px;bottom:4px;display:flex;gap:3px}
-    .bfd{width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,.25);transition:all .3s;border:none}
-    .bfd.on{width:12px;border-radius:2px;background:rgba(255,255,255,.7)}
-    /* TAB BAR */
-    .tb{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--bo);display:flex;z-index:50;box-shadow:0 -4px 20px rgba(0,0,0,.06)}
-    .tab{flex:1;padding:10px 4px 8px;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;border:none;background:transparent;font-family:'DM Sans',sans-serif}
-    .ti{font-size:18px;line-height:1}
-    .tl{font-size:8px;font-weight:500;color:var(--mu);text-transform:uppercase;letter-spacing:.3px}
-    .tab.on .tl{color:var(--g)}
-    .td{width:4px;height:4px;border-radius:50%;background:var(--g);margin:2px auto 0;display:none}
-    .tab.on .td{display:block}
-    /* MODAIS */
-    .mbg{display:none;position:fixed;inset:0;background:rgba(10,20,14,.65);z-index:200;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(4px)}
-    .mbg.on{display:flex}
-    .modal{background:#fff;border-radius:16px;width:100%;max-width:480px;max-height:88vh;overflow-y:auto;animation:popin .22s ease}
-    @keyframes popin{from{transform:scale(.94);opacity:0}to{transform:scale(1);opacity:1}}
-    .mhd{padding:14px 18px 12px;border-bottom:1px solid var(--bo);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:#fff;z-index:10;border-radius:16px 16px 0 0}
-    .mtt{font-family:var(--fd);font-size:16px;font-weight:700;color:var(--tx)}
-    .mcl{background:transparent;border:none;font-size:22px;cursor:pointer;color:var(--mu);line-height:1}
-    .mbod{padding:16px 18px}
-    .fi{margin-bottom:12px}
-    .fi label{display:block;font-size:10px;font-weight:600;color:var(--mu);margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px}
-    .fi input,.fi select,.fi textarea{width:100%;padding:10px 12px;border:1px solid var(--bo);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--tx);background:#fff;outline:none;transition:border .15s;-webkit-appearance:none;appearance:none}
-    .fi input:focus,.fi select:focus,.fi textarea:focus{border-color:var(--gl);box-shadow:0 0 0 3px rgba(45,158,95,.1)}
-    .fi textarea{min-height:80px;resize:vertical}
-    .fi select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b7f72' d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px}
-    .fi-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-    .fi-hint{font-size:10px;color:var(--mu);margin-top:4px;line-height:1.4}
-    .mft{padding:12px 18px;border-top:1px solid var(--bo);display:flex;gap:8px;position:sticky;bottom:0;background:#fff}
-    .bm{flex:1;padding:10px;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;border:none;transition:all .15s}
-    .bcn{background:var(--cr);color:var(--mu)}
-    .bcn:hover{background:#eee}
-    .bcf{background:var(--g);color:#fff}
-    .bcf:hover{background:#1a5c35}
-    .fs{display:none;text-align:center;padding:32px 20px}
-    .fs.on{display:block}
-    .fb.hide{display:none}
-    .fs-icon{font-size:48px;margin-bottom:12px}
-    .fs-title{font-family:var(--fd);font-size:18px;font-weight:700;color:var(--tx);margin-bottom:8px}
-    .fs-msg{font-size:13px;color:var(--mu);line-height:1.6}
-    /* PLANOS */
-    .plano{border:1px solid var(--bo);border-radius:12px;padding:14px;margin-bottom:10px;position:relative;cursor:pointer;transition:all .2s}
-    .plano:hover{border-color:var(--gl)}
-    .plano.ft{border:2px solid var(--g);background:#f0f9f4}
-    .plb{position:absolute;top:-10px;left:14px;background:var(--g);color:#fff;font-size:9px;font-weight:600;padding:2px 10px;border-radius:20px}
-    .pln{font-family:var(--fd);font-size:14px;font-weight:700;margin-bottom:2px}
-    .pld{font-size:11px;color:var(--mu);margin-bottom:7px;line-height:1.5}
-    .plp{font-family:var(--fd);font-size:20px;font-weight:700;color:var(--g)}
-    .plp span{font-size:11px;font-weight:400;color:var(--mu);font-family:'DM Sans',sans-serif}
-    /* DETALHE */
-    .dth{background:var(--dk);padding:16px 18px}
-    .dtav{width:50px;height:50px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-size:16px;font-weight:700;margin-bottom:8px}
-    .dtnm{font-family:var(--fd);font-size:17px;font-weight:700;color:#fff;margin-bottom:3px}
-    .dtct{font-size:11px;color:rgba(255,255,255,.45)}
-    .dsec{padding:13px 18px;border-bottom:1px solid var(--bo)}
-    .dsec h4{font-size:9px;font-weight:600;color:var(--mu);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px}
-    .dsec p{font-size:13px;color:var(--tx);line-height:1.6}
-    .crow{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--tx);margin-bottom:6px}
-    .cico{width:28px;height:28px;border-radius:6px;background:#f0f7f3;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
-    .ntd{display:inline-block;background:#f0f7f3;color:var(--g);border:1px solid rgba(26,107,60,.15);border-radius:20px;padding:3px 8px;font-size:10px;margin:2px}
-    .wbtn{width:100%;padding:11px;background:#25d366;color:#fff;border:none;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;margin-top:4px;transition:background .15s}
-    .wbtn:hover{background:#1da851}
-    .vti{display:inline-block;padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;margin:2px}
-    .ltbs{display:flex;border-bottom:1px solid var(--bo);margin-bottom:14px}
-    .ltb{flex:1;padding:9px;font-size:12px;font-weight:600;text-align:center;cursor:pointer;border:none;background:transparent;font-family:"DM Sans",sans-serif;color:var(--mu);border-bottom:2px solid transparent}
-    .ltb.on{color:var(--g);border-bottom-color:var(--g)}
-    .lp{display:none}.lp.on{display:block}
-    .ldv{display:flex;align-items:center;gap:8px;margin:12px 0;font-size:10px;color:var(--mu)}
-    .ldv::before,.ldv::after{content:"";flex:1;height:1px;background:var(--bo)}
-    .bsoc{width:100%;padding:9px;border:1px solid var(--bo);border-radius:8px;background:#fff;font-family:"DM Sans",sans-serif;font-size:12px;font-weight:500;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:8px;color:var(--tx);transition:background .15s}
-    .bsoc:hover{background:var(--cr)}
-    .tpsl{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
-    .tpb{padding:12px;border:1px solid var(--bo);border-radius:10px;text-align:center;cursor:pointer;font-family:"DM Sans",sans-serif;background:#fff;transition:all .15s}
-    .tpb.on{border-color:var(--g);background:#f0f9f4}
-    .tpi{font-size:22px;margin-bottom:4px}
-    .tpl{font-size:11px;font-weight:600;color:var(--tx)}
-    .tps{font-size:9px;color:var(--mu);margin-top:2px}
-    .empty{text-align:center;padding:40px 20px;color:var(--mu);font-size:13px}
-    .empty div{font-size:36px;margin-bottom:10px}
-    @media(min-width:768px){.hi{padding:20px 24px 0}.cw{padding:0 24px 16px}.main{padding:20px 24px 110px}}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Guia Codoense – Encontre empresas, serviços, vagas de emprego e ofertas em Codó, Maranhão.">
+<meta name="theme-color" content="#0f1f16">
+<title>Guia Codoense – Codó, MA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:#faf7f2;color:#1c2b22;overflow-x:hidden}
+:root{
+  --g:#1a6b3c;--gl:#2d9e5f;--go:#c8922a;--gol:#e8b04a;
+  --cr:#faf7f2;--dk:#0f1f16;--tx:#1c2b22;--mu:#6b7f72;
+  --bo:rgba(26,107,60,.15);--fd:'Playfair Display',serif
+}
+
+/* === HERO === */
+.hero{background:var(--dk);position:relative;overflow:hidden}
+.hp{position:absolute;inset:0;opacity:.07;background-image:repeating-linear-gradient(0deg,transparent,transparent 28px,rgba(200,146,42,.5) 28px,rgba(200,146,42,.5) 29px),repeating-linear-gradient(90deg,transparent,transparent 28px,rgba(200,146,42,.5) 28px,rgba(200,146,42,.5) 29px)}
+.hi{position:relative;z-index:1;padding:14px 20px 0;max-width:960px;margin:0 auto}
+.ht{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px}
+.ls{font-size:9px;letter-spacing:2.5px;color:var(--gol);text-transform:uppercase;font-weight:300}
+.lm{font-family:var(--fd);font-size:clamp(20px,5vw,28px);font-weight:900;color:#fff;line-height:1}
+.lm span{color:var(--gol)}
+.bh{font-size:11px;padding:7px 14px;border-radius:5px;cursor:pointer;font-weight:600;border:none;white-space:nowrap;font-family:'DM Sans',sans-serif}
+.sw{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);border-radius:10px;padding:10px;display:flex;gap:8px}
+.sw input{flex:1;background:transparent;border:none;outline:none;font-size:14px;color:#fff;padding:3px 6px;font-family:'DM Sans',sans-serif}
+.sw input::placeholder{color:rgba(255,255,255,.4)}
+.sw button{background:var(--gl);color:#fff;border:none;border-radius:7px;padding:9px 18px;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif}
+
+/* === BANNER PRINCIPAL === */
+.bm{overflow:hidden;height:150px;position:relative;margin:0 -20px}
+@media(min-width:640px){.bm{margin:0}}
+.bt{display:flex;height:100%;transition:transform .55s cubic-bezier(.4,0,.2,1)}
+.bs{min-width:100%;height:100%;position:relative;display:flex;align-items:center;padding:0 24px;flex-shrink:0}
+.bsbg{position:absolute;inset:0;opacity:.2}
+.bsc{position:relative;z-index:1;flex:1}
+.bsey{font-size:9px;letter-spacing:2px;text-transform:uppercase;font-weight:600;margin-bottom:4px;opacity:.8}
+.bst{font-family:var(--fd);font-size:clamp(16px,4vw,22px);font-weight:900;line-height:1.2;margin-bottom:4px}
+.bss{font-size:11px;opacity:.65;line-height:1.4;margin-bottom:10px}
+.bsb{display:inline-block;font-size:11px;font-weight:600;padding:5px 14px;border-radius:5px;cursor:pointer;border:none;font-family:'DM Sans',sans-serif}
+.bsl{position:relative;z-index:1;width:64px;height:64px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:30px;flex-shrink:0;margin-left:16px;background:rgba(255,255,255,.08)}
+.bds{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);display:flex;gap:5px;z-index:10}
+.bd{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.3);transition:all .3s;cursor:pointer;border:none}
+.bd.on{width:16px;border-radius:3px;background:#fff}
+.ba{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.15);border:none;color:#fff;width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;z-index:10}
+.ba:hover{background:rgba(255,255,255,.25)}
+
+/* === CATEGORIAS === */
+.cw{background:var(--dk);padding:0 20px 14px;border-bottom:1px solid rgba(255,255,255,.06)}
+.ci{max-width:960px;margin:0 auto}
+.cs{display:flex;gap:8px;overflow-x:auto;padding-top:12px;scrollbar-width:none}
+.cs::-webkit-scrollbar{display:none}
+.cp{display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 12px;border-radius:10px;cursor:pointer;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);min-width:58px;flex-shrink:0;transition:all .2s}
+.cp.on{background:var(--gl);border-color:var(--gl)}
+.cpi{font-size:16px;line-height:1}
+.cpl{font-size:8px;color:rgba(255,255,255,.6);font-weight:500;white-space:nowrap}
+.cp.on .cpl{color:#fff}
+
+/* === STATS === */
+.stb{display:grid;grid-template-columns:repeat(3,1fr);background:#fff;border-bottom:1px solid var(--bo)}
+.sti{padding:10px;text-align:center;border-right:1px solid var(--bo)}
+.sti:last-child{border-right:none}
+.stn{font-family:var(--fd);font-size:clamp(16px,4vw,20px);font-weight:700;color:var(--g)}
+.stl{font-size:9px;color:var(--mu)}
+
+/* === MAIN === */
+.main{padding:16px 16px 110px;max-width:960px;margin:0 auto}
+.sh{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.stt{font-family:var(--fd);font-size:clamp(14px,3.5vw,17px);font-weight:700;color:var(--tx)}
+.svm{font-size:11px;color:var(--g);font-weight:600;cursor:pointer;background:none;border:none;font-family:'DM Sans',sans-serif}
+
+/* === CARDS OFERTAS === */
+.osc{display:flex;gap:10px;overflow-x:auto;padding-bottom:4px;margin-bottom:22px;scrollbar-width:none}
+.osc::-webkit-scrollbar{display:none}
+.ocard{min-width:148px;background:#fff;border:1px solid var(--bo);border-radius:10px;overflow:hidden;cursor:pointer;flex-shrink:0;transition:transform .15s}
+.ocard:hover{transform:translateY(-2px)}
+.oimg{height:72px;display:flex;align-items:center;justify-content:center;position:relative}
+.obdg{position:absolute;top:5px;left:5px;background:#e11d48;color:#fff;font-size:8px;font-weight:700;padding:2px 6px;border-radius:20px}
+.otmr{position:absolute;top:5px;right:5px;background:rgba(0,0,0,.55);color:#fff;font-size:8px;padding:2px 5px;border-radius:20px}
+.obody{padding:8px}
+.oemp{font-size:8px;color:var(--mu);margin-bottom:1px}
+.onome{font-size:11px;font-weight:600;color:var(--tx);margin-bottom:4px;line-height:1.3}
+.oprc{display:flex;align-items:baseline;gap:5px}
+.ode{font-size:9px;color:var(--mu);text-decoration:line-through}
+.opor{font-size:13px;font-weight:700;color:#e11d48}
+
+/* === CARDS VAGAS === */
+.vlist{display:flex;flex-direction:column;gap:8px;margin-bottom:22px}
+.vcard{background:#fff;border:1px solid var(--bo);border-radius:10px;padding:11px;cursor:pointer;display:flex;align-items:center;gap:10px;transition:all .15s}
+.vcard:hover{border-color:var(--gl);box-shadow:0 2px 12px rgba(26,107,60,.1)}
+.vic{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.vif{flex:1;min-width:0}
+.vtit{font-size:13px;font-weight:600;color:var(--tx);margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.vemp{font-size:10px;color:var(--mu);margin-bottom:3px}
+.vtgs{display:flex;gap:3px;flex-wrap:wrap}
+.vtag{font-size:8px;padding:2px 6px;border-radius:20px;background:#f0f7f3;color:var(--g);border:1px solid rgba(26,107,60,.15)}
+.vtag.nv{background:#fef3c7;color:#92400e}
+.vright{text-align:right;flex-shrink:0}
+.vsal{font-size:11px;font-weight:600;color:var(--g);margin-bottom:2px}
+.varr{font-size:10px;color:var(--mu)}
+
+/* === CARDS DESTAQUE === */
+.dgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin-bottom:22px}
+.dcard{background:var(--dk);border-radius:10px;overflow:hidden;cursor:pointer;transition:transform .15s}
+.dcard:hover{transform:translateY(-2px)}
+.dacc{height:3px;background:linear-gradient(90deg,var(--gl),var(--go))}
+.dbod{padding:11px}
+.dbdg{display:inline-flex;align-items:center;background:var(--go);color:#fff;font-size:8px;font-weight:600;padding:2px 7px;border-radius:20px;margin-bottom:6px;text-transform:uppercase}
+.dh{display:flex;align-items:center;gap:8px;margin-bottom:5px}
+.dav{width:32px;height:32px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-size:11px;font-weight:700;flex-shrink:0}
+.dn{font-size:12px;font-weight:600;color:#fff;line-height:1.2;margin-bottom:2px}
+.dct{font-size:9px;color:rgba(255,255,255,.45)}
+.ddesc{font-size:10px;color:rgba(255,255,255,.5);line-height:1.45;margin-bottom:6px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.dtgs{display:flex;flex-wrap:wrap;gap:3px;margin-bottom:7px}
+.dtag{font-size:8px;padding:2px 6px;border-radius:20px;border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.45)}
+.df{display:flex;align-items:center;justify-content:space-between;padding-top:6px;border-top:1px solid rgba(255,255,255,.08)}
+.drat{font-size:9px;color:var(--gol)}
+.dbtn{font-size:9px;padding:4px 10px;background:var(--gl);color:#fff;border:none;border-radius:5px;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:500}
+
+/* === CARDS NORMAIS === */
+.ngrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px;margin-bottom:22px}
+.ncard{background:#fff;border:1px solid var(--bo);border-radius:10px;padding:11px;cursor:pointer;transition:all .15s}
+.ncard:hover{border-color:var(--gl);box-shadow:0 3px 14px rgba(26,107,60,.1)}
+.nh{display:flex;align-items:center;gap:8px;margin-bottom:7px}
+.nav{width:30px;height:30px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-size:10px;font-weight:700;flex-shrink:0}
+.nn{font-size:12px;font-weight:600;color:var(--tx);line-height:1.2;margin-bottom:1px}
+.nct{font-size:9px;color:var(--mu)}
+.nrat{font-size:9px;color:var(--go);margin-bottom:5px}
+.nds{font-size:10px;color:var(--mu);line-height:1.45;margin-bottom:6px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.ntgs{display:flex;flex-wrap:wrap;gap:3px;margin-bottom:7px}
+.ntag{font-size:8px;padding:2px 6px;border-radius:20px;background:#f0f7f3;color:var(--g);border:1px solid rgba(26,107,60,.15)}
+.nft{padding-top:7px;border-top:1px solid var(--bo)}
+.nbtn{width:100%;font-size:11px;padding:6px;border-radius:6px;border:1px solid var(--g);background:transparent;cursor:pointer;font-family:'DM Sans',sans-serif;color:var(--g);font-weight:600;transition:all .15s}
+.nbtn:hover{background:var(--g);color:#fff}
+
+/* === BANNER RODAPÉ === */
+.bfw{position:fixed;bottom:54px;left:0;right:0;z-index:49;overflow:hidden;height:50px;background:var(--dk);border-top:1px solid rgba(255,255,255,.06)}
+.bftr{display:flex;height:100%;transition:transform .5s cubic-bezier(.4,0,.2,1)}
+.bfs{min-width:100%;height:100%;display:flex;align-items:center;padding:0 16px;gap:10px;flex-shrink:0;position:relative;overflow:hidden;cursor:pointer}
+.bfbg{position:absolute;inset:0;opacity:.15}
+.bfic{font-size:20px;flex-shrink:0;position:relative;z-index:1}
+.bftx{flex:1;position:relative;z-index:1}
+.bftt{font-size:11px;font-weight:600;color:#fff;line-height:1.2}
+.bfsb{font-size:9px;color:rgba(255,255,255,.5)}
+.bfct{font-size:10px;font-weight:600;padding:5px 12px;border-radius:5px;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;flex-shrink:0;position:relative;z-index:1}
+.bfds{position:absolute;right:8px;bottom:4px;display:flex;gap:3px}
+.bfdt{width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,.25);transition:all .3s;border:none}
+.bfdt.on{width:12px;border-radius:2px;background:rgba(255,255,255,.7)}
+
+/* === TAB BAR === */
+.tabbar{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--bo);display:flex;z-index:50;box-shadow:0 -4px 20px rgba(0,0,0,.06)}
+.tab{flex:1;padding:10px 4px 8px;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;border:none;background:transparent;font-family:'DM Sans',sans-serif}
+.tab-i{font-size:18px;line-height:1}
+.tab-l{font-size:8px;font-weight:500;color:var(--mu);text-transform:uppercase;letter-spacing:.3px}
+.tab.on .tab-l{color:var(--g)}
+.tab-d{width:4px;height:4px;border-radius:50%;background:var(--g);margin:2px auto 0;display:none}
+.tab.on .tab-d{display:block}
+
+/* === MODAIS === */
+.mbg{display:none;position:fixed;inset:0;background:rgba(10,20,14,.65);z-index:200;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(4px)}
+.mbg.on{display:flex}
+.modal{background:#fff;border-radius:16px;width:100%;max-width:480px;max-height:88vh;overflow-y:auto;animation:popin .22s ease}
+@keyframes popin{from{transform:scale(.94);opacity:0}to{transform:scale(1);opacity:1}}
+.mhd{padding:14px 18px 12px;border-bottom:1px solid var(--bo);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:#fff;z-index:10;border-radius:16px 16px 0 0}
+.mtt{font-family:var(--fd);font-size:16px;font-weight:700;color:var(--tx)}
+.mcl{background:transparent;border:none;font-size:22px;cursor:pointer;color:var(--mu);line-height:1}
+.mbod{padding:16px 18px}
+.mft{padding:12px 18px;border-top:1px solid var(--bo);display:flex;gap:8px;position:sticky;bottom:0;background:#fff}
+.bm2{flex:1;padding:10px;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;border:none;transition:all .15s}
+.bcn{background:var(--cr);color:var(--mu)}
+.bcn:hover{background:#eee}
+.bcf{background:var(--g);color:#fff}
+.bcf:hover{background:#1a5c35}
+
+/* === FORMULÁRIOS === */
+.fi{margin-bottom:12px}
+.fi label{display:block;font-size:10px;font-weight:600;color:var(--mu);margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px}
+.fi input,.fi select,.fi textarea{width:100%;padding:10px 12px;border:1px solid var(--bo);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--tx);background:#fff;outline:none;transition:border .15s;-webkit-appearance:none;appearance:none}
+.fi input:focus,.fi select:focus,.fi textarea:focus{border-color:var(--gl);box-shadow:0 0 0 3px rgba(45,158,95,.1)}
+.fi textarea{min-height:80px;resize:vertical}
+.fi select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b7f72' d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px}
+.fi-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.fi-hint{font-size:10px;color:var(--mu);margin-top:4px;line-height:1.4}
+
+/* === ESTADO SUCESSO FORMULÁRIO === */
+.form-body.hide{display:none}
+.form-success{display:none;text-align:center;padding:32px 20px}
+.form-success.on{display:block}
+.fs-icon{font-size:48px;margin-bottom:12px}
+.fs-title{font-family:var(--fd);font-size:18px;font-weight:700;color:var(--tx);margin-bottom:8px}
+.fs-msg{font-size:13px;color:var(--mu);line-height:1.6}
+
+/* === LOGIN === */
+.ltbs{display:flex;border-bottom:1px solid var(--bo);margin-bottom:14px}
+.ltb{flex:1;padding:9px;font-size:12px;font-weight:600;text-align:center;cursor:pointer;border:none;background:transparent;font-family:'DM Sans',sans-serif;color:var(--mu);border-bottom:2px solid transparent}
+.ltb.on{color:var(--g);border-bottom-color:var(--g)}
+.lpanel{display:none}
+.lpanel.on{display:block}
+.ldiv{display:flex;align-items:center;gap:8px;margin:12px 0;font-size:10px;color:var(--mu)}
+.ldiv::before,.ldiv::after{content:'';flex:1;height:1px;background:var(--bo)}
+.bsoc{width:100%;padding:9px;border:1px solid var(--bo);border-radius:8px;background:#fff;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:8px;color:var(--tx);transition:background .15s}
+.bsoc:hover{background:var(--cr)}
+.tpsl{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
+.tpb{padding:12px;border:1px solid var(--bo);border-radius:10px;text-align:center;cursor:pointer;font-family:'DM Sans',sans-serif;background:#fff;transition:all .15s}
+.tpb.on{border-color:var(--g);background:#f0f9f4}
+.tpi{font-size:22px;margin-bottom:4px}
+.tpl{font-size:11px;font-weight:600;color:var(--tx)}
+.tps{font-size:9px;color:var(--mu);margin-top:2px}
+
+/* === PLANOS === */
+.plano{border:1px solid var(--bo);border-radius:12px;padding:14px;margin-bottom:10px;position:relative;cursor:pointer;transition:all .2s}
+.plano:hover{border-color:var(--gl)}
+.plano.ft{border:2px solid var(--g);background:#f0f9f4}
+.plb{position:absolute;top:-10px;left:14px;background:var(--g);color:#fff;font-size:9px;font-weight:600;padding:2px 10px;border-radius:20px}
+.pln{font-family:var(--fd);font-size:14px;font-weight:700;margin-bottom:2px}
+.pld{font-size:11px;color:var(--mu);margin-bottom:7px;line-height:1.5}
+.plp{font-family:var(--fd);font-size:20px;font-weight:700;color:var(--g)}
+.plp span{font-size:11px;font-weight:400;color:var(--mu);font-family:'DM Sans',sans-serif}
+
+/* === DETALHE EMPRESA === */
+.dth{background:var(--dk);padding:16px 18px}
+.dtav{width:50px;height:50px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-size:16px;font-weight:700;margin-bottom:8px}
+.dtnm{font-family:var(--fd);font-size:17px;font-weight:700;color:#fff;margin-bottom:3px}
+.dtct{font-size:11px;color:rgba(255,255,255,.45)}
+.dsec{padding:13px 18px;border-bottom:1px solid var(--bo)}
+.dsec h4{font-size:9px;font-weight:600;color:var(--mu);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px}
+.dsec p{font-size:13px;color:var(--tx);line-height:1.6}
+.crow{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--tx);margin-bottom:6px}
+.cico{width:28px;height:28px;border-radius:6px;background:#f0f7f3;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
+.ntd{display:inline-block;background:#f0f7f3;color:var(--g);border:1px solid rgba(26,107,60,.15);border-radius:20px;padding:3px 8px;font-size:10px;margin:2px}
+.wbtn{width:100%;padding:11px;background:#25d366;color:#fff;border:none;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;margin-top:4px;transition:background .15s}
+.wbtn:hover{background:#1da851}
+.vti{display:inline-block;padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;margin:2px}
+
+/* === EMPTY === */
+.empty{text-align:center;padding:40px 20px;color:var(--mu);font-size:13px}
+.empty div{font-size:36px;margin-bottom:10px}
+
+@media(min-width:768px){
+  .hi{padding:20px 24px 0}
+  .cw{padding:0 24px 16px}
+  .main{padding:20px 24px 110px}
+}
+</style>
 </head>
 <body>
 
+<!-- ======== HERO ======== -->
 <div class="hero">
   <div class="hp"></div>
   <div class="hi">
     <div class="ht">
-      <div><div class="ls">cidade de codó · ma</div><div class="lm">Guia <span>Codoense</span></div></div>
+      <div>
+        <div class="ls">cidade de codó · ma</div>
+        <div class="lm">Guia <span>Codoense</span></div>
+      </div>
       <div style="display:flex;gap:8px;align-items:center">
         <button class="bh" style="background:transparent;border:1px solid rgba(255,255,255,.3);color:#fff" onclick="oM('planos')">Planos</button>
         <button class="bh" style="background:var(--gl);color:#fff" onclick="oM('login')">Entre ou cadastre-se</button>
       </div>
     </div>
-    <div class="sw"><input type="text" id="si" placeholder="Buscar empresa, serviço ou profissional..." oninput="filtrar()" autocomplete="off"><button onclick="filtrar()">Buscar</button></div>
+    <div class="sw">
+      <input type="text" id="si" placeholder="Buscar empresa, serviço ou profissional..." oninput="filtrar()" autocomplete="off">
+      <button onclick="filtrar()">Buscar</button>
+    </div>
+    <!-- Banner rotativo abaixo da busca -->
     <div class="bm" id="bmain">
       <div class="bt" id="btrack">
-        <div class="bs" style="background:linear-gradient(135deg,#0f2d1a,#1a5c35)"><div class="bsbg" style="background:radial-gradient(circle at 80% 50%,#2d9e5f,transparent 60%)"></div><div class="bsc"><div class="bsey" style="color:#5dd98a">Oportunidade</div><div class="bst" style="color:#fff">Destaque sua<br>empresa em Codó</div><div class="bss" style="color:rgba(255,255,255,.6)">Apareça primeiro para milhares de clientes</div><button class="bsb" style="background:var(--go);color:#fff" onclick="oM('planos')">Ver planos</button></div><div class="bsl">🏆</div></div>
-        <div class="bs" style="background:linear-gradient(135deg,#1a1a0f,#3d3000)"><div class="bsbg" style="background:radial-gradient(circle at 80% 50%,#c8922a,transparent 60%)"></div><div class="bsc"><div class="bsey" style="color:#fbbf24">Destaque</div><div class="bst" style="color:#fff">Restaurante<br>Sabor da Terra</div><div class="bss" style="color:rgba(255,255,255,.6)">Culinária regional · Almoço executivo</div><button class="bsb" style="background:#fff;color:#1a1a0f" onclick="aD(2)">Ver perfil</button></div><div class="bsl">🍽️</div></div>
-        <div class="bs" style="background:linear-gradient(135deg,#0f1a3d,#1a2b5c)"><div class="bsbg" style="background:radial-gradient(circle at 80% 50%,#60a5fa,transparent 60%)"></div><div class="bsc"><div class="bsey" style="color:#93c5fd">Saúde em Codó</div><div class="bst" style="color:#fff">Farmácia<br>São João</div><div class="bss" style="color:rgba(255,255,255,.6)">Delivery · Manipulação · Convênios</div><button class="bsb" style="background:#60a5fa;color:#0f1a3d" onclick="aD(1)">Ver perfil</button></div><div class="bsl">💊</div></div>
-        <div class="bs" style="background:linear-gradient(135deg,#2e0f2e,#5c1a5c)"><div class="bsbg" style="background:radial-gradient(circle at 80% 50%,#c084fc,transparent 60%)"></div><div class="bsc"><div class="bsey" style="color:#d8b4fe">Vagas abertas</div><div class="bst" style="color:#fff">Encontre seu<br>próximo emprego</div><div class="bss" style="color:rgba(255,255,255,.6)">Vagas disponíveis em Codó agora</div><button class="bsb" style="background:#c084fc;color:#1a0f1a" onclick="irP('vagas',null)">Ver vagas</button></div><div class="bsl">💼</div></div>
+        <div class="bs" style="background:linear-gradient(135deg,#0f2d1a,#1a5c35)">
+          <div class="bsbg" style="background:radial-gradient(circle at 80% 50%,#2d9e5f,transparent 60%)"></div>
+          <div class="bsc">
+            <div class="bsey" style="color:#5dd98a">Oportunidade</div>
+            <div class="bst" style="color:#fff">Destaque sua<br>empresa em Codó</div>
+            <div class="bss" style="color:rgba(255,255,255,.6)">Apareça primeiro para milhares de clientes</div>
+            <button class="bsb" style="background:var(--go);color:#fff" onclick="oM('planos')">Ver planos</button>
+          </div>
+          <div class="bsl">🏆</div>
+        </div>
+        <div class="bs" style="background:linear-gradient(135deg,#1a1a0f,#3d3000)">
+          <div class="bsbg" style="background:radial-gradient(circle at 80% 50%,#c8922a,transparent 60%)"></div>
+          <div class="bsc">
+            <div class="bsey" style="color:#fbbf24">Destaque</div>
+            <div class="bst" style="color:#fff">Restaurante<br>Sabor da Terra</div>
+            <div class="bss" style="color:rgba(255,255,255,.6)">Culinária regional · Almoço executivo</div>
+            <button class="bsb" style="background:#fff;color:#1a1a0f" onclick="aD(2)">Ver perfil</button>
+          </div>
+          <div class="bsl">🍽️</div>
+        </div>
+        <div class="bs" style="background:linear-gradient(135deg,#0f1a3d,#1a2b5c)">
+          <div class="bsbg" style="background:radial-gradient(circle at 80% 50%,#60a5fa,transparent 60%)"></div>
+          <div class="bsc">
+            <div class="bsey" style="color:#93c5fd">Saúde em Codó</div>
+            <div class="bst" style="color:#fff">Farmácia<br>São João</div>
+            <div class="bss" style="color:rgba(255,255,255,.6)">Delivery · Manipulação · Convênios</div>
+            <button class="bsb" style="background:#60a5fa;color:#0f1a3d" onclick="aD(1)">Ver perfil</button>
+          </div>
+          <div class="bsl">💊</div>
+        </div>
+        <div class="bs" style="background:linear-gradient(135deg,#2e0f2e,#5c1a5c)">
+          <div class="bsbg" style="background:radial-gradient(circle at 80% 50%,#c084fc,transparent 60%)"></div>
+          <div class="bsc">
+            <div class="bsey" style="color:#d8b4fe">Vagas abertas</div>
+            <div class="bst" style="color:#fff">Encontre seu<br>próximo emprego</div>
+            <div class="bss" style="color:rgba(255,255,255,.6)">Vagas disponíveis em Codó agora</div>
+            <button class="bsb" style="background:#c084fc;color:#1a0f1a" onclick="irP('vagas',null)">Ver vagas</button>
+          </div>
+          <div class="bsl">💼</div>
+        </div>
       </div>
       <button class="ba" style="left:8px" onclick="mvB(-1)">‹</button>
       <button class="ba" style="right:8px" onclick="mvB(1)">›</button>
       <div class="bds" id="bdots"></div>
     </div>
   </div>
-  <div class="cw"><div class="ci"><div class="cs">
-    <div class="cp on" onclick="sC(this,'','inicio')"><div class="cpi">🏠</div><div class="cpl">Início</div></div>
-    <div class="cp" onclick="sC(this,'ofertas','ofertas')"><div class="cpi">🔥</div><div class="cpl">Ofertas</div></div>
-    <div class="cp" onclick="sC(this,'vagas','vagas')"><div class="cpi">💼</div><div class="cpl">Vagas</div></div>
-    <div class="cp" onclick="sC(this,'Alimentação','emp')"><div class="cpi">🍽️</div><div class="cpl">Alimentação</div></div>
-    <div class="cp" onclick="sC(this,'Saúde','emp')"><div class="cpi">🏥</div><div class="cpl">Saúde</div></div>
-    <div class="cp" onclick="sC(this,'Beleza','emp')"><div class="cpi">💇</div><div class="cpl">Beleza</div></div>
-    <div class="cp" onclick="sC(this,'Educação','emp')"><div class="cpi">📚</div><div class="cpl">Educação</div></div>
-    <div class="cp" onclick="sC(this,'Serviços','emp')"><div class="cpi">🔧</div><div class="cpl">Serviços</div></div>
-    <div class="cp" onclick="sC(this,'Comércio','emp')"><div class="cpi">🛍️</div><div class="cpl">Comércio</div></div>
-    <div class="cp" onclick="sC(this,'Profissionais','emp')"><div class="cpi">👔</div><div class="cpl">Profissionais</div></div>
-  </div></div></div>
+  <!-- Categorias -->
+  <div class="cw">
+    <div class="ci">
+      <div class="cs">
+        <div class="cp on" onclick="sC(this,'','inicio')"><div class="cpi">🏠</div><div class="cpl">Início</div></div>
+        <div class="cp" onclick="sC(this,'ofertas','ofertas')"><div class="cpi">🔥</div><div class="cpl">Ofertas</div></div>
+        <div class="cp" onclick="sC(this,'vagas','vagas')"><div class="cpi">💼</div><div class="cpl">Vagas</div></div>
+        <div class="cp" onclick="sC(this,'Alimentação','emp')"><div class="cpi">🍽️</div><div class="cpl">Alimentação</div></div>
+        <div class="cp" onclick="sC(this,'Saúde','emp')"><div class="cpi">🏥</div><div class="cpl">Saúde</div></div>
+        <div class="cp" onclick="sC(this,'Beleza','emp')"><div class="cpi">💇</div><div class="cpl">Beleza</div></div>
+        <div class="cp" onclick="sC(this,'Educação','emp')"><div class="cpi">📚</div><div class="cpl">Educação</div></div>
+        <div class="cp" onclick="sC(this,'Serviços','emp')"><div class="cpi">🔧</div><div class="cpl">Serviços</div></div>
+        <div class="cp" onclick="sC(this,'Comércio','emp')"><div class="cpi">🛍️</div><div class="cpl">Comércio</div></div>
+        <div class="cp" onclick="sC(this,'Profissionais','emp')"><div class="cpi">👔</div><div class="cpl">Profissionais</div></div>
+      </div>
+    </div>
+  </div>
 </div>
 
-<div class="st-bar">
+<!-- ======== STATS ======== -->
+<div class="stb">
   <div class="sti"><div class="stn" id="total-emp">12</div><div class="stl">empresas</div></div>
   <div class="sti"><div class="stn">8</div><div class="stl">vagas abertas</div></div>
   <div class="sti"><div class="stn" style="color:#e11d48">5</div><div class="stl">ofertas hoje</div></div>
 </div>
 
+<!-- ======== MAIN ======== -->
 <div class="main">
-  <div id="so"><div class="sh"><div class="stt">🔥 Ofertas do dia</div><button class="svm" onclick="sC(document.querySelector('.cp:nth-child(2)'),'ofertas','ofertas')">Ver todas</button></div><div class="osc" id="oc"></div></div>
-  <div id="sv"><div class="sh"><div class="stt">💼 Vagas em Codó</div><button class="svm" onclick="irP('vagas',null)">Ver todas</button></div><div class="vl" id="vc"></div></div>
-  <div id="sd"><div class="sh"><div class="stt">⭐ Destaques</div><div id="dcnt" style="font-size:10px;color:var(--mu)"></div></div><div class="dg" id="cd"></div></div>
-  <div id="sn"><div class="sh"><div class="stt">Todas as empresas</div><div id="ncnt" style="font-size:10px;color:var(--mu)"></div></div><div class="ng" id="cn"></div></div>
+  <div id="so">
+    <div class="sh"><div class="stt">🔥 Ofertas do dia</div><button class="svm" onclick="sC(document.querySelector('.cp:nth-child(2)'),'ofertas','ofertas')">Ver todas</button></div>
+    <div class="osc" id="oc"></div>
+  </div>
+  <div id="sv">
+    <div class="sh"><div class="stt">💼 Vagas em Codó</div><button class="svm" onclick="irP('vagas',null)">Ver todas</button></div>
+    <div class="vlist" id="vc"></div>
+  </div>
+  <div id="sd">
+    <div class="sh"><div class="stt">⭐ Destaques</div><div id="dcnt" style="font-size:10px;color:var(--mu)"></div></div>
+    <div class="dgrid" id="cd"></div>
+  </div>
+  <div id="sn">
+    <div class="sh"><div class="stt">Todas as empresas</div><div id="ncnt" style="font-size:10px;color:var(--mu)"></div></div>
+    <div class="ngrid" id="cn"></div>
+  </div>
   <div class="empty" id="emp-empty" style="display:none"><div>🔍</div>Nenhuma empresa encontrada.</div>
 </div>
 
+<!-- ======== BANNER RODAPÉ ======== -->
 <div class="bfw">
-  <div class="bfr" id="bfr">
-    <div class="bfs" style="background:linear-gradient(90deg,#0f2d1a,#1a5c35)" onclick="oM('planos')"><div class="bfbg" style="background:linear-gradient(90deg,transparent,#2d9e5f)"></div><div class="bfi">⭐</div><div class="bftx"><div class="bftt">Destaque seu negócio!</div><div class="bfsb">A partir de R$ 49/mês</div></div><button class="bfc" style="background:var(--go);color:#fff">Ver</button></div>
-    <div class="bfs" style="background:linear-gradient(90deg,#3d0a0a,#7f1d1d)" onclick="aV(1)"><div class="bfbg" style="background:linear-gradient(90deg,transparent,#dc2626)"></div><div class="bfi">💼</div><div class="bftx"><div class="bftt">Vaga: Atendente de Farmácia</div><div class="bfsb">Farmácia São João · Candidate-se já</div></div><button class="bfc" style="background:#f87171;color:#3d0a0a">Ver</button></div>
-    <div class="bfs" style="background:linear-gradient(90deg,#1a1a0f,#2e2200)" onclick="oM('cadastro')"><div class="bfbg" style="background:linear-gradient(90deg,transparent,#c8922a)"></div><div class="bfi">🏪</div><div class="bftx"><div class="bftt">Cadastre sua empresa grátis</div><div class="bfsb">Apareça para toda Codó agora mesmo</div></div><button class="bfc" style="background:#fbbf24;color:#1a1a0f">Cadastrar</button></div>
-    <div class="bfs" style="background:linear-gradient(90deg,#0f1a3d,#0f2a5c)" onclick="irP('vagas',null)"><div class="bfbg" style="background:linear-gradient(90deg,transparent,#1d4ed8)"></div><div class="bfi">💼</div><div class="bftx"><div class="bftt">Vagas abertas em Codó</div><div class="bfsb">Confira e candidate-se gratuitamente</div></div><button class="bfc" style="background:#60a5fa;color:#0f1a3d">Ver vagas</button></div>
+  <div class="bftr" id="bftr">
+    <div class="bfs" style="background:linear-gradient(90deg,#0f2d1a,#1a5c35)" onclick="oM('planos')">
+      <div class="bfbg" style="background:linear-gradient(90deg,transparent,#2d9e5f)"></div>
+      <div class="bfic">⭐</div>
+      <div class="bftx"><div class="bftt">Destaque seu negócio!</div><div class="bfsb">A partir de R$ 49/mês</div></div>
+      <button class="bfct" style="background:var(--go);color:#fff">Ver</button>
+    </div>
+    <div class="bfs" style="background:linear-gradient(90deg,#3d0a0a,#7f1d1d)" onclick="aV(1)">
+      <div class="bfbg" style="background:linear-gradient(90deg,transparent,#dc2626)"></div>
+      <div class="bfic">💼</div>
+      <div class="bftx"><div class="bftt">Vaga: Atendente de Farmácia</div><div class="bfsb">Farmácia São João · Candidate-se já</div></div>
+      <button class="bfct" style="background:#f87171;color:#3d0a0a">Ver</button>
+    </div>
+    <div class="bfs" style="background:linear-gradient(90deg,#1a1a0f,#2e2200)" onclick="oM('cadastro')">
+      <div class="bfbg" style="background:linear-gradient(90deg,transparent,#c8922a)"></div>
+      <div class="bfic">🏪</div>
+      <div class="bftx"><div class="bftt">Cadastre sua empresa grátis</div><div class="bfsb">Apareça para toda Codó agora mesmo</div></div>
+      <button class="bfct" style="background:#fbbf24;color:#1a1a0f">Cadastrar</button>
+    </div>
+    <div class="bfs" style="background:linear-gradient(90deg,#0f1a3d,#0f2a5c)" onclick="irP('vagas',null)">
+      <div class="bfbg" style="background:linear-gradient(90deg,transparent,#1d4ed8)"></div>
+      <div class="bfic">💼</div>
+      <div class="bftx"><div class="bftt">Vagas abertas em Codó</div><div class="bfsb">Confira e candidate-se gratuitamente</div></div>
+      <button class="bfct" style="background:#60a5fa;color:#0f1a3d">Ver vagas</button>
+    </div>
   </div>
   <div class="bfds" id="bfds"></div>
 </div>
 
-<div class="tb">
-  <button class="tab on" onclick="irP('inicio',this)"><div class="ti">🏠</div><div class="tl">Início</div><div class="td"></div></button>
-  <button class="tab" onclick="irP('ofertas',this)"><div class="ti">🔥</div><div class="tl">Ofertas</div><div class="td"></div></button>
-  <button class="tab" onclick="irP('vagas',this)"><div class="ti">💼</div><div class="tl">Vagas</div><div class="td"></div></button>
-  <button class="tab" onclick="irP('emp',this)"><div class="ti">🏪</div><div class="tl">Empresas</div><div class="td"></div></button>
-  <button class="tab" onclick="oM('login')"><div class="ti">👤</div><div class="tl">Entrar</div><div class="td"></div></button>
+<!-- ======== TAB BAR ======== -->
+<div class="tabbar">
+  <button class="tab on" onclick="irP('inicio',this)"><div class="tab-i">🏠</div><div class="tab-l">Início</div><div class="tab-d"></div></button>
+  <button class="tab" onclick="irP('ofertas',this)"><div class="tab-i">🔥</div><div class="tab-l">Ofertas</div><div class="tab-d"></div></button>
+  <button class="tab" onclick="irP('vagas',this)"><div class="tab-i">💼</div><div class="tab-l">Vagas</div><div class="tab-d"></div></button>
+  <button class="tab" onclick="irP('emp',this)"><div class="tab-i">🏪</div><div class="tab-l">Empresas</div><div class="tab-d"></div></button>
+  <button class="tab" onclick="oM('login')"><div class="tab-i">👤</div><div class="tab-l">Entrar</div><div class="tab-d"></div></button>
 </div>
 
-<!-- MODAL LOGIN / CADASTRO USUÁRIO -->
+<!-- ======== MODAL: LOGIN / CADASTRO USUÁRIO ======== -->
 <div class="mbg" id="m-login">
   <div class="modal">
-    <div class="mhd"><div class="mtt">Guia <span style="color:var(--gl)">Codoense</span></div><button class="mcl" onclick="cM('login')">×</button></div>
-    <div class="mbod" style="padding-top:0">
-      <div style="text-align:center;padding:14px 0 12px"><div style="font-size:9px;letter-spacing:2px;color:var(--mu);text-transform:uppercase">cidade de codó · ma</div></div>
+    <div class="mhd">
+      <div class="mtt">Guia <span style="color:var(--gl)">Codoense</span></div>
+      <button class="mcl" onclick="cM('login')">×</button>
+    </div>
+    <div class="mbod">
+      <div style="text-align:center;margin-bottom:16px">
+        <div style="font-size:9px;letter-spacing:2px;color:var(--mu);text-transform:uppercase">cidade de codó · ma</div>
+      </div>
       <div class="ltbs">
         <button class="ltb on" onclick="ltab('e',this)">Entrar</button>
         <button class="ltb" onclick="ltab('c',this)">Criar conta</button>
       </div>
-      <div class="lp on" id="lp-e">
+      <!-- Painel Entrar -->
+      <div class="lpanel on" id="lp-e">
         <button class="bsoc">🌐 Continuar com Google</button>
         <button class="bsoc">📘 Continuar com Facebook</button>
-        <div class="ldv">ou use seu e-mail</div>
+        <div class="ldiv">ou use seu e-mail</div>
         <div class="fi"><label>E-mail</label><input type="email" placeholder="seu@email.com"></div>
         <div class="fi"><label>Senha</label><input type="password" placeholder="••••••••"></div>
-        <div style="text-align:right;margin-bottom:14px"><span style="font-size:11px;color:var(--g);cursor:pointer;font-weight:600">Esqueci minha senha</span></div>
-        <button class="bm bcf" style="width:100%;margin-bottom:10px" onclick="simL()">Entrar</button>
-        <div style="text-align:center;font-size:12px;color:var(--mu)">Não tem conta? <span style="color:var(--g);cursor:pointer;font-weight:600" onclick="ltab('c',null)">Criar grátis</span></div>
-        <div style="border-top:1px solid var(--bo);margin-top:16px;padding-top:12px;text-align:center"><span style="font-size:11px;color:var(--mu)">É empresa? </span><span style="font-size:11px;color:var(--g);cursor:pointer;font-weight:600" onclick="cM('login');oM('cadastro')">Cadastre seu negócio aqui</span></div>
+        <div style="text-align:right;margin-bottom:14px">
+          <span style="font-size:11px;color:var(--g);cursor:pointer;font-weight:600">Esqueci minha senha</span>
+        </div>
+        <button class="bm2 bcf" style="width:100%;margin-bottom:10px" onclick="simL()">Entrar</button>
+        <div style="text-align:center;font-size:12px;color:var(--mu)">
+          Não tem conta? <span style="color:var(--g);cursor:pointer;font-weight:600" onclick="ltab('c',null)">Criar grátis</span>
+        </div>
+        <div style="border-top:1px solid var(--bo);margin-top:16px;padding-top:12px;text-align:center">
+          <span style="font-size:11px;color:var(--mu)">É empresa? </span>
+          <span style="font-size:11px;color:var(--g);cursor:pointer;font-weight:600" onclick="cM('login');oM('cadastro')">Cadastre seu negócio aqui</span>
+        </div>
       </div>
-      <div class="lp" id="lp-c">
+      <!-- Painel Criar conta -->
+      <div class="lpanel" id="lp-c">
         <div style="font-size:12px;color:var(--mu);margin-bottom:12px">Você é:</div>
         <div class="tpsl">
           <div class="tpb on" id="tp-p" onclick="selT('p')"><div class="tpi">👤</div><div class="tpl">Pessoa física</div><div class="tps">Buscar vagas e ofertas</div></div>
           <div class="tpb" id="tp-e" onclick="selT('e')"><div class="tpi">🏪</div><div class="tpl">Empresa</div><div class="tps">Divulgar meu negócio</div></div>
         </div>
         <button class="bsoc">🌐 Cadastrar com Google</button>
-        <div class="ldv">ou preencha os dados</div>
+        <div class="ldiv">ou preencha os dados</div>
         <div class="fi"><label>Nome completo</label><input type="text" placeholder="Seu nome"></div>
         <div class="fi"><label>E-mail</label><input type="email" placeholder="seu@email.com"></div>
         <div class="fi"><label>WhatsApp</label><input type="text" placeholder="(99) 99999-9999"></div>
         <div class="fi"><label>Senha</label><input type="password" placeholder="Mín. 6 caracteres"></div>
-        <button class="bm bcf" style="width:100%;margin-top:6px" onclick="simL()">Criar conta grátis</button>
-        <div style="text-align:center;font-size:11px;color:var(--mu);margin-top:12px">É empresa? <span style="color:var(--g);cursor:pointer;font-weight:600" onclick="cM('login');oM('cadastro')">Cadastre seu negócio aqui</span></div>
+        <button class="bm2 bcf" style="width:100%;margin-top:6px" onclick="simL()">Criar conta grátis</button>
+        <div style="text-align:center;font-size:11px;color:var(--mu);margin-top:12px">
+          É empresa? <span style="color:var(--g);cursor:pointer;font-weight:600" onclick="cM('login');oM('cadastro')">Cadastre seu negócio aqui</span>
+        </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- MODAL CADASTRO DE EMPRESA -->
+<!-- ======== MODAL: CADASTRO DE EMPRESA ======== -->
 <div class="mbg" id="m-cadastro">
   <div class="modal">
     <div class="mhd"><div class="mtt">🏪 Cadastrar empresa</div><button class="mcl" onclick="cM('cadastro')">×</button></div>
-    <div class="fb" id="fb-cadastro">
+    <div class="form-body" id="fb-cadastro">
       <div class="mbod">
         <p style="font-size:12px;color:var(--mu);margin-bottom:16px;line-height:1.6">Preencha os dados abaixo. O cadastro básico é <strong style="color:var(--g)">100% gratuito</strong> e sua empresa aparecerá no Guia Codoense em até 24h.</p>
         <form id="form-cadastro" action="https://formspree.io/f/xdayabnv" method="POST" onsubmit="envForm(event,'cadastro')">
+          <input type="hidden" name="_subject" value="Novo cadastro de empresa – Guia Codoense">
           <div class="fi"><label>Nome da empresa / profissional *</label><input type="text" name="nome_empresa" placeholder="Ex: Padaria Central" required></div>
-          <div class="fi"><label>Categoria *</label><select name="categoria" required><option value="">Selecione...</option><option>Alimentação</option><option>Saúde</option><option>Beleza</option><option>Educação</option><option>Serviços</option><option>Comércio</option><option>Profissionais</option><option>Outro</option></select></div>
+          <div class="fi"><label>Categoria *</label>
+            <select name="categoria" required>
+              <option value="">Selecione...</option>
+              <option>Alimentação</option><option>Saúde</option><option>Beleza</option>
+              <option>Educação</option><option>Serviços</option><option>Comércio</option>
+              <option>Profissionais</option><option>Outro</option>
+            </select>
+          </div>
           <div class="fi"><label>Descrição do negócio *</label><textarea name="descricao" placeholder="O que sua empresa oferece? Descreva seus principais produtos ou serviços." required></textarea></div>
           <div class="fi-row">
             <div class="fi"><label>WhatsApp *</label><input type="tel" name="whatsapp" placeholder="(99) 99999-9999" required></div>
@@ -346,27 +486,53 @@
           <div class="fi"><label>Endereço completo *</label><input type="text" name="endereco" placeholder="Rua, número, bairro – Codó/MA" required></div>
           <div class="fi"><label>Horário de funcionamento *</label><input type="text" name="horario" placeholder="Ex: Seg–Sex 8h–18h / Sáb 8h–12h" required></div>
           <div class="fi"><label>Instagram (opcional)</label><input type="text" name="instagram" placeholder="@suaempresa"></div>
-          <div class="fi"><label>Plano de interesse</label><select name="plano"><option value="Básico (Grátis)">Básico – Listagem gratuita</option><option value="Destaque R$49/mês">Destaque – R$ 49/mês</option><option value="Premium R$129/mês">Premium – R$ 129/mês</option></select></div>
-          <div class="fi"><label>Observações</label><textarea name="observacoes" placeholder="Alguma informação adicional?"></textarea><div class="fi-hint">Após o envio, entraremos em contato pelo WhatsApp para confirmar o cadastro.</div></div>
-          <input type="hidden" name="_subject" value="Novo cadastro de empresa – Guia Codoense">
-          <button type="submit" class="bm bcf" style="width:100%;margin-top:4px;padding:12px;font-size:14px">Enviar cadastro grátis ✓</button>
+          <div class="fi"><label>Plano de interesse</label>
+            <select name="plano">
+              <option value="Básico (Grátis)">Básico – Listagem gratuita</option>
+              <option value="Destaque R$49/mês">Destaque – R$ 49/mês</option>
+              <option value="Premium R$129/mês">Premium – R$ 129/mês</option>
+            </select>
+          </div>
+          <div class="fi"><label>Observações</label>
+            <textarea name="observacoes" placeholder="Alguma informação adicional?"></textarea>
+            <div class="fi-hint">Após o envio, entraremos em contato pelo WhatsApp para confirmar o cadastro.</div>
+          </div>
+          <button type="submit" class="bm2 bcf" style="width:100%;margin-top:4px;padding:12px;font-size:14px">Enviar cadastro grátis ✓</button>
         </form>
       </div>
     </div>
-    <div class="fs" id="fs-cadastro"><div class="fs-icon">🎉</div><div class="fs-title">Cadastro enviado!</div><div class="fs-msg">Recebemos os dados da sua empresa.<br>Entraremos em contato pelo WhatsApp em até <strong>24 horas</strong> para confirmar e publicar seu perfil no Guia Codoense.</div><button class="bm bcf" style="width:100%;margin-top:20px" onclick="cM('cadastro')">Fechar</button></div>
+    <div class="form-success" id="fs-cadastro">
+      <div class="fs-icon">🎉</div>
+      <div class="fs-title">Cadastro enviado!</div>
+      <div class="fs-msg">Recebemos os dados da sua empresa.<br>Entraremos em contato pelo WhatsApp em até <strong>24 horas</strong> para confirmar e publicar seu perfil no Guia Codoense.</div>
+      <button class="bm2 bcf" style="width:100%;margin-top:20px" onclick="cM('cadastro')">Fechar</button>
+    </div>
   </div>
 </div>
 
-<!-- MODAL PLANOS -->
+<!-- ======== MODAL: PLANOS ======== -->
 <div class="mbg" id="m-planos">
   <div class="modal">
     <div class="mhd"><div class="mtt">⭐ Planos de destaque</div><button class="mcl" onclick="cM('planos')">×</button></div>
-    <div class="fb" id="fb-planos">
+    <div class="form-body" id="fb-planos">
       <div class="mbod">
         <p style="font-size:12px;color:var(--mu);margin-bottom:16px;line-height:1.6">Escolha o plano ideal e apareça primeiro para quem busca em Codó.</p>
-        <div class="plano" onclick="selPlano('Básico (Grátis)','Básico – Gratuito')"><div class="pln">Básico</div><div class="pld">Listagem com nome, contato, endereço e horário.</div><div class="plp">Grátis</div></div>
-        <div class="plano ft" onclick="selPlano('Destaque R$49/mês','Destaque – R$ 49/mês')"><div class="plb">Mais popular</div><div class="pln">Destaque</div><div class="pld">Aparece no topo + selo dourado + banner rotativo + publicar vagas e ofertas.</div><div class="plp">R$ 49<span>/mês</span></div></div>
-        <div class="plano" onclick="selPlano('Premium R$129/mês','Premium – R$ 129/mês')"><div class="pln">Premium</div><div class="pld">Tudo do Destaque + banner no rodapé + divulgação nas redes sociais do Guia.</div><div class="plp">R$ 129<span>/mês</span></div></div>
+        <div class="plano" onclick="selPlano('Básico (Grátis)','Básico – Gratuito')">
+          <div class="pln">Básico</div>
+          <div class="pld">Listagem com nome, contato, endereço e horário.</div>
+          <div class="plp">Grátis</div>
+        </div>
+        <div class="plano ft" onclick="selPlano('Destaque R$49/mês','Destaque – R$ 49/mês')">
+          <div class="plb">Mais popular</div>
+          <div class="pln">Destaque</div>
+          <div class="pld">Aparece no topo + selo dourado + banner rotativo + publicar vagas e ofertas.</div>
+          <div class="plp">R$ 49<span>/mês</span></div>
+        </div>
+        <div class="plano" onclick="selPlano('Premium R$129/mês','Premium – R$ 129/mês')">
+          <div class="pln">Premium</div>
+          <div class="pld">Tudo do Destaque + banner no rodapé + divulgação nas redes do Guia.</div>
+          <div class="plp">R$ 129<span>/mês</span></div>
+        </div>
         <div style="border-top:1px solid var(--bo);margin-top:16px;padding-top:16px">
           <p style="font-size:12px;font-weight:600;color:var(--tx);margin-bottom:12px">Deixe seu contato e te retornamos:</p>
           <form id="form-planos" action="https://formspree.io/f/myklkoyy" method="POST" onsubmit="envForm(event,'planos')">
@@ -377,25 +543,33 @@
               <div class="fi"><label>WhatsApp *</label><input type="tel" name="whatsapp" placeholder="(99) 99999-9999" required></div>
               <div class="fi"><label>Plano escolhido</label><input type="text" id="plano-disp" value="Destaque – R$ 49/mês" readonly style="background:var(--cr);color:var(--g);font-weight:600"></div>
             </div>
-            <button type="submit" class="bm bcf" style="width:100%;padding:12px;font-size:14px">Quero me destacar ✓</button>
+            <button type="submit" class="bm2 bcf" style="width:100%;padding:12px;font-size:14px">Quero me destacar ✓</button>
           </form>
         </div>
       </div>
     </div>
-    <div class="fs" id="fs-planos"><div class="fs-icon">🚀</div><div class="fs-title">Interesse registrado!</div><div class="fs-msg">Ótima escolha! Entraremos em contato pelo WhatsApp em breve para ativar seu plano.</div><button class="bm bcf" style="width:100%;margin-top:20px" onclick="cM('planos')">Fechar</button></div>
+    <div class="form-success" id="fs-planos">
+      <div class="fs-icon">🚀</div>
+      <div class="fs-title">Interesse registrado!</div>
+      <div class="fs-msg">Ótima escolha! Entraremos em contato pelo WhatsApp em breve para ativar seu plano.</div>
+      <button class="bm2 bcf" style="width:100%;margin-top:20px" onclick="cM('planos')">Fechar</button>
+    </div>
   </div>
 </div>
 
-<!-- MODAL DETALHE EMPRESA -->
+<!-- ======== MODAL: DETALHE EMPRESA ======== -->
 <div class="mbg" id="m-detail">
-  <div class="modal" style="overflow:hidden"><div id="m-din"></div><div class="mft"><button class="bm bcn" style="width:100%" onclick="cM('detail')">Fechar</button></div></div>
+  <div class="modal" style="overflow:hidden">
+    <div id="m-din"></div>
+    <div class="mft"><button class="bm2 bcn" style="width:100%" onclick="cM('detail')">Fechar</button></div>
+  </div>
 </div>
 
-<!-- MODAL VAGA + CANDIDATURA -->
+<!-- ======== MODAL: VAGA + CANDIDATURA ======== -->
 <div class="mbg" id="m-vaga">
   <div class="modal" style="overflow:hidden">
     <div id="m-vin"></div>
-    <div class="fb" id="fb-vaga">
+    <div class="form-body" id="fb-vaga">
       <div style="padding:14px 18px;border-top:1px solid var(--bo);background:#f9fafb">
         <p style="font-size:12px;font-weight:600;color:var(--tx);margin-bottom:10px">Candidate-se agora:</p>
         <form id="form-vaga" action="https://formspree.io/f/xojyjrqe" method="POST" onsubmit="envForm(event,'vaga')">
@@ -407,23 +581,52 @@
             <div class="fi"><label>WhatsApp *</label><input type="tel" name="whatsapp" placeholder="(99) 99999-9999" required></div>
             <div class="fi"><label>Idade</label><input type="number" name="idade" placeholder="Ex: 25" min="14" max="70"></div>
           </div>
-          <div class="fi"><label>Escolaridade *</label><select name="escolaridade" required><option value="">Selecione...</option><option>Ensino Fundamental</option><option>Ensino Médio incompleto</option><option>Ensino Médio completo</option><option>Superior incompleto</option><option>Superior completo</option><option>Pós-graduação</option></select></div>
-          <div class="fi"><label>Experiência na área</label><textarea name="experiencia" placeholder="Descreva brevemente. Se não tiver, escreva 'Sem experiência'." style="min-height:60px"></textarea></div>
-          <button type="submit" class="bm bcf" style="width:100%;padding:12px;font-size:14px">Enviar candidatura ✓</button>
+          <div class="fi"><label>Escolaridade *</label>
+            <select name="escolaridade" required>
+              <option value="">Selecione...</option>
+              <option>Ensino Fundamental</option>
+              <option>Ensino Médio incompleto</option>
+              <option>Ensino Médio completo</option>
+              <option>Superior incompleto</option>
+              <option>Superior completo</option>
+              <option>Pós-graduação</option>
+            </select>
+          </div>
+          <div class="fi"><label>Experiência na área</label>
+            <textarea name="experiencia" placeholder="Descreva brevemente. Se não tiver, escreva 'Sem experiência'." style="min-height:60px"></textarea>
+          </div>
+          <button type="submit" class="bm2 bcf" style="width:100%;padding:12px;font-size:14px">Enviar candidatura ✓</button>
         </form>
       </div>
     </div>
-    <div class="fs" id="fs-vaga"><div class="fs-icon">✅</div><div class="fs-title">Candidatura enviada!</div><div class="fs-msg">Sua candidatura foi registrada com sucesso.<br>A empresa entrará em contato pelo WhatsApp que você informou. <strong>Boa sorte!</strong></div><button class="bm bcf" style="width:100%;margin-top:20px" onclick="cM('vaga')">Fechar</button></div>
+    <div class="form-success" id="fs-vaga">
+      <div class="fs-icon">✅</div>
+      <div class="fs-title">Candidatura enviada!</div>
+      <div class="fs-msg">Sua candidatura foi registrada com sucesso.<br>A empresa entrará em contato pelo WhatsApp que você informou. <strong>Boa sorte!</strong></div>
+      <button class="bm2 bcf" style="width:100%;margin-top:20px" onclick="cM('vaga')">Fechar</button>
+    </div>
   </div>
 </div>
 
-<!-- MODAL OFERTA -->
+<!-- ======== MODAL: OFERTA ======== -->
 <div class="mbg" id="m-oferta">
-  <div class="modal" style="overflow:hidden"><div id="m-oin"></div><div class="mft"><button class="bm bcn" onclick="cM('oferta')">Fechar</button><button class="bm bcf" style="flex:2" id="btn-oferta-w">Ver no WhatsApp ↗</button></div></div>
+  <div class="modal" style="overflow:hidden">
+    <div id="m-oin"></div>
+    <div class="mft">
+      <button class="bm2 bcn" onclick="cM('oferta')">Fechar</button>
+      <button class="bm2 bcf" style="flex:2" id="btn-oferta-w">Ver no WhatsApp ↗</button>
+    </div>
+  </div>
 </div>
 
 <script>
-const AV=[{bg:'#1a3d2b',c:'#5dd98a'},{bg:'#1a2b4a',c:'#60a5fa'},{bg:'#3d1a1a',c:'#f87171'},{bg:'#3d2e1a',c:'#fbbf24'},{bg:'#2e1a3d',c:'#c084fc'},{bg:'#1a3d38',c:'#34d399'}];
+// ===== DADOS =====
+const AV=[
+  {bg:'#1a3d2b',c:'#5dd98a'},{bg:'#1a2b4a',c:'#60a5fa'},
+  {bg:'#3d1a1a',c:'#f87171'},{bg:'#3d2e1a',c:'#fbbf24'},
+  {bg:'#2e1a3d',c:'#c084fc'},{bg:'#1a3d38',c:'#34d399'}
+];
+
 const dados=[
   {id:1,nome:"Farmácia São João",cat:"Saúde",desc:"Medicamentos, perfumaria e atendimento farmacêutico personalizado para toda a família.",tel:"99987654321",end:"Rua Coronel Tito, 120 – Centro, Codó/MA",hora:"Seg–Sáb 7h–22h",ini:"FSJ",rating:4.8,premium:true,tags:["Delivery","Manipulação","Convênios"],av:1},
   {id:2,nome:"Restaurante Sabor da Terra",cat:"Alimentação",desc:"Culinária regional com o melhor do Maranhão. Almoço executivo e bufê completo.",tel:"99991234567",end:"Av. Getúlio Vargas, 340 – Centro, Codó/MA",hora:"Seg–Dom 11h–15h",ini:"ST",rating:4.6,premium:true,tags:["Bufê","Delivery","Marmita"],av:3},
@@ -436,52 +639,162 @@ const dados=[
   {id:9,nome:"Psicóloga Ana Beatriz",cat:"Profissionais",desc:"Atendimento clínico para adultos, adolescentes e casais. Online e presencial.",tel:"99997890123",end:"Rua 14 de Julho, 88 – Centro, Codó/MA",hora:"Seg–Sex 8h–18h",ini:"AB",rating:5.0,premium:false,tags:["Adultos","Casais","Online"],av:2},
   {id:10,nome:"Academia Força Total",cat:"Saúde",desc:"Musculação, aeróbico e aulas coletivas. Avaliação física gratuita.",tel:"99998901234",end:"Av. dos Esportes, 55 – Codó/MA",hora:"Seg–Sex 5h30–22h / Sáb 7h–12h",ini:"FT",rating:4.6,premium:false,tags:["Musculação","Aeróbico"],av:0},
   {id:11,nome:"Contabilidade Matos",cat:"Serviços",desc:"MEI, abertura de empresa, declaração de IR e assessoria contábil completa.",tel:"99999012345",end:"Rua do Comércio, 15 – Sala 3, Codó/MA",hora:"Seg–Sex 8h–17h",ini:"CM",rating:4.5,premium:false,tags:["MEI","IR","Empresa"],av:5},
-  {id:12,nome:"Pet Shop Amigo Fiel",cat:"Serviços",desc:"Banho, tosa, vacinas e produtos para pets de estimação.",tel:"99990123456",end:"Rua dos Animais, 22 – Bairro Novo, Codó/MA",hora:"Ter–Dom 8h–18h",ini:"PF",rating:4.8,premium:false,tags:["Banho","Tosa","Vacinas"],av:4},
+  {id:12,nome:"Pet Shop Amigo Fiel",cat:"Serviços",desc:"Banho, tosa, vacinas e produtos para pets de estimação.",tel:"99990123456",end:"Rua dos Animais, 22 – Bairro Novo, Codó/MA",hora:"Ter–Dom 8h–18h",ini:"PF",rating:4.8,premium:false,tags:["Banho","Tosa","Vacinas"],av:4}
 ];
+
 const ofertas=[
   {id:1,e:"🍱",n:"Marmita Executiva",emp:"Sabor da Terra",de:20,por:16,desc:"Marmita completa com arroz, feijão, carne e salada. Válido para retirada ou delivery.",val:"Hoje até 14h",bg:"#3d2200",tel:"99991234567"},
   {id:2,e:"💊",n:"Kit Vitaminas C+D",emp:"Farmácia São João",de:45,por:32,desc:"Suplementação completa para imunidade. Estoque limitado.",val:"Hoje",bg:"#0f1a3d",tel:"99987654321"},
   {id:3,e:"✂️",n:"Corte + Escova",emp:"Studio Beleza",de:60,por:42,desc:"Corte feminino com escova modeladora. Agendar pelo WhatsApp.",val:"Hoje e amanhã",bg:"#2e0f2e",tel:"99992345678"},
-  {id:4,e:"🐾",n:"Banho + Tosa",emp:"Pet Shop Amigo Fiel",de:55,por:38,desc:"Para cães de pequeno e médio porte.",val:"Hoje",bg:"#1a1a3d",tel:"99990123456"},
-  {id:5,e:"📚",n:"Matrícula 30% OFF",emp:"Escola Alpha",de:200,por:140,desc:"Inglês ou Espanhol. Primeira mensalidade com desconto para novos alunos.",val:"Esta semana",bg:"#0f2d1a",tel:"99988881234"},
+  {id:4,e:"🐾",n:"Banho + Tosa",emp:"Pet Shop Amigo Fiel",de:55,por:38,desc:"Para cães de pequeno e médio porte. Agendamento necessário.",val:"Hoje",bg:"#1a1a3d",tel:"99990123456"},
+  {id:5,e:"📚",n:"Matrícula 30% OFF",emp:"Escola Alpha",de:200,por:140,desc:"Inglês ou Espanhol. Primeira mensalidade com desconto para novos alunos.",val:"Esta semana",bg:"#0f2d1a",tel:"99988881234"}
 ];
+
 const vagas=[
   {id:1,t:"Atendente de Farmácia",emp:"Farmácia São João",tp:"CLT",tu:"Tarde",sal:"R$ 1.400",nv:true,desc:"Buscamos atendente com ensino médio completo, proativo e com boa comunicação.",req:["Ensino médio completo","Disponibilidade de tarde","Boa comunicação"],e:"💊"},
   {id:2,t:"Cozinheiro(a)",emp:"Sabor da Terra",tp:"CLT",tu:"Manhã",sal:"R$ 1.600",nv:true,desc:"Restaurante regional busca cozinheiro experiente em culinária maranhense.",req:["Experiência em cozinha","Disponibilidade de manhã","Higiene alimentar"],e:"🍽️"},
-  {id:3,t:"Manicure",emp:"Studio Beleza & Estilo",tp:"Autônoma",tu:"Flexível",sal:"Comissão 50%",nv:false,desc:"Studio em crescimento busca manicure para regime de comissão.",req:["Experiência em manicure","Boa apresentação"],e:"💅"},
+  {id:3,t:"Manicure",emp:"Studio Beleza & Estilo",tp:"Autônoma",tu:"Flexível",sal:"Comissão 50%",nv:false,desc:"Studio em crescimento busca manicure para regime de comissão. Clientela já formada.",req:["Experiência em manicure","Boa apresentação"],e:"💅"},
   {id:4,t:"Professor de Inglês",emp:"Escola Alpha",tp:"PJ",tu:"Noite",sal:"R$ 40/h",nv:false,desc:"Escola de idiomas contrata professor de inglês com fluência comprovada.",req:["Fluência em inglês","Experiência em ensino"],e:"📚"},
   {id:5,t:"Eletricista Residencial",emp:"Elétrica Confiança",tp:"CLT",tu:"Comercial",sal:"R$ 1.800",nv:true,desc:"Contrata eletricista com NR10. Veículo próprio é diferencial.",req:["NR10 atualizado","Experiência residencial"],e:"⚡"},
-  {id:6,t:"Vendedor(a)",emp:"Loja do Lar",tp:"CLT",tu:"Comercial",sal:"R$ 1.320 + comissão",nv:false,desc:"Loja de decoração contrata vendedor comunicativo.",req:["Ensino médio","Experiência em vendas"],e:"🛍️"},
+  {id:6,t:"Vendedor(a)",emp:"Loja do Lar",tp:"CLT",tu:"Comercial",sal:"R$ 1.320 + comissão",nv:false,desc:"Loja de decoração contrata vendedor comunicativo.",req:["Ensino médio","Experiência em vendas"],e:"🛍️"}
 ];
 
-// BANNERS
-let bi=0,bT=4,bTm;
-function iDots(){const c=document.getElementById('bdots');c.innerHTML='';for(let i=0;i<bT;i++){const d=document.createElement('button');d.className='bd'+(i===0?' on':'');d.onclick=()=>gB(i);c.appendChild(d)}}
-function gB(i){bi=i;document.getElementById('btrack').style.transform=`translateX(-${i*100}%)`;document.querySelectorAll('.bd').forEach((d,j)=>d.classList.toggle('on',j===i))}
-function mvB(d){bi=(bi+d+bT)%bT;gB(bi);clearInterval(bTm);bTm=setInterval(()=>mvB(1),4500)}
-iDots();bTm=setInterval(()=>mvB(1),4500);
+// ===== BANNER PRINCIPAL =====
+var bi=0, bT=4, bTmr;
+function iDots(){
+  var c=document.getElementById('bdots');
+  c.innerHTML='';
+  for(var i=0;i<bT;i++){
+    var d=document.createElement('button');
+    d.className='bd'+(i===0?' on':'');
+    d.setAttribute('data-i',i);
+    d.onclick=function(){gB(parseInt(this.getAttribute('data-i')))};
+    c.appendChild(d);
+  }
+}
+function gB(i){
+  bi=i;
+  document.getElementById('btrack').style.transform='translateX(-'+i*100+'%)';
+  document.querySelectorAll('.bd').forEach(function(d,j){d.classList.toggle('on',j===i)});
+}
+function mvB(dir){
+  bi=(bi+dir+bT)%bT;
+  gB(bi);
+  clearInterval(bTmr);
+  bTmr=setInterval(function(){mvB(1)},4500);
+}
+iDots();
+bTmr=setInterval(function(){mvB(1)},4500);
 
-let fi=0,fT=4,fTm;
-function iFD(){const c=document.getElementById('bfds');c.innerHTML='';for(let i=0;i<fT;i++){const d=document.createElement('button');d.className='bfd'+(i===0?' on':'');c.appendChild(d)}}
-function gF(i){fi=i;document.getElementById('bfr').style.transform=`translateX(-${i*100}%)`;document.querySelectorAll('.bfd').forEach((d,j)=>d.classList.toggle('on',j===i))}
-iFD();fTm=setInterval(()=>{fi=(fi+1)%fT;gF(fi)},3800);
+// ===== BANNER RODAPÉ =====
+var fi=0, fT=4, fTmr;
+function iFD(){
+  var c=document.getElementById('bfds');
+  c.innerHTML='';
+  for(var i=0;i<fT;i++){
+    var d=document.createElement('button');
+    d.className='bfdt'+(i===0?' on':'');
+    c.appendChild(d);
+  }
+}
+function gF(i){
+  fi=i;
+  document.getElementById('bftr').style.transform='translateX(-'+i*100+'%)';
+  document.querySelectorAll('.bfdt').forEach(function(d,j){d.classList.toggle('on',j===i)});
+}
+iFD();
+fTmr=setInterval(function(){fi=(fi+1)%fT;gF(fi)},3800);
 
-// HELPERS
-function av(i,s){const c=AV[i%AV.length];return `style="background:${c.bg};color:${c.c};width:${s}px;height:${s}px"`}
-function st(r){return '★'.repeat(Math.floor(r))+'☆'.repeat(5-Math.floor(r))}
+// ===== HELPERS =====
+function avStyle(i,s){
+  var c=AV[i%AV.length];
+  return 'background:'+c.bg+';color:'+c.c+';width:'+s+'px;height:'+s+'px';
+}
+function stars(r){
+  return '★'.repeat(Math.floor(r))+'☆'.repeat(5-Math.floor(r));
+}
 function pct(de,por){return Math.round((1-por/de)*100)}
-function wpp(tel,msg){return `https://wa.me/55${tel}?text=${encodeURIComponent(msg)}`}
+function wppLink(tel,msg){return 'https://wa.me/55'+tel+'?text='+encodeURIComponent(msg)}
 
-// RENDER
-function rO(l){document.getElementById('oc').innerHTML=l.map(o=>`<div class="oc2" onclick="aO(${o.id})"><div class="oi" style="background:${o.bg}22"><span style="font-size:32px">${o.e}</span><div class="obg">-${pct(o.de,o.por)}%</div><div class="otm">⏱ ${Math.floor(Math.random()*5)+1}h</div></div><div class="ob"><div class="oe">${o.emp}</div><div class="on2">${o.n}</div><div class="op"><span class="od">R$ ${o.de}</span><span class="op2">R$ ${o.por}</span></div></div></div>`).join('')}
+// ===== RENDER OFERTAS =====
+function rO(l){
+  document.getElementById('oc').innerHTML=l.map(function(o){
+    return '<div class="ocard" onclick="aO('+o.id+')">'+
+      '<div class="oimg" style="background:'+o.bg+'22">'+
+        '<span style="font-size:32px">'+o.e+'</span>'+
+        '<div class="obdg">-'+pct(o.de,o.por)+'%</div>'+
+        '<div class="otmr">⏱ '+(Math.floor(Math.random()*5)+1)+'h</div>'+
+      '</div>'+
+      '<div class="obody">'+
+        '<div class="oemp">'+o.emp+'</div>'+
+        '<div class="onome">'+o.n+'</div>'+
+        '<div class="oprc"><span class="ode">R$ '+o.de+'</span><span class="opor">R$ '+o.por+'</span></div>'+
+      '</div>'+
+    '</div>';
+  }).join('');
+}
 
-function rV(l){document.getElementById('vc').innerHTML=l.map(v=>`<div class="vc" onclick="aV(${v.id})"><div class="vic" style="background:${AV[v.id%AV.length].bg}">${v.e}</div><div class="vif"><div class="vt">${v.t}</div><div class="ve">${v.emp}</div><div class="vtg">${v.nv?'<span class="vt2 nv">Nova</span>':''}<span class="vt2">${v.tp}</span><span class="vt2">${v.tu}</span></div></div><div class="vr"><div class="vs">${v.sal}</div><div class="va">Ver ›</div></div></div>`).join('')}
+// ===== RENDER VAGAS =====
+function rV(l){
+  document.getElementById('vc').innerHTML=l.map(function(v){
+    return '<div class="vcard" onclick="aV('+v.id+')">'+
+      '<div class="vic" style="background:'+AV[v.id%AV.length].bg+'">'+v.e+'</div>'+
+      '<div class="vif">'+
+        '<div class="vtit">'+v.t+'</div>'+
+        '<div class="vemp">'+v.emp+'</div>'+
+        '<div class="vtgs">'+
+          (v.nv?'<span class="vtag nv">Nova</span>':'')+
+          '<span class="vtag">'+v.tp+'</span>'+
+          '<span class="vtag">'+v.tu+'</span>'+
+        '</div>'+
+      '</div>'+
+      '<div class="vright"><div class="vsal">'+v.sal+'</div><div class="varr">Ver ›</div></div>'+
+    '</div>';
+  }).join('');
+}
 
+// ===== RENDER EMPRESAS =====
 function rE(){
-  const l=dados.filter(d=>{const b=!busca||d.nome.toLowerCase().includes(busca)||d.cat.toLowerCase().includes(busca)||(d.tags||[]).some(t=>t.toLowerCase().includes(busca));const c=!catAtual||d.cat===catAtual;return b&&c});
-  const p=l.filter(d=>d.premium),n=l.filter(d=>!d.premium);
-  document.getElementById('cd').innerHTML=p.map(d=>`<div class="dc" onclick="aD(${d.id})"><div class="da"></div><div class="db"><div class="dbg">⭐ Destaque</div><div class="dh"><div class="dav" ${av(d.av,32)}>${d.ini}</div><div><div class="dn">${d.nome}</div><div class="dct">${d.cat}</div></div></div><div class="dd">${d.desc}</div><div class="dtg">${d.tags.map(t=>`<span class="dtag">${t}</span>`).join('')}</div><div class="df"><div class="dr">${st(d.rating)} ${d.rating}</div><button class="dbt" onclick="event.stopPropagation();aD(${d.id})">Ver perfil</button></div></div></div>`).join('');
-  document.getElementById('cn').innerHTML=n.map(d=>`<div class="nc" onclick="aD(${d.id})"><div class="nh"><div class="nav2" ${av(d.av,30)}>${d.ini}</div><div><div class="nn">${d.nome}</div><div class="nct">${d.cat}</div></div></div><div class="nr">${st(d.rating)} ${d.rating}</div><div class="nds">${d.desc}</div><div class="ntg">${d.tags.map(t=>`<span class="ntag">${t}</span>`).join('')}</div><div class="nft"><button class="nb" onclick="event.stopPropagation();aD(${d.id})">Ver perfil</button></div></div>`).join('');
+  var l=dados.filter(function(d){
+    var b=!busca||d.nome.toLowerCase().indexOf(busca)>-1||d.cat.toLowerCase().indexOf(busca)>-1||d.tags.some(function(t){return t.toLowerCase().indexOf(busca)>-1});
+    var c=!catAtual||d.cat===catAtual;
+    return b&&c;
+  });
+  var p=l.filter(function(d){return d.premium});
+  var n=l.filter(function(d){return !d.premium});
+
+  document.getElementById('cd').innerHTML=p.map(function(d){
+    return '<div class="dcard" onclick="aD('+d.id+')">'+
+      '<div class="dacc"></div>'+
+      '<div class="dbod">'+
+        '<div class="dbdg">⭐ Destaque</div>'+
+        '<div class="dh">'+
+          '<div class="dav" style="'+avStyle(d.av,32)+'">'+d.ini+'</div>'+
+          '<div><div class="dn">'+d.nome+'</div><div class="dct">'+d.cat+'</div></div>'+
+        '</div>'+
+        '<div class="ddesc">'+d.desc+'</div>'+
+        '<div class="dtgs">'+d.tags.map(function(t){return '<span class="dtag">'+t+'</span>'}).join('')+'</div>'+
+        '<div class="df">'+
+          '<div class="drat">'+stars(d.rating)+' '+d.rating+'</div>'+
+          '<button class="dbtn" onclick="event.stopPropagation();aD('+d.id+')">Ver perfil</button>'+
+        '</div>'+
+      '</div>'+
+    '</div>';
+  }).join('');
+
+  document.getElementById('cn').innerHTML=n.map(function(d){
+    return '<div class="ncard" onclick="aD('+d.id+')">'+
+      '<div class="nh">'+
+        '<div class="nav" style="'+avStyle(d.av,30)+'">'+d.ini+'</div>'+
+        '<div><div class="nn">'+d.nome+'</div><div class="nct">'+d.cat+'</div></div>'+
+      '</div>'+
+      '<div class="nrat">'+stars(d.rating)+' '+d.rating+'</div>'+
+      '<div class="nds">'+d.desc+'</div>'+
+      '<div class="ntgs">'+d.tags.map(function(t){return '<span class="ntag">'+t+'</span>'}).join('')+'</div>'+
+      '<div class="nft"><button class="nbtn" onclick="event.stopPropagation();aD('+d.id+')">Ver perfil</button></div>'+
+    '</div>';
+  }).join('');
+
   document.getElementById('sd').style.display=p.length?'':'none';
   document.getElementById('sn').style.display=n.length?'':'none';
   document.getElementById('emp-empty').style.display=l.length?'none':'block';
@@ -490,94 +803,222 @@ function rE(){
   document.getElementById('total-emp').textContent=dados.length;
 }
 
-// ABRIR CONTEÚDO
+// ===== ABRIR DETALHE EMPRESA =====
 function aD(id){
-  const d=dados.find(x=>x.id===id),c=AV[d.av%AV.length];
-  document.getElementById('m-din').innerHTML=`<div class="dth"><div class="dtav" style="background:${c.bg};color:${c.c}">${d.ini}</div>${d.premium?`<div style="display:inline-flex;align-items:center;background:var(--go);color:#fff;font-size:9px;font-weight:600;padding:2px 9px;border-radius:20px;margin-bottom:6px;text-transform:uppercase">⭐ Destaque</div><br>`:''}<div class="dtnm">${d.nome}</div><div class="dtct">${d.cat} · <span style="color:var(--gol)">${st(d.rating)} ${d.rating}</span></div></div><div class="dsec"><h4>Sobre</h4><p>${d.desc}</p></div><div class="dsec"><h4>Contato & Localização</h4><div class="crow"><div class="cico">📍</div>${d.end}</div><div class="crow"><div class="cico">⏰</div>${d.hora}</div></div><div class="dsec" style="border-bottom:none"><h4>Especialidades</h4><div>${d.tags.map(t=>`<span class="ntd">${t}</span>`).join('')}</div></div><div style="padding:12px 18px"><button class="wbtn" onclick="window.open('${wpp(d.tel,'Olá, '+d.nome+'! Vi seu perfil no Guia Codoense e gostaria de mais informações.')}','_blank')">💬 Entrar em contato pelo WhatsApp</button></div>`;
+  var d=dados.find(function(x){return x.id===id});
+  var c=AV[d.av%AV.length];
+  var msg='Olá, '+d.nome+'! Vi seu perfil no Guia Codoense e gostaria de mais informações.';
+  document.getElementById('m-din').innerHTML=
+    '<div class="dth">'+
+      '<div class="dtav" style="background:'+c.bg+';color:'+c.c+'">'+d.ini+'</div>'+
+      (d.premium?'<div style="display:inline-flex;align-items:center;background:var(--go);color:#fff;font-size:9px;font-weight:600;padding:2px 9px;border-radius:20px;margin-bottom:6px;text-transform:uppercase">⭐ Destaque</div><br>':'')+
+      '<div class="dtnm">'+d.nome+'</div>'+
+      '<div class="dtct">'+d.cat+' · <span style="color:var(--gol)">'+stars(d.rating)+' '+d.rating+'</span></div>'+
+    '</div>'+
+    '<div class="dsec"><h4>Sobre</h4><p>'+d.desc+'</p></div>'+
+    '<div class="dsec"><h4>Contato &amp; Localização</h4>'+
+      '<div class="crow"><div class="cico">📍</div>'+d.end+'</div>'+
+      '<div class="crow"><div class="cico">⏰</div>'+d.hora+'</div>'+
+    '</div>'+
+    '<div class="dsec" style="border-bottom:none"><h4>Especialidades</h4>'+
+      '<div>'+d.tags.map(function(t){return '<span class="ntd">'+t+'</span>'}).join('')+'</div>'+
+    '</div>'+
+    '<div style="padding:12px 18px">'+
+      '<button class="wbtn" onclick="window.open(\''+wppLink(d.tel,msg)+'\',\'_blank\')">💬 Entrar em contato pelo WhatsApp</button>'+
+    '</div>';
   oM('detail');
 }
 
+// ===== ABRIR OFERTA =====
 function aO(id){
-  const o=ofertas.find(x=>x.id===id);
-  document.getElementById('m-oin').innerHTML=`<div style="background:${o.bg}22;padding:22px 18px;text-align:center;border-bottom:1px solid var(--bo)"><div style="font-size:50px;margin-bottom:8px">${o.e}</div><div style="display:inline-block;background:#e11d48;color:#fff;font-size:9px;font-weight:700;padding:3px 12px;border-radius:20px;margin-bottom:8px">OFERTA DO DIA</div><div style="font-family:var(--fd);font-size:18px;font-weight:700;color:var(--tx);margin-bottom:3px">${o.n}</div><div style="font-size:12px;color:var(--mu)">${o.emp}</div></div><div style="padding:14px 18px"><div style="display:flex;align-items:baseline;gap:10px;margin-bottom:8px"><span style="font-size:13px;color:var(--mu);text-decoration:line-through">De R$ ${o.de}</span><span style="font-family:var(--fd);font-size:28px;font-weight:700;color:#e11d48">Por R$ ${o.por}</span></div><p style="font-size:13px;color:var(--tx);line-height:1.6;margin-bottom:10px">${o.desc}</p><div style="font-size:11px;color:var(--mu)">⏱ Válido: <strong style="color:var(--tx)">${o.val}</strong></div></div>`;
-  document.getElementById('btn-oferta-w').onclick=()=>window.open(wpp(o.tel,'Olá! Vi a oferta "'+o.n+'" no Guia Codoense e tenho interesse.'),'_blank');
+  var o=ofertas.find(function(x){return x.id===id});
+  var msg='Olá! Vi a oferta "'+o.n+'" no Guia Codoense e tenho interesse.';
+  document.getElementById('m-oin').innerHTML=
+    '<div style="background:'+o.bg+'22;padding:22px 18px;text-align:center;border-bottom:1px solid var(--bo)">'+
+      '<div style="font-size:50px;margin-bottom:8px">'+o.e+'</div>'+
+      '<div style="display:inline-block;background:#e11d48;color:#fff;font-size:9px;font-weight:700;padding:3px 12px;border-radius:20px;margin-bottom:8px">OFERTA DO DIA</div>'+
+      '<div style="font-family:var(--fd);font-size:18px;font-weight:700;color:var(--tx);margin-bottom:3px">'+o.n+'</div>'+
+      '<div style="font-size:12px;color:var(--mu)">'+o.emp+'</div>'+
+    '</div>'+
+    '<div style="padding:14px 18px">'+
+      '<div style="display:flex;align-items:baseline;gap:10px;margin-bottom:8px">'+
+        '<span style="font-size:13px;color:var(--mu);text-decoration:line-through">De R$ '+o.de+'</span>'+
+        '<span style="font-family:var(--fd);font-size:28px;font-weight:700;color:#e11d48">Por R$ '+o.por+'</span>'+
+      '</div>'+
+      '<p style="font-size:13px;color:var(--tx);line-height:1.6;margin-bottom:10px">'+o.desc+'</p>'+
+      '<div style="font-size:11px;color:var(--mu)">⏱ Válido: <strong style="color:var(--tx)">'+o.val+'</strong></div>'+
+    '</div>';
+  document.getElementById('btn-oferta-w').onclick=function(){
+    window.open(wppLink(o.tel,msg),'_blank');
+  };
   oM('oferta');
 }
 
+// ===== ABRIR VAGA =====
 function aV(id){
-  const v=vagas.find(x=>x.id===id),c=AV[v.id%AV.length];
+  var v=vagas.find(function(x){return x.id===id});
+  var c=AV[v.id%AV.length];
   document.getElementById('vaga-n').value=v.t;
   document.getElementById('vaga-e').value=v.emp;
   document.getElementById('form-vaga').reset();
   document.getElementById('vaga-n').value=v.t;
   document.getElementById('vaga-e').value=v.emp;
   showFS('vaga',false);
-  document.getElementById('m-vin').innerHTML=`<div style="background:var(--dk);padding:14px 18px"><div style="width:44px;height:44px;border-radius:9px;background:${c.bg};display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:8px">${v.e}</div>${v.nv?'<div style="display:inline-block;background:#fef3c7;color:#92400e;font-size:9px;font-weight:700;padding:2px 9px;border-radius:20px;margin-bottom:6px">Nova vaga</div><br>':''}<div style="font-family:var(--fd);font-size:17px;font-weight:700;color:#fff;margin-bottom:3px">${v.t}</div><div style="font-size:12px;color:rgba(255,255,255,.45)">${v.emp}</div></div><div style="padding:10px 18px;border-bottom:1px solid var(--bo);display:flex;gap:7px;flex-wrap:wrap"><span class="vti" style="background:#f0f9f4;color:var(--g);border:1px solid rgba(26,107,60,.2)">💰 ${v.sal}</span><span class="vti" style="background:#f0f7ff;color:#1e40af;border:1px solid rgba(30,64,175,.2)">📋 ${v.tp}</span><span class="vti" style="background:#fff7ed;color:#9a3412;border:1px solid rgba(154,52,18,.2)">🕐 ${v.tu}</span></div><div style="padding:12px 18px;border-bottom:1px solid var(--bo)"><div style="font-size:10px;font-weight:600;color:var(--mu);text-transform:uppercase;letter-spacing:.8px;margin-bottom:7px">Sobre a vaga</div><p style="font-size:13px;color:var(--tx);line-height:1.6">${v.desc}</p></div><div style="padding:12px 18px;border-bottom:1px solid var(--bo)"><div style="font-size:10px;font-weight:600;color:var(--mu);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px">Requisitos</div>${v.req.map(r=>`<div style="display:flex;align-items:center;gap:7px;font-size:13px;color:var(--tx);margin-bottom:6px"><span style="color:var(--g);font-size:14px">✓</span>${r}</div>`).join('')}</div>`;
+  document.getElementById('m-vin').innerHTML=
+    '<div style="background:var(--dk);padding:14px 18px">'+
+      '<div style="width:44px;height:44px;border-radius:9px;background:'+c.bg+';display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:8px">'+v.e+'</div>'+
+      (v.nv?'<div style="display:inline-block;background:#fef3c7;color:#92400e;font-size:9px;font-weight:700;padding:2px 9px;border-radius:20px;margin-bottom:6px">Nova vaga</div><br>':'')+
+      '<div style="font-family:var(--fd);font-size:17px;font-weight:700;color:#fff;margin-bottom:3px">'+v.t+'</div>'+
+      '<div style="font-size:12px;color:rgba(255,255,255,.45)">'+v.emp+'</div>'+
+    '</div>'+
+    '<div style="padding:10px 18px;border-bottom:1px solid var(--bo);display:flex;gap:7px;flex-wrap:wrap">'+
+      '<span class="vti" style="background:#f0f9f4;color:var(--g);border:1px solid rgba(26,107,60,.2)">💰 '+v.sal+'</span>'+
+      '<span class="vti" style="background:#f0f7ff;color:#1e40af;border:1px solid rgba(30,64,175,.2)">📋 '+v.tp+'</span>'+
+      '<span class="vti" style="background:#fff7ed;color:#9a3412;border:1px solid rgba(154,52,18,.2)">🕐 '+v.tu+'</span>'+
+    '</div>'+
+    '<div style="padding:12px 18px;border-bottom:1px solid var(--bo)">'+
+      '<div style="font-size:10px;font-weight:600;color:var(--mu);text-transform:uppercase;letter-spacing:.8px;margin-bottom:7px">Sobre a vaga</div>'+
+      '<p style="font-size:13px;color:var(--tx);line-height:1.6">'+v.desc+'</p>'+
+    '</div>'+
+    '<div style="padding:12px 18px;border-bottom:1px solid var(--bo)">'+
+      '<div style="font-size:10px;font-weight:600;color:var(--mu);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px">Requisitos</div>'+
+      v.req.map(function(r){
+        return '<div style="display:flex;align-items:center;gap:7px;font-size:13px;color:var(--tx);margin-bottom:6px"><span style="color:var(--g);font-size:14px">✓</span>'+r+'</div>';
+      }).join('')+
+    '</div>';
   oM('vaga');
 }
 
-// FORMULÁRIOS
+// ===== FORMULÁRIOS =====
 function showFS(id,ok){
   document.getElementById('fb-'+id).classList.toggle('hide',ok);
   document.getElementById('fs-'+id).classList.toggle('on',ok);
 }
-async function envForm(e,id){
+
+function envForm(e,id){
   e.preventDefault();
-  const form=e.target,btn=form.querySelector('button[type=submit]');
-  const txt=btn.textContent;btn.disabled=true;btn.textContent='Enviando...';
-  try{
-    const r=await fetch(form.action,{method:'POST',body:new FormData(form),headers:{'Accept':'application/json'}});
+  var form=e.target;
+  var btn=form.querySelector('button[type=submit]');
+  var txt=btn.textContent;
+  btn.disabled=true;
+  btn.textContent='Enviando...';
+  fetch(form.action,{
+    method:'POST',
+    body:new FormData(form),
+    headers:{'Accept':'application/json'}
+  }).then(function(r){
     if(r.ok){showFS(id,true)}
     else{alert('Erro ao enviar. Tente novamente.');btn.disabled=false;btn.textContent=txt}
-  }catch{alert('Erro de conexão. Verifique sua internet.');btn.disabled=false;btn.textContent=txt}
+  }).catch(function(){
+    alert('Erro de conexão. Verifique sua internet.');btn.disabled=false;btn.textContent=txt;
+  });
 }
 
-// PLANOS
+// ===== PLANOS =====
 function selPlano(val,label){
   document.getElementById('plano-val').value=val;
   document.getElementById('plano-disp').value=label;
 }
 
-// LOGIN
+// ===== LOGIN =====
 function ltab(id,el){
-  document.querySelectorAll(".ltb").forEach(t=>t.classList.remove("on"));
-  if(el)el.classList.add("on");
-  else document.querySelectorAll(".ltb").forEach((t,i)=>{if((i===0&&id==="e")||(i===1&&id==="c"))t.classList.add("on")});
-  document.querySelectorAll(".lp").forEach(p=>p.classList.remove("on"));
-  document.getElementById("lp-"+id).classList.add("on");
+  document.querySelectorAll('.ltb').forEach(function(t){t.classList.remove('on')});
+  if(el){
+    el.classList.add('on');
+  } else {
+    document.querySelectorAll('.ltb').forEach(function(t,i){
+      if((i===0&&id==='e')||(i===1&&id==='c')) t.classList.add('on');
+    });
+  }
+  document.querySelectorAll('.lpanel').forEach(function(p){p.classList.remove('on')});
+  document.getElementById('lp-'+id).classList.add('on');
 }
-function selT(t){document.getElementById("tp-p").classList.toggle("on",t==="p");document.getElementById("tp-e").classList.toggle("on",t==="e")}
-function simL(){cM("login");alert("Em breve! O sistema de login completo será ativado na próxima versão do Guia Codoense.")}
+function selT(t){
+  document.getElementById('tp-p').classList.toggle('on',t==='p');
+  document.getElementById('tp-e').classList.toggle('on',t==='e');
+}
+function simL(){
+  cM('login');
+  alert('Em breve! O sistema de login completo será ativado na próxima versão do Guia Codoense.');
+}
 
-// NAVEGAÇÃO
-let catAtual='',busca='',view='inicio';
-function filtrar(){busca=document.getElementById('si').value.toLowerCase();rView()}
-function irP(v,el){view=v;document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));if(el)el.classList.add('on');catAtual='';document.querySelectorAll('.cp').forEach(c=>c.classList.remove('on'));document.querySelector('.cp').classList.add('on');rView();window.scrollTo({top:0,behavior:'smooth'})}
-function sC(el,cat,v){document.querySelectorAll('.cp').forEach(c=>c.classList.remove('on'));if(el)el.classList.add('on');view=v;catAtual=cat;rView();window.scrollTo({top:0,behavior:'smooth'})}
+// ===== NAVEGAÇÃO =====
+var catAtual='', busca='', view='inicio';
+
+function filtrar(){
+  busca=document.getElementById('si').value.toLowerCase();
+  rView();
+}
+function irP(v,el){
+  view=v;
+  document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('on')});
+  if(el) el.classList.add('on');
+  catAtual='';
+  document.querySelectorAll('.cp').forEach(function(c){c.classList.remove('on')});
+  document.querySelector('.cp').classList.add('on');
+  rView();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function sC(el,cat,v){
+  document.querySelectorAll('.cp').forEach(function(c){c.classList.remove('on')});
+  if(el) el.classList.add('on');
+  view=v;
+  catAtual=cat;
+  rView();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
 function rView(){
-  const so=document.getElementById('so'),sv=document.getElementById('sv'),sd=document.getElementById('sd'),sn=document.getElementById('sn');
-  if(view==='inicio'){so.style.display='';sv.style.display='';sd.style.display='';sn.style.display='';rO(ofertas);rV(vagas.slice(0,3));rE()}
-  else if(view==='ofertas'){so.style.display='';sv.style.display='none';sd.style.display='none';sn.style.display='none';rO(ofertas)}
-  else if(view==='vagas'){so.style.display='none';sv.style.display='';sd.style.display='none';sn.style.display='none';rV(vagas)}
-  else{so.style.display='none';sv.style.display='none';sd.style.display='';sn.style.display='';rE()}
+  var so=document.getElementById('so');
+  var sv=document.getElementById('sv');
+  var sd=document.getElementById('sd');
+  var sn=document.getElementById('sn');
+  if(view==='inicio'){
+    so.style.display=''; sv.style.display=''; sd.style.display=''; sn.style.display='';
+    rO(ofertas); rV(vagas.slice(0,3)); rE();
+  } else if(view==='ofertas'){
+    so.style.display=''; sv.style.display='none'; sd.style.display='none'; sn.style.display='none';
+    rO(ofertas);
+  } else if(view==='vagas'){
+    so.style.display='none'; sv.style.display=''; sd.style.display='none'; sn.style.display='none';
+    rV(vagas);
+  } else {
+    so.style.display='none'; sv.style.display='none'; sd.style.display=''; sn.style.display='';
+    rE();
+  }
 }
 
-// MODAIS
+// ===== MODAIS =====
 function oM(id){
-  if(id==='login'){document.querySelectorAll('.ltb').forEach((t,i)=>{t.classList.toggle('on',i===0)});document.querySelectorAll('.lp').forEach(p=>p.classList.remove('on'));document.getElementById('lp-e').classList.add('on')}
-  if(id==='cadastro'){showFS('cadastro',false);document.getElementById('form-cadastro').reset()}
-  if(id==='planos'){showFS('planos',false);document.getElementById('form-planos').reset()}
+  if(id==='login'){
+    document.querySelectorAll('.ltb').forEach(function(t,i){t.classList.toggle('on',i===0)});
+    document.querySelectorAll('.lpanel').forEach(function(p){p.classList.remove('on')});
+    document.getElementById('lp-e').classList.add('on');
+  }
+  if(id==='cadastro'){
+    showFS('cadastro',false);
+    document.getElementById('form-cadastro').reset();
+  }
+  if(id==='planos'){
+    showFS('planos',false);
+    document.getElementById('form-planos').reset();
+  }
   document.getElementById('m-'+id).classList.add('on');
   document.body.style.overflow='hidden';
 }
-  if(id==='cadastro'){showFS('cadastro',false);document.getElementById('form-cadastro').reset()}
-  if(id==='planos'){showFS('planos',false);document.getElementById('form-planos').reset()}
-  document.getElementById('m-'+id).classList.add('on');
-  document.body.style.overflow='hidden';
+function cM(id){
+  document.getElementById('m-'+id).classList.remove('on');
+  document.body.style.overflow='';
 }
-function cM(id){document.getElementById('m-'+id).classList.remove('on');document.body.style.overflow=''}
-document.querySelectorAll('.mbg').forEach(m=>m.addEventListener('click',function(e){if(e.target===this){const id=this.id.replace('m-','');cM(id)}}));
+document.querySelectorAll('.mbg').forEach(function(m){
+  m.addEventListener('click',function(e){
+    if(e.target===this){
+      var id=this.id.replace('m-','');
+      cM(id);
+    }
+  });
+});
 
+// ===== INICIAR =====
 rView();
 </script>
 </body>

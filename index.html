@@ -798,9 +798,9 @@ function enviarCadastro(e) {
       return r.text().then(function(txt) { throw new Error(txt); });
     }
   })
-  .catch(function(err) {
-    console.error(err);
-    alert('Erro ao enviar. Tente novamente ou entre em contato pelo WhatsApp.');
+  .catch(async function(err) {
+    console.error('Erro completo:', err);
+    alert('Erro: ' + err.message);
     btn.disabled = false;
     btn.textContent = 'Enviar cadastro grátis ✓';
   });
@@ -822,11 +822,16 @@ function envForm(e, id) {
     method: 'POST',
     body: new FormData(form),
     headers: { 'Accept': 'application/json' }
-  }).then(function(r) {
-    if (r.ok) { showFS(id, true); }
-    else { alert('Erro ao enviar. Tente novamente.'); btn.disabled = false; btn.textContent = txt; }
-  }).catch(function() {
-    alert('Erro de conexão.'); btn.disabled = false; btn.textContent = txt;
+  }).then(async function(r) {
+    if (r.ok) {
+      showFS('cadastro', true);
+  } else {
+    const txt = await r.text();
+    console.error('Erro Supabase:', txt);
+    alert('Erro: ' + txt); btn.disabled = false; btn.textContent = txt; }
+  }).catch(function(err) {
+    console.error('Erro completo:', err);
+    alert('Erro: ' + err.message); btn.disabled = false; btn.textContent = txt;
   });
 }
 

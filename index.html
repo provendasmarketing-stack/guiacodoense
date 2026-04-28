@@ -4,151 +4,182 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Guia Codoense - O Melhor de Codó</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <meta name="description" content="Encontre empresas, vagas de emprego e ofertas exclusivas em Codó-MA.">
+    <meta name="theme-color" content="#0f172a">
+    
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"><br/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Supabase SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
     <style>
         :root {
-            --primary: #FFD700;<br/>
-            --secondary: #1a1a1a;<br/>
-            --text: #333;<br/>
-            --light: #f4f4f4;<br/>
-            --white: #ffffff;<br/>
-            --shadow: 0 4px 12px rgba(0,0,0,0.1);<br/>
-            --radius: 12px;
+            --primary: #3b82f6;<br/>
+            --primary-dark: #1d4ed8;<br/>
+            --bg: #f8fafc;<br/>
+            --card: #ffffff;<br/>
+            --text-main: #0f172a;<br/>
+            --text-muted: #64748b;<br/>
+            --accent: #f59e0b;<br/>
+            --success: #10b981;<br/>
+            --danger: #ef4444;<br/>
+            --radius: 12px;<br/>
+            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }<br/>
-        body { background: var(--light); color: var(--text); line-height: 1.6; overflow-x: hidden; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }<br/>
+        body { background: var(--bg); color: var(--text-main); line-height: 1.5; padding-bottom: 80px; }
 
-        /* HEADER & HERO */
-        .hero {
-            background: var(--secondary);<br/>
-            padding: 20px 15px 40px;<br/>
-            color: var(--white);<br/>
-            text-align: center;
-        }
-
-        .header-top {
-            display: flex;<br/>
-            justify-content: space-between;<br/>
-            align-items: center;<br/>
-            margin-bottom: 25px;<br/>
-            max-width: 1200px;<br/>
-            margin-left: auto;<br/>
-            margin-right: auto;
-        }
-
-        .logo { font-size: 22px; font-weight: 800; color: var(--primary); text-decoration: none; }
-
-        .header-actions { display: flex; gap: 8px; }
-        .btn-sm {
-            padding: 8px 12px;<br/>
-            border-radius: 8px;<br/>
-            font-size: 12px;<br/>
-            font-weight: 600;<br/>
-            cursor: pointer;<br/>
-            border: none;<br/>
-            transition: 0.3s;
-        }
-        .btn-planos { background: var(--primary); color: var(--secondary); }<br/>
-        .btn-login { background: rgba(255,255,255,0.1); color: var(--white); border: 1px solid rgba(255,255,255,0.2); }
-
-        .search-container {
-            max-width: 600px;<br/>
-            margin: 0 auto;<br/>
-            position: relative;
-        }
-        .search-input {
-            width: 100%;<br/>
+        /* Header & Navigation */
+        header {
+            background: #0f172a;<br/>
             padding: 15px 20px;<br/>
-            border-radius: 30px;<br/>
-            border: none;<br/>
-            font-size: 16px;<br/>
-            box-shadow: var(--shadow);
-        }
-
-        /* MODAIS */
-        .mbg {
-            position: fixed;<br/>
-            top: 0; left: 0; width: 100%; height: 100%;<br/>
-            background: rgba(0,0,0,0.8);<br/>
-            backdrop-filter: blur(5px);<br/>
-            display: none;<br/>
-            justify-content: center;<br/>
-            align-items: center;<br/>
-            z-index: 1000;<br/>
-            padding: 20px;
-        }
-
-        .modal {
-            background: var(--white);<br/>
-            width: 100%;<br/>
-            max-width: 500px;<br/>
-            border-radius: var(--radius);<br/>
-            position: relative;<br/>
-            max-height: 90vh;<br/>
-            display: flex;<br/>
-            flex-direction: column;<br/>
-            animation: slideUp 0.3s ease;
-        }
-
-        .modal-header {
-            padding: 20px;<br/>
-            border-bottom: 1px solid #eee;<br/>
+            color: white;<br/>
+            position: sticky;<br/>
+            top: 0;<br/>
+            z-index: 100;<br/>
             display: flex;<br/>
             justify-content: space-between;<br/>
             align-items: center;
         }
 
-        .modal-body {
-            padding: 20px;<br/>
-            overflow-y: auto;<br/>
-            flex-grow: 1;<br/>
-            -webkit-overflow-scrolling: touch;
+        .logo-area { display: flex; align-items: center; gap: 10px; }<br/>
+        .logo-area h1 { font-size: 1.2rem; font-weight: 800; letter-spacing: -0.5px; }
+        
+        .header-actions { display: flex; gap: 8px; }
+        .btn-header {
+            padding: 6px 12px;<br/>
+            border-radius: 8px;<br/>
+            font-size: 0.75rem;<br/>
+            font-weight: 600;<br/>
+            cursor: pointer;<br/>
+            border: none;<br/>
+            transition: 0.2s;
         }
+        .btn-planos { background: var(--accent); color: #000; }<br/>
+        .btn-login { background: rgba(255,255,255,0.1); color: #fff; border: 1px solid rgba(255,255,255,0.2); }
 
-        @keyframes slideUp {
-            from { transform: translateY(50px); opacity: 0; }<br/>
-            to { transform: translateY(0); opacity: 1; }
+        /* Hero & Search */
+        .hero { background: #0f172a; padding: 20px; text-align: center; color: white; }
+        .search-container {
+            background: white;<br/>
+            border-radius: 50px;<br/>
+            padding: 5px 15px;<br/>
+            display: flex;<br/>
+            align-items: center;<br/>
+            margin: 20px 0;<br/>
+            box-shadow: var(--shadow);
         }
+        .search-container input {
+            border: none;<br/>
+            padding: 10px;<br/>
+            width: 100%;<br/>
+            outline: none;<br/>
+            font-size: 0.95rem;
+        }
+        .search-container i { color: var(--text-muted); }
 
-        /* CARDS & LISTS */
-        .section-title { padding: 20px 15px 10px; font-size: 18px; font-weight: 700; }<br/>
-        .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 15px; padding: 15px; }
+        /* Categories */
+        .categories-scroll {
+            display: flex;<br/>
+            overflow-x: auto;<br/>
+            padding: 15px 20px;<br/>
+            gap: 12px;<br/>
+            scrollbar-width: none;
+        }
+        .categories-scroll::-webkit-scrollbar { display: none; }
+        .cat-item {
+            flex: 0 0 auto;<br/>
+            background: white;<br/>
+            padding: 10px 18px;<br/>
+            border-radius: 50px;<br/>
+            font-size: 0.85rem;<br/>
+            font-weight: 600;<br/>
+            box-shadow: var(--shadow);<br/>
+            cursor: pointer;<br/>
+            border: 1px solid transparent;
+        }
+        .cat-item.active { background: var(--primary); color: white; }
+
+        /* Grids & Cards */
+        .section-title { padding: 20px 20px 10px; font-weight: 700; font-size: 1.1rem; display: flex; justify-content: space-between; align-items: center; }<br/>
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 15px; padding: 0 20px 20px; }
         
         .card {
-            background: var(--white);<br/>
+            background: white;<br/>
             border-radius: var(--radius);<br/>
             overflow: hidden;<br/>
             box-shadow: var(--shadow);<br/>
-            transition: 0.3s;
+            transition: 0.3s;<br/>
+            position: relative;
         }
-
-        .card-img { width: 100%; height: 120px; background: #ddd; object-fit: cover; }<br/>
-        .card-info { padding: 12px; }<br/>
-        .card-name { font-weight: 700; font-size: 14px; margin-bottom: 4px; }
+        .card-img { height: 100px; background: #e2e8f0; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: 800; color: white; }<br/>
+        .card-body { padding: 12px; }<br/>
+        .card-title { font-weight: 700; font-size: 0.9rem; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }<br/>
+        .card-sub { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 8px; }
         
-        /* TAB BAR */
-        .tab-bar {
-            position: fixed;<br/>
-            bottom: 0; left: 0; width: 100%;<br/>
-            background: var(--white);<br/>
-            display: flex;<br/>
-            justify-content: space-around;<br/>
-            padding: 10px 0;<br/>
-            border-top: 1px solid #eee;<br/>
-            z-index: 900;
+        .badge-premium {
+            position: absolute;<br/>
+            top: 8px;<br/>
+            right: 8px;<br/>
+            background: var(--accent);<br/>
+            color: #000;<br/>
+            font-size: 0.6rem;<br/>
+            font-weight: 800;<br/>
+            padding: 2px 6px;<br/>
+            border-radius: 4px;<br/>
+            text-transform: uppercase;
         }
 
-        .tab-item { text-align: center; font-size: 10px; color: #888; text-decoration: none; cursor: pointer; }<br/>
-        .tab-item.active { color: var(--secondary); font-weight: 700; }<br/>
-        .tab-icon { font-size: 20px; display: block; margin-bottom: 2px; }
-
-        /* BUTTONS */
-        .btn-full {
+        /* Modals */
+        .modal-bg {
+            position: fixed;<br/>
+            top: 0;<br/>
+            left: 0;<br/>
             width: 100%;<br/>
-            padding: 15px;<br/>
-            background: var(--secondary);<br/>
-            color: var(--white);<br/>
+            height: 100%;<br/>
+            background: rgba(0,0,0,0.7);<br/>
+            backdrop-filter: blur(4px);<br/>
+            display: none;<br/>
+            z-index: 1000;<br/>
+            align-items: center;<br/>
+            justify-content: center;<br/>
+            padding: 20px;
+        }
+        .modal {
+            background: white;<br/>
+            width: 100%;<br/>
+            max-width: 500px;<br/>
+            border-radius: 20px;<br/>
+            max-height: 90vh;<br/>
+            overflow-y: auto;<br/>
+            position: relative;<br/>
+            animation: slideUp 0.3s ease;
+        }
+        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        
+        .modal-header { padding: 20px; border-bottom: 1px solid #f1f5f9; position: sticky; top: 0; background: white; z-index: 10; display: flex; justify-content: space-between; align-items: center; }<br/>
+        .modal-body { padding: 20px; }<br/>
+        .close-modal { font-size: 1.5rem; cursor: pointer; color: var(--text-muted); }
+
+        /* Forms */
+        .form-group { margin-bottom: 15px; }<br/>
+        .form-group label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 5px; color: var(--text-main); }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;<br/>
+            padding: 12px;<br/>
+            border: 1px solid #e2e8f0;<br/>
+            border-radius: 8px;<br/>
+            outline: none;<br/>
+            font-size: 0.9rem;
+        }
+        .btn-submit {
+            width: 100%;<br/>
+            padding: 14px;<br/>
+            background: var(--primary);<br/>
+            color: white;<br/>
             border: none;<br/>
             border-radius: 8px;<br/>
             font-weight: 700;<br/>
@@ -156,249 +187,358 @@
             margin-top: 10px;
         }
 
-        .btn-buy { background: #27ae60; color: white; }<br/>
-        .btn-eval { background: #f39c12; color: white; margin-bottom: 10px; }
+        /* Tab Bar */
+        .tab-bar {
+            position: fixed;<br/>
+            bottom: 0;<br/>
+            left: 0;<br/>
+            width: 100%;<br/>
+            background: white;<br/>
+            display: flex;<br/>
+            justify-content: space-around;<br/>
+            padding: 10px 0;<br/>
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.05);<br/>
+            z-index: 900;
+        }
+        .tab-item { text-align: center; color: var(--text-muted); font-size: 0.65rem; font-weight: 500; flex: 1; cursor: pointer; }<br/>
+        .tab-item i { font-size: 1.2rem; margin-bottom: 4px; display: block; }<br/>
+        .tab-item.active { color: var(--primary); }
 
-        /* RATING STARS */
-        .stars { color: #f1c40f; margin: 10px 0; font-size: 18px; }
-
-        @media (max-width: 480px) {<br/>
-            .header-actions { gap: 5px; }<br/>
-            .btn-sm { padding: 6px 8px; font-size: 11px; }
+        /* Utilities */
+        .hidden { display: none; }<br/>
+        .rating-stars { color: var(--accent); font-size: 0.8rem; margin-top: 5px; }
+        .btn-avaliar { 
+            background: #f1f5f9; <br/>
+            border: none; <br/>
+            padding: 5px 10px; <br/>
+            border-radius: 5px; <br/>
+            font-size: 0.7rem; <br/>
+            font-weight: 600; <br/>
+            margin-top: 10px;<br/>
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
 
-    <header class="hero">
-        <div class="header-top">
-            <a href="#" class="logo">Guia Codoense</a>
-            <div class="header-actions">
-                <button class="btn-sm btn-planos" onclick="oM('modalPlanos')">Planos</button>
-                <button class="btn-sm btn-login" onclick="oM('modalLogin')">Entrar</button>
-            </div>
+    <header>
+        <div class="logo-area">
+            <i class="fas fa-map-marker-alt text-primary"></i>
+            <h1>Guia Codoense</h1>
         </div>
-        <div class="search-container">
-            <input type="text" class="search-input" placeholder="O que você procura em Codó?">
+        <div class="header-actions">
+            <button class="btn-header btn-planos" onclick="oM('modal-planos')">Planos</button>
+            <button class="btn-header btn-login" onclick="oM('modal-login')">Entrar</button>
         </div>
     </header>
 
-    <main id="app-content" style="padding-bottom: 80px;">
-        <h2 class="section-title">Destaques</h2>
-        <div class="card-grid" id="grid-destaques">
-            <!-- Renderizado via JS -->
+    <div id="view-home">
+        <section class="hero">
+            <h2>O que você procura em Codó?</h2>
+            <div class="search-container">
+                <i class="fas fa-search"></i>
+                <input type="text" id="main-search" placeholder="Buscar empresas, serviços ou vagas..." onkeyup="filtrar()">
+            </div>
+        </section>
+
+        <div class="categories-scroll" id="cat-list">
+            <div class="cat-item active" onclick="sC('Todas')">Todas</div>
+            <div class="cat-item" onclick="sC('Alimentação')">Alimentação</div>
+            <div class="cat-item" onclick="sC('Saúde')">Saúde</div>
+            <div class="cat-item" onclick="sC('Serviços')">Serviços</div>
+            <div class="cat-item" onclick="sC('Vagas')">Vagas</div>
         </div>
 
-        <h2 class="section-title">Vagas de Emprego</h2>
-        <div class="card-grid" id="grid-vagas">
-            <!-- Renderizado via JS -->
+        <div id="content-area">
+            <div class="section-title">Ofertas do Dia <span style="font-size: 0.7rem; color: var(--primary);">Ver todas</span></div>
+            <div class="grid" id="lista-ofertas"></div>
+
+            <div class="section-title">Vagas em Destaque</div>
+            <div class="grid" id="lista-vagas"></div>
+
+            <div class="section-title">Empresas</div>
+            <div class="grid" id="lista-empresas"></div>
         </div>
-    </main>
+    </div>
 
-    <nav class="tab-bar">
-        <div class="tab-item active" onclick="irP('inicio')"><span class="tab-icon">🏠</span>Início</div>
-        <div class="tab-item" onclick="irP('ofertas')"><span class="tab-icon">🏷️</span>Ofertas</div>
-        <div class="tab-item" onclick="irP('vagas')"><span class="tab-icon">💼</span>Vagas</div>
-        <div class="tab-item" onclick="oM('modalCadastroEmpresa')"><span class="tab-icon">🏢</span>Anunciar</div>
-    </nav>
-
-    <!-- MODAL PLANOS -->
-    <div id="modalPlanos" class="mbg">
+    <!-- Modais -->
+    <div id="modal-login" class="modal-bg" onclick="eC(event, 'modal-login')">
         <div class="modal">
             <div class="modal-header">
-                <h3>Planos de Destaque</h3>
-                <button onclick="cM('modalPlanos')">✕</button>
+                <h3>Entrar ou Cadastrar</h3>
+                <i class="fas fa-times close-modal" onclick="cM('modal-login')"></i>
             </div>
             <div class="modal-body">
-                <p style="margin-bottom: 15px;">Escolha como deseja posicionar sua empresa no Guia.</p><br/>
-                <div style="border: 1px solid #ddd; padding: 15px; border-radius: 8px; margin-bottom: 10px;">
-                    <h4>Plano Ouro</h4>
-                    <p>Destaque no topo, fotos ilimitadas e link direto.</p>
-                    <button class="btn-full" onclick="cM('modalPlanos'); oM('modalCadastroEmpresa')">Quero me destacar</button>
+                <div class="form-group">
+                    <label>E-mail</label>
+                    <input type="email" id="login-email" placeholder="seu@email.com">
                 </div>
-                <div style="border: 1px solid #ddd; padding: 15px; border-radius: 8px;">
-                    <h4>Plano Prata</h4>
-                    <p>Visibilidade média e 5 fotos no catálogo.</p>
-                    <button class="btn-full" onclick="cM('modalPlanos'); oM('modalCadastroEmpresa')">Selecionar Prata</button>
-                </div>
+                <button class="btn-submit" onclick="alert('Funcionalidade em implementação')">Continuar</button>
+                <p style="text-align: center; margin-top: 20px; font-size: 0.8rem; color: var(--text-muted);"><br/>
+                    Não tem conta? <a href="#" onclick="cM('modal-login'); oM('modal-cadastro-user')" style="color: var(--primary); font-weight: 600;">Crie agora</a>
+                </p>
             </div>
         </div>
     </div>
 
-    <!-- MODAL CADASTRO EMPRESA (UNIFICADO) -->
-    <div id="modalCadastroEmpresa" class="mbg">
-        <div class="modal">
-            <div class="modal-header">
-                <h3>Cadastrar Empresa</h3>
-                <button onclick="cM('modalCadastroEmpresa')">✕</button>
-            </div>
-            <div class="modal-body">
-                <form id="formEmpresa">
-                    <input type="text" placeholder="Nome da Empresa" class="search-input" style="margin-bottom: 10px; border: 1px solid #ddd;"><br/>
-                    <input type="text" placeholder="WhatsApp (DDD + Número)" class="search-input" style="margin-bottom: 10px; border: 1px solid #ddd;"><br/>
-                    <select class="search-input" style="margin-bottom: 10px; border: 1px solid #ddd;">
-                        <option>Selecione a Categoria</option>
-                        <option>Alimentação</option>
-                        <option>Saúde</option>
-                        <option>Serviços</option>
-                    </select>
-                    <textarea placeholder="Descrição do negócio" class="search-input" style="margin-bottom: 10px; border: 1px solid #ddd; height: 80px;"></textarea><br/>
-                    <button type="button" class="btn-full" style="background: var(--primary); color: var(--secondary);">Finalizar e Escolher Plano</button>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <!-- MODAL LOGIN / CRIAR CONTA -->
-    <div id="modalLogin" class="mbg">
-        <div class="modal">
-            <div class="modal-header">
-                <h3>Acesse sua Conta</h3>
-                <button onclick="cM('modalLogin')">✕</button>
-            </div>
-            <div class="modal-body">
-                <input type="email" placeholder="E-mail" class="search-input" style="margin-bottom: 10px; border: 1px solid #ddd;"><br/>
-                <input type="password" placeholder="Senha" class="search-input" style="margin-bottom: 10px; border: 1px solid #ddd;">
-                <button class="btn-full">Entrar</button>
-                <p style="text-align: center; margin-top: 15px; font-size: 14px;">Não tem conta? <a href="#" onclick="cM('modalLogin'); oM('modalCriarConta')">Cadastre-se</a></p>
-            </div>
-        </div>
-    </div>
-
-    <div id="modalCriarConta" class="mbg">
+    <div id="modal-cadastro-user" class="modal-bg" onclick="eC(event, 'modal-cadastro-user')">
         <div class="modal">
             <div class="modal-header">
                 <h3>Criar Conta</h3>
-                <button onclick="cM('modalCriarConta')">✕</button>
+                <i class="fas fa-times close-modal" onclick="cM('modal-cadastro-user')"></i>
             </div>
             <div class="modal-body">
-                <p>Você é:</p><br/>
-                <div style="display: flex; gap: 10px; margin: 15px 0;"><br/>
-                    <button class="btn-full" style="background: #eee; color: #333;" onclick="alert('Cadastro de Usuário em breve')">Consumidor</button>
-                    <button class="btn-full" onclick="cM('modalCriarConta'); oM('modalCadastroEmpresa')">Empresa</button>
+                <div class="form-group">
+                    <label>Nome Completo</label>
+                    <input type="text" id="reg-nome">
+                </div>
+                <div class="form-group">
+                    <label>WhatsApp</label>
+                    <input type="tel" id="reg-whatsapp">
+                </div>
+                <div class="form-group">
+                    <label>Tipo de Conta</label>
+                    <select id="reg-tipo" onchange="checkTipo(this.value)">
+                        <option value="pessoa_fisica">Pessoa Física (Candidato)</option>
+                        <option value="empresa">Empresa (Anunciante)</option>
+                    </select>
+                </div>
+                <button class="btn-submit" onclick="cadastrarUsuario()">Criar Conta</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-cadastro-empresa" class="modal-bg" onclick="eC(event, 'modal-cadastro-empresa')">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>Cadastrar Empresa</h3>
+                <i class="fas fa-times close-modal" onclick="cM('modal-cadastro-empresa')"></i>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Plano Selecionado</label>
+                    <select id="emp-plano">
+                        <option value="Básico (Grátis)">Básico (Grátis)</option>
+                        <option value="Ouro (Destaque)">Ouro (Destaque)</option>
+                        <option value="Diamante (Topo)">Diamante (Topo)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Nome da Empresa</label>
+                    <input type="text" id="emp-nome">
+                </div>
+                <div class="form-group">
+                    <label>Categoria</label>
+                    <select id="emp-cat">
+                        <option value="Alimentação">Alimentação</option>
+                        <option value="Saúde">Saúde</option>
+                        <option value="Serviços">Serviços</option>
+                        <option value="Outros">Outros</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>WhatsApp (Link Direto)</label>
+                    <input type="tel" id="emp-whatsapp">
+                </div>
+                <div class="form-group">
+                    <label>Descrição Curta</label>
+                    <textarea id="emp-desc" rows="3"></textarea>
+                </div>
+                <button class="btn-submit" onclick="cadastrarEmpresa()">Finalizar Cadastro</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-planos" class="modal-bg" onclick="eC(event, 'modal-planos')">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>Planos para Empresas</h3>
+                <i class="fas fa-times close-modal" onclick="cM('modal-planos')"></i>
+            </div>
+            <div class="modal-body">
+                <div style="background: #f8fafc; padding: 15px; border-radius: 10px; margin-bottom: 10px; border: 1px solid #e2e8f0;"><br/>
+                    <h4 style="color: var(--text-main);">Básico</h4><br/>
+                    <p style="font-size: 0.8rem; color: var(--text-muted);">Presença digital gratuita no guia.</p><br/>
+                    <button class="btn-submit" style="background: #64748b;" onclick="cM('modal-planos'); oM('modal-cadastro-empresa')">Começar Grátis</button>
+                </div>
+                <div style="background: #fffbeb; padding: 15px; border-radius: 10px; border: 2px solid var(--accent);"><br/>
+                    <h4 style="color: #92400e;">Ouro (Destaque)</h4><br/>
+                    <p style="font-size: 0.8rem; color: #b45309;">Apareça no topo e receba mais cliques.</p><br/>
+                    <button class="btn-submit" style="background: var(--accent); color: #000;" onclick="cM('modal-planos'); oM('modal-cadastro-empresa')">Quero me destacar</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- MODAL DETALHE EMPRESA -->
-    <div id="modalEmpresa" class="mbg">
-        <div class="modal">
-            <div class="modal-header">
-                <h3 id="m-emp-nome">Nome da Empresa</h3>
-                <button onclick="cM('modalEmpresa')">✕</button>
-            </div>
-            <div class="modal-body">
-                <div id="m-emp-img" style="width: 100%; height: 200px; background: #eee; border-radius: 8px; margin-bottom: 15px;"></div><br/>
-                <div class="stars">★★★★☆ <span style="font-size: 12px; color: #888;">(4.5)</span></div>
-                <button class="btn-full btn-eval">Avaliar Empresa</button>
-                <p id="m-emp-desc">Descrição detalhada aqui...</p>
-                <button class="btn-full" style="background: #25d366;">Falar no WhatsApp</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- MODAL DETALHE VAGA -->
-    <div id="modalVaga" class="mbg">
-        <div class="modal">
-            <div class="modal-header">
-                <h3 id="m-vaga-titulo">Título da Vaga</h3>
-                <button onclick="cM('modalVaga')">✕</button>
-            </div>
-            <div class="modal-body">
-                <h4 id="m-vaga-empresa">Empresa Contratante</h4>
-                <p style="color: #666; margin-bottom: 15px;" id="m-vaga-local">Codó - MA</p><br/>
-                <div style="background: #f9f9f9; padding: 15px; border-radius: 8px; margin-bottom: 15px;"><br/>
-                    <strong>Requisitos:</strong>
-                    <p id="m-vaga-req">Informações sobre a vaga que podem ser extensas e agora possuem rolagem garantida para dispositivos móveis.</p>
-                </div>
-                <button class="btn-full">Candidatar-se Agora</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- MODAL OFERTA -->
-    <div id="modalOferta" class="mbg">
-        <div class="modal">
-            <div class="modal-header">
-                <h3>Oferta Especial</h3>
-                <button onclick="cM('modalOferta')">✕</button>
-            </div>
-            <div class="modal-body">
-                <div style="text-align: center;">
-                    <h2 id="m-of-item">Produto em Promoção</h2>
-                    <p style="text-decoration: line-through; color: #999;">De: R$ 99,90</p><br/>
-                    <h1 style="color: #e74c3c;">Por: R$ 69,90</h1>
-                    <button class="btn-full btn-buy">Comprar Agora</button>
-                </div>
-            </div>
-        </div>
-    </div>
+    <nav class="tab-bar">
+        <div class="tab-item active" onclick="irP('home')"><i class="fas fa-home"></i>Início</div>
+        <div class="tab-item" onclick="irP('ofertas')"><i class="fas fa-tag"></i>Ofertas</div>
+        <div class="tab-item" onclick="irP('vagas')"><i class="fas fa-briefcase"></i>Vagas</div>
+        <div class="tab-item" onclick="oM('modal-login')"><i class="fas fa-user"></i>Perfil</div>
+    </nav>
 
     <script>
-        // Funções de Controle de Interface
-        function oM(id) { document.getElementById(id).style.display = 'flex'; }
-        function cM(id) { document.getElementById(id).style.display = 'none'; }
+        // Configurações Supabase
+        const SUPABASE_URL = 'https://xzcqsyqgtmbfsufezuyp.supabase.co';
+        const SUPABASE_KEY = 'sb_publishable_q2YnksX8NxsPpKi2O06REA_Rd58ZZAN';
+        const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-        function irP(view) {
-            console.log("Navegando para: " + view);
-            // Lógica de troca de abas
-            document.querySelectorAll('.tab-item').forEach(i => i.classList.remove('active'));
-            event.currentTarget.classList.add('active');
+        let empresas = [];
+        let vagas = [];
+        let ofertas = [];
+
+        // Inicialização
+        async function init() {
+            await carregarDados();
+            renderizarTudo();
         }
 
-        // Mock de Dados para Demonstração
-        const empresas = [
-            { nome: "Restaurante do João", desc: "A melhor comida caseira de Codó.", img: "https://via.placeholder.com/300x200" },<br/>
-            { nome: "Farmácia Central", desc: "Aberto 24 horas para sua saúde.", img: "https://via.placeholder.com/300x200" }
-        ];
+        async function carregarDados() {
+            const { data: emp } = await _supabase.from('empresas').select('*').eq('aprovado', true);<br/>
+            const { data: vag } = await _supabase.from('vagas').select('*');<br/>
+            const { data: ofe } = await _supabase.from('ofertas').select('*');
+            
+            empresas = emp || [];
+            vagas = vag || [];
+            ofertas = ofe || [];
+        }
 
-        const vagas = [
-            { titulo: "Vendedor Externo", empresa: "Loja Exemplo", local: "Centro" },<br/>
-            { titulo: "Auxiliar Administrativo", empresa: "Grupo Codó", local: "Distrito Industrial" }
-        ];
+        function renderizarTudo() {
+            renderEmpresas(empresas);
+            renderVagas(vagas);
+            renderOfertas(ofertas);
+        }
 
-        function renderizar() {
-            const gridEmp = document.getElementById('grid-destaques');
-            const gridVag = document.getElementById('grid-vagas');
-
-            empresas.forEach(e => {
-                gridEmp.innerHTML += `
-                    <div class="card" onclick="abrirEmpresa('${e.nome}')">
-                        <img src="${e.img}" class="card-img">
-                        <div class="card-info">
-                            <div class="card-name">${e.nome}</div>
-                            <div style="font-size: 12px; color: #666;">★★★★☆</div>
+        function renderEmpresas(lista) {
+            const container = document.getElementById('lista-empresas');
+            container.innerHTML = lista.map(e => `
+                <div class="card" onclick="verEmpresa(${e.id})">
+                    ${e.premium ? '<span class="badge-premium">Destaque</span>' : ''}<br/>
+                    <div class="card-img" style="background: ${getCor(e.av_index)}">${e.iniciais}</div>
+                    <div class="card-body">
+                        <div class="card-title">${e.nome}</div>
+                        <div class="card-sub">${e.categoria}</div>
+                        <div class="rating-stars">
+                            ${Array(Math.floor(e.rating)).fill('<i class="fas fa-star"></i>').join('')}
+                            <span style="color: #64748b; font-size: 0.7rem;">(${e.rating})</span>
                         </div>
+                        <button class="btn-avaliar">Avaliar</button>
                     </div>
-                `;
-            });
-
-            vagas.forEach(v => {
-                gridVag.innerHTML += `
-                    <div class="card" onclick="oM('modalVaga')">
-                        <div class="card-info">
-                            <div class="card-name">${v.titulo}</div>
-                            <div style="font-size: 12px; color: #888;">${v.empresa}</div>
-                        </div>
-                    </div>
-                `;
-            });
+                </div>
+            `).join('');
         }
 
-        function abrirEmpresa(nome) {
-            document.getElementById('m-emp-nome').innerText = nome;
-            oM('modalEmpresa');
+        function renderVagas(lista) {
+            const container = document.getElementById('lista-vagas');
+            container.innerHTML = lista.map(v => `
+                <div class="card" style="display: flex; flex-direction: row; height: auto;" onclick="verVaga(${v.id})"><br/>
+                    <div style="padding: 15px; flex: 1;">
+                        <div class="card-title">${v.nome}</div>
+                        <div class="card-sub">${v.empresa}</div>
+                        <div style="font-size: 0.7rem; color: var(--success); font-weight: 700;">Candidatura Aberta</div>
+                    </div>
+                </div>
+            `).join('');
         }
 
-        window.onload = renderizar;
+        function renderOfertas(lista) {
+            const container = document.getElementById('lista-ofertas');
+            container.innerHTML = lista.map(o => `
+                <div class="card">
+                    <div class="card-img" style="background: #fee2e2; color: #ef4444;"><i class="fas fa-fire"></i></div>
+                    <div class="card-body">
+                        <div class="card-title">${o.titulo}</div>
+                        <div style="color: var(--danger); font-weight: 800; font-size: 0.9rem;">R$ ${o.preco}</div><br/>
+                        <button class="btn-submit" style="padding: 8px; font-size: 0.7rem; margin-top: 8px;">Comprar Agora</button>
+                    </div>
+                </div>
+            `).join('');
+        }
 
-        // Fechar modais ao clicar fora
-        window.onclick = function(event) {
-            if (event.target.className === 'mbg') {
-                event.target.style.display = 'none';
+        // Ações de Cadastro
+        async function cadastrarEmpresa() {
+            const nome = document.getElementById('emp-nome').value;
+            const plano = document.getElementById('emp-plano').value;
+            
+            if(!nome) return alert('Nome é obrigatório');
+
+            const iniciais = nome.split(' ').map(n => n[0]).join('').substring(0,2).toUpperCase();
+            const av_index = Math.floor(Math.random() * 6);
+
+            const { error } = await _supabase.from('empresas').insert([{
+                nome: nome,<br/>
+                categoria: document.getElementById('emp-cat').value,<br/>
+                whatsapp: document.getElementById('emp-whatsapp').value,<br/>
+                descricao: document.getElementById('emp-desc').value,<br/>
+                plano: plano,<br/>
+                premium: plano !== 'Básico (Grátis)',<br/>
+                aprovado: false,<br/>
+                rating: 5.0,<br/>
+                iniciais: iniciais,<br/>
+                av_index: av_index,<br/>
+                created_at: new Date()
+            }]);
+
+            if(error) alert('Erro ao cadastrar');
+            else {
+                alert('Empresa enviada para análise!');
+                cM('modal-cadastro-empresa');
             }
         }
+
+        async function cadastrarUsuario() {
+            const nome = document.getElementById('reg-nome').value;
+            const tipo = document.getElementById('reg-tipo').value;
+
+            const { error } = await _supabase.from('usuarios').insert([{
+                nome: nome,<br/>
+                whatsapp: document.getElementById('reg-whatsapp').value,<br/>
+                tipo: tipo,<br/>
+                aprovado: true
+            }]);
+
+            if(error) alert('Erro ao criar conta');
+            else {
+                if(tipo === 'empresa') {
+                    cM('modal-cadastro-user');
+                    oM('modal-cadastro-empresa');
+                } else {
+                    alert('Conta criada com sucesso!');
+                    cM('modal-cadastro-user');
+                }
+            }
+        }
+
+        // UI Helpers
+        function oM(id) { document.getElementById(id).style.display = 'flex'; }
+        function cM(id) { document.getElementById(id).style.display = 'none'; }
+        function eC(e, id) { if(e.target.id === id) cM(id); }
+        
+        function getCor(i) {
+            const cores = ['#3b82f6', '#ef4444', '#10b981', '#f59e0b', '#8b5cf6', '#ec4899'];
+            return cores[i] || cores[0];
+        }
+
+        function checkTipo(val) {
+            if(val === 'empresa') {
+                // Lógica extra se necessário
+            }
+        }
+
+        function filtrar() {
+            const termo = document.getElementById('main-search').value.toLowerCase();
+            const filtradas = empresas.filter(e => e.nome.toLowerCase().includes(termo) || e.categoria.toLowerCase().includes(termo));
+            renderEmpresas(filtradas);
+        }
+
+        function sC(cat) {
+            document.querySelectorAll('.cat-item').forEach(i => i.classList.remove('active'));
+            event.target.classList.add('active');
+            if(cat === 'Todas') renderEmpresas(empresas);
+            else renderEmpresas(empresas.filter(e => e.categoria === cat));
+        }
+
+        init();
     </script>
 </body>
 </html>

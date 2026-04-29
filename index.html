@@ -1045,21 +1045,21 @@ rO(ofertas);
 rV(vagas.slice(0,3));
 </script>
 <script>
-    // Track the current rating per company
+    // Track the current rating for each company
     let companyRatings = {};
 
-    // Função para definir as estrelas
+    // Function to set stars for each company card
     function setEstrela(companyId, n) {
-        companyRatings[companyId] = n;
-        document.querySelectorAll(`#ncard-${companyId} .estrela`).forEach((estrela, index) => {
+        companyRatings[companyId] = n;  // Store the rating for the current company
+        document.querySelectorAll(`#avaliacao-empresa-${companyId} .estrela`).forEach((estrela, index) => {
             if (index < n) {
-                estrela.style.color = '#fbbf24';
+                estrela.style.color = '#fbbf24';  // Highlight stars in gold
             } else {
-                estrela.style.color = '#ccc';
+                estrela.style.color = '#ccc';    // Dim unselected stars
             }
         });
 
-        // Atualiza o texto de feedback
+        // Update the feedback message for each company
         let message = '';
         switch (n) {
             case 1:
@@ -1081,7 +1081,7 @@ rV(vagas.slice(0,3));
         document.getElementById(`avaliacao-mensagem-${companyId}`).innerText = message;
     }
 
-    // Função para enviar a avaliação para o Supabase
+    // Function to send the rating to Supabase for each company
     function enviarAvaliacao(companyId) {
         const rating = companyRatings[companyId];
         if (!rating) {
@@ -1090,12 +1090,12 @@ rV(vagas.slice(0,3));
         }
 
         const avaliacao = {
-            empresa_id: companyId,  // Use the correct company ID here
+            empresa_id: companyId,  // Use the company ID here
             estrelas: rating,
             data: new Date().toISOString()
         };
 
-        // Enviar a avaliação para o Supabase
+        // Send the evaluation to Supabase
         fetch('https://xzcqsyqgtmbfsufezuyp.supabase.co/rest/v1/avaliacoes', {
             method: 'POST',
             headers: {

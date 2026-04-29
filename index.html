@@ -1,13 +1,15 @@
+
 <!DOCTYPE html>
+
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Guia Codoense – Encontre empresas, serviços, vagas de emprego e ofertas em Codó, Maranhão.">
-<meta name="theme-color" content="#0f1f16">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="Guia Codoense – Encontre empresas, serviços, vagas de emprego e ofertas em Codó, Maranhão." name="description"/>
+<meta content="#0f1f16" name="theme-color"/>
 <title>Guia Codoense – Codó, MA</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&amp;family=DM+Sans:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
@@ -259,341 +261,345 @@ body{font-family:'DM Sans',sans-serif;background:#faf7f2;color:#1c2b22;overflow-
 </style>
 </head>
 <body>
-
 <!-- HERO -->
 <div class="hero">
-  <div class="hp"></div>
-  <div class="hi">
-    <div class="ht">
-      <div>
-        <div class="ls">cidade de codó · ma</div>
-        <div class="lm">Guia <span>Codoense</span></div>
-      </div>
-      <div style="display:flex;gap:8px;align-items:center">
-        <button class="bh" style="background:transparent;border:1px solid rgba(255,255,255,.3);color:#fff" onclick="oM('planos')">Planos</button>
-        <button class="bh" style="background:var(--gl);color:#fff" onclick="oM('login')">Entre ou cadastre-se</button>
-      </div>
-    </div>
-    <div class="sw">
-      <input type="text" id="si" placeholder="Buscar empresa, serviço ou profissional..." oninput="filtrar()" autocomplete="off">
-      <button onclick="filtrar()">Buscar</button>
-    </div>
-    <div class="bm" id="bmain">
-      <div class="bt" id="btrack">
-        <div class="bs" style="background:linear-gradient(135deg,#0f2d1a,#1a5c35)"><div class="bsbg" style="background:radial-gradient(circle at 80% 50%,#2d9e5f,transparent 60%)"></div><div class="bsc"><div class="bsey" style="color:#5dd98a">Oportunidade</div><div class="bst" style="color:#fff">Destaque sua<br>empresa em Codó</div><div class="bss" style="color:rgba(255,255,255,.6)">Apareça primeiro para milhares de clientes</div><button class="bsb" style="background:var(--go);color:#fff" onclick="oM('planos')">Ver planos</button></div><div class="bsl">🏆</div></div>
-        <div class="bs" style="background:linear-gradient(135deg,#1a1a0f,#3d3000)"><div class="bsbg" style="background:radial-gradient(circle at 80% 50%,#c8922a,transparent 60%)"></div><div class="bsc"><div class="bsey" style="color:#fbbf24">Destaque</div><div class="bst" style="color:#fff">Restaurante<br>Sabor da Terra</div><div class="bss" style="color:rgba(255,255,255,.6)">Culinária regional · Almoço executivo</div><button class="bsb" style="background:#fff;color:#1a1a0f" onclick="abrirEmpresa(2)">Ver perfil</button></div><div class="bsl">🍽️</div></div>
-        <div class="bs" style="background:linear-gradient(135deg,#0f1a3d,#1a2b5c)"><div class="bsbg" style="background:radial-gradient(circle at 80% 50%,#60a5fa,transparent 60%)"></div><div class="bsc"><div class="bsey" style="color:#93c5fd">Saúde em Codó</div><div class="bst" style="color:#fff">Farmácia<br>São João</div><div class="bss" style="color:rgba(255,255,255,.6)">Delivery · Manipulação · Convênios</div><button class="bsb" style="background:#60a5fa;color:#0f1a3d" onclick="abrirEmpresa(1)">Ver perfil</button></div><div class="bsl">💊</div></div>
-        <div class="bs" style="background:linear-gradient(135deg,#2e0f2e,#5c1a5c)"><div class="bsbg" style="background:radial-gradient(circle at 80% 50%,#c084fc,transparent 60%)"></div><div class="bsc"><div class="bsey" style="color:#d8b4fe">Vagas abertas</div><div class="bst" style="color:#fff">Encontre seu<br>próximo emprego</div><div class="bss" style="color:rgba(255,255,255,.6)">Vagas disponíveis em Codó agora</div><button class="bsb" style="background:#c084fc;color:#1a0f1a" onclick="irP('vagas',null)">Ver vagas</button></div><div class="bsl">💼</div></div>
-      </div>
-      <button class="ba" style="left:8px" onclick="mvB(-1)">‹</button>
-      <button class="ba" style="right:8px" onclick="mvB(1)">›</button>
-      <div class="bds" id="bdots"></div>
-    </div>
-  </div>
-  <div class="cw"><div class="ci"><div class="cs">
-    <div class="cp on" onclick="sC(this,'','inicio')"><div class="cpi">🏠</div><div class="cpl">Início</div></div>
-    <div class="cp" onclick="sC(this,'ofertas','ofertas')"><div class="cpi">🔥</div><div class="cpl">Ofertas</div></div>
-    <div class="cp" onclick="sC(this,'vagas','vagas')"><div class="cpi">💼</div><div class="cpl">Vagas</div></div>
-    <div class="cp" onclick="sC(this,'Alimentação','emp')"><div class="cpi">🍽️</div><div class="cpl">Alimentação</div></div>
-    <div class="cp" onclick="sC(this,'Saúde','emp')"><div class="cpi">🏥</div><div class="cpl">Saúde</div></div>
-    <div class="cp" onclick="sC(this,'Beleza','emp')"><div class="cpi">💇</div><div class="cpl">Beleza</div></div>
-    <div class="cp" onclick="sC(this,'Educação','emp')"><div class="cpi">📚</div><div class="cpl">Educação</div></div>
-    <div class="cp" onclick="sC(this,'Serviços','emp')"><div class="cpi">🔧</div><div class="cpl">Serviços</div></div>
-    <div class="cp" onclick="sC(this,'Comércio','emp')"><div class="cpi">🛍️</div><div class="cpl">Comércio</div></div>
-    <div class="cp" onclick="sC(this,'Profissionais','emp')"><div class="cpi">👔</div><div class="cpl">Profissionais</div></div>
-  </div></div></div>
+<div class="hp"></div>
+<div class="hi">
+<div class="ht">
+<div>
+<div class="ls">cidade de codó · ma</div>
+<div class="lm">Guia <span>Codoense</span></div>
 </div>
-
+<div style="display:flex;gap:8px;align-items:center">
+<button class="bh" onclick="oM('planos')" style="background:transparent;border:1px solid rgba(255,255,255,.3);color:#fff">Planos</button>
+<button class="bh" onclick="oM('login')" style="background:var(--gl);color:#fff">Entre ou cadastre-se</button>
+</div>
+</div>
+<div class="sw">
+<input autocomplete="off" id="si" oninput="filtrar()" placeholder="Buscar empresa, serviço ou profissional..." type="text"/>
+<button onclick="filtrar()">Buscar</button>
+</div>
+<div class="bm" id="bmain">
+<div class="bt" id="btrack">
+<div class="bs" style="background:linear-gradient(135deg,#0f2d1a,#1a5c35)"><div class="bsbg" style="background:radial-gradient(circle at 80% 50%,#2d9e5f,transparent 60%)"></div><div class="bsc"><div class="bsey" style="color:#5dd98a">Oportunidade</div><div class="bst" style="color:#fff">Destaque sua<br/>empresa em Codó</div><div class="bss" style="color:rgba(255,255,255,.6)">Apareça primeiro para milhares de clientes</div><button class="bsb" onclick="oM('planos')" style="background:var(--go);color:#fff">Ver planos</button></div><div class="bsl">🏆</div></div>
+<div class="bs" style="background:linear-gradient(135deg,#1a1a0f,#3d3000)"><div class="bsbg" style="background:radial-gradient(circle at 80% 50%,#c8922a,transparent 60%)"></div><div class="bsc"><div class="bsey" style="color:#fbbf24">Destaque</div><div class="bst" style="color:#fff">Restaurante<br/>Sabor da Terra</div><div class="bss" style="color:rgba(255,255,255,.6)">Culinária regional · Almoço executivo</div><button class="bsb" onclick="abrirEmpresa(2)" style="background:#fff;color:#1a1a0f">Ver perfil</button></div><div class="bsl">🍽️</div></div>
+<div class="bs" style="background:linear-gradient(135deg,#0f1a3d,#1a2b5c)"><div class="bsbg" style="background:radial-gradient(circle at 80% 50%,#60a5fa,transparent 60%)"></div><div class="bsc"><div class="bsey" style="color:#93c5fd">Saúde em Codó</div><div class="bst" style="color:#fff">Farmácia<br/>São João</div><div class="bss" style="color:rgba(255,255,255,.6)">Delivery · Manipulação · Convênios</div><button class="bsb" onclick="abrirEmpresa(1)" style="background:#60a5fa;color:#0f1a3d">Ver perfil</button></div><div class="bsl">💊</div></div>
+<div class="bs" style="background:linear-gradient(135deg,#2e0f2e,#5c1a5c)"><div class="bsbg" style="background:radial-gradient(circle at 80% 50%,#c084fc,transparent 60%)"></div><div class="bsc"><div class="bsey" style="color:#d8b4fe">Vagas abertas</div><div class="bst" style="color:#fff">Encontre seu<br/>próximo emprego</div><div class="bss" style="color:rgba(255,255,255,.6)">Vagas disponíveis em Codó agora</div><button class="bsb" onclick="irP('vagas',null)" style="background:#c084fc;color:#1a0f1a">Ver vagas</button></div><div class="bsl">💼</div></div>
+</div>
+<button class="ba" onclick="mvB(-1)" style="left:8px">‹</button>
+<button class="ba" onclick="mvB(1)" style="right:8px">›</button>
+<div class="bds" id="bdots"></div>
+</div>
+</div>
+<div class="cw"><div class="ci"><div class="cs">
+<div class="cp on" onclick="sC(this,'','inicio')"><div class="cpi">🏠</div><div class="cpl">Início</div></div>
+<div class="cp" onclick="sC(this,'ofertas','ofertas')"><div class="cpi">🔥</div><div class="cpl">Ofertas</div></div>
+<div class="cp" onclick="sC(this,'vagas','vagas')"><div class="cpi">💼</div><div class="cpl">Vagas</div></div>
+<div class="cp" onclick="sC(this,'Alimentação','emp')"><div class="cpi">🍽️</div><div class="cpl">Alimentação</div></div>
+<div class="cp" onclick="sC(this,'Saúde','emp')"><div class="cpi">🏥</div><div class="cpl">Saúde</div></div>
+<div class="cp" onclick="sC(this,'Beleza','emp')"><div class="cpi">💇</div><div class="cpl">Beleza</div></div>
+<div class="cp" onclick="sC(this,'Educação','emp')"><div class="cpi">📚</div><div class="cpl">Educação</div></div>
+<div class="cp" onclick="sC(this,'Serviços','emp')"><div class="cpi">🔧</div><div class="cpl">Serviços</div></div>
+<div class="cp" onclick="sC(this,'Comércio','emp')"><div class="cpi">🛍️</div><div class="cpl">Comércio</div></div>
+<div class="cp" onclick="sC(this,'Profissionais','emp')"><div class="cpi">👔</div><div class="cpl">Profissionais</div></div>
+</div></div></div>
+</div>
 <!-- STATS -->
 <div class="stb">
-  <div class="sti"><div class="stn" id="total-emp">–</div><div class="stl">empresas</div></div>
-  <div class="sti"><div class="stn">8</div><div class="stl">vagas abertas</div></div>
-  <div class="sti"><div class="stn" style="color:#e11d48">5</div><div class="stl">ofertas hoje</div></div>
+<div class="sti"><div class="stn" id="total-emp">–</div><div class="stl">empresas</div></div>
+<div class="sti"><div class="stn">8</div><div class="stl">vagas abertas</div></div>
+<div class="sti"><div class="stn" style="color:#e11d48">5</div><div class="stl">ofertas hoje</div></div>
 </div>
-
 <!-- MAIN -->
 <div class="main">
-  <div id="so"><div class="sh"><div class="stt">🔥 Ofertas do dia</div><button class="svm" onclick="sC(document.querySelector('.cp:nth-child(2)'),'ofertas','ofertas')">Ver todas</button></div><div class="osc" id="oc"></div></div>
-  <div id="sv"><div class="sh"><div class="stt">💼 Vagas em Codó</div><button class="svm" onclick="irP('vagas',null)">Ver todas</button></div><div class="vlist" id="vc"></div></div>
-  <div id="sd"><div class="sh"><div class="stt">⭐ Destaques</div><div id="dcnt" style="font-size:10px;color:var(--mu)"></div></div><div class="dgrid" id="cd"></div></div>
-  <div id="sn"><div class="sh"><div class="stt">Todas as empresas</div><div id="ncnt" style="font-size:10px;color:var(--mu)"></div></div><div class="ngrid" id="cn"></div></div>
-  <div class="empty" id="emp-empty" style="display:none"><div>🔍</div>Nenhuma empresa encontrada.</div>
-  <div class="loading" id="loading" style="display:none"><div>⏳</div>Carregando empresas...</div>
+<div id="so"><div class="sh"><div class="stt">🔥 Ofertas do dia</div><button class="svm" onclick="sC(document.querySelector('.cp:nth-child(2)'),'ofertas','ofertas')">Ver todas</button></div><div class="osc" id="oc"></div></div>
+<div id="sv"><div class="sh"><div class="stt">💼 Vagas em Codó</div><button class="svm" onclick="irP('vagas',null)">Ver todas</button></div><div class="vlist" id="vc"></div></div>
+<div id="sd"><div class="sh"><div class="stt">⭐ Destaques</div><div id="dcnt" style="font-size:10px;color:var(--mu)"></div></div><div class="dgrid" id="cd"></div></div>
+<div id="sn"><div class="sh"><div class="stt">Todas as empresas</div><div id="ncnt" style="font-size:10px;color:var(--mu)"></div></div><div class="ngrid" id="cn"></div></div>
+<div class="empty" id="emp-empty" style="display:none"><div>🔍</div>Nenhuma empresa encontrada.</div>
+<div class="loading" id="loading" style="display:none"><div>⏳</div>Carregando empresas...</div>
 </div>
-
 <!-- BANNER RODAPÉ -->
 <div class="bfw">
-  <div class="bftr" id="bftr">
-    <div class="bfs" style="background:linear-gradient(90deg,#0f2d1a,#1a5c35)" onclick="oM('planos')"><div class="bfbg" style="background:linear-gradient(90deg,transparent,#2d9e5f)"></div><div class="bfic">⭐</div><div class="bftx"><div class="bftt">Destaque seu negócio!</div><div class="bfsb">A partir de R$ 49/mês</div></div><button class="bfct" style="background:var(--go);color:#fff">Ver</button></div>
-    <div class="bfs" style="background:linear-gradient(90deg,#3d0a0a,#7f1d1d)" onclick="abrirVaga(1)"><div class="bfbg" style="background:linear-gradient(90deg,transparent,#dc2626)"></div><div class="bfic">💼</div><div class="bftx"><div class="bftt">Vaga: Atendente de Farmácia</div><div class="bfsb">Farmácia São João · Candidate-se já</div></div><button class="bfct" style="background:#f87171;color:#3d0a0a">Ver</button></div>
-    <div class="bfs" style="background:linear-gradient(90deg,#1a1a0f,#2e2200)" onclick="oM('cadastro')"><div class="bfbg" style="background:linear-gradient(90deg,transparent,#c8922a)"></div><div class="bfic">🏪</div><div class="bftx"><div class="bftt">Cadastre sua empresa grátis</div><div class="bfsb">Apareça para toda Codó agora mesmo</div></div><button class="bfct" style="background:#fbbf24;color:#1a1a0f">Cadastrar</button></div>
-    <div class="bfs" style="background:linear-gradient(90deg,#0f1a3d,#0f2a5c)" onclick="irP('vagas',null)"><div class="bfbg" style="background:linear-gradient(90deg,transparent,#1d4ed8)"></div><div class="bfic">💼</div><div class="bftx"><div class="bftt">Vagas abertas em Codó</div><div class="bfsb">Confira e candidate-se gratuitamente</div></div><button class="bfct" style="background:#60a5fa;color:#0f1a3d">Ver vagas</button></div>
-  </div>
-  <div class="bfds" id="bfds"></div>
+<div class="bftr" id="bftr">
+<div class="bfs" onclick="oM('planos')" style="background:linear-gradient(90deg,#0f2d1a,#1a5c35)"><div class="bfbg" style="background:linear-gradient(90deg,transparent,#2d9e5f)"></div><div class="bfic">⭐</div><div class="bftx"><div class="bftt">Destaque seu negócio!</div><div class="bfsb">A partir de R$ 49/mês</div></div><button class="bfct" style="background:var(--go);color:#fff">Ver</button></div>
+<div class="bfs" onclick="abrirVaga(1)" style="background:linear-gradient(90deg,#3d0a0a,#7f1d1d)"><div class="bfbg" style="background:linear-gradient(90deg,transparent,#dc2626)"></div><div class="bfic">💼</div><div class="bftx"><div class="bftt">Vaga: Atendente de Farmácia</div><div class="bfsb">Farmácia São João · Candidate-se já</div></div><button class="bfct" style="background:#f87171;color:#3d0a0a">Ver</button></div>
+<div class="bfs" onclick="oM('cadastro')" style="background:linear-gradient(90deg,#1a1a0f,#2e2200)"><div class="bfbg" style="background:linear-gradient(90deg,transparent,#c8922a)"></div><div class="bfic">🏪</div><div class="bftx"><div class="bftt">Cadastre sua empresa grátis</div><div class="bfsb">Apareça para toda Codó agora mesmo</div></div><button class="bfct" style="background:#fbbf24;color:#1a1a0f">Cadastrar</button></div>
+<div class="bfs" onclick="irP('vagas',null)" style="background:linear-gradient(90deg,#0f1a3d,#0f2a5c)"><div class="bfbg" style="background:linear-gradient(90deg,transparent,#1d4ed8)"></div><div class="bfic">💼</div><div class="bftx"><div class="bftt">Vagas abertas em Codó</div><div class="bfsb">Confira e candidate-se gratuitamente</div></div><button class="bfct" style="background:#60a5fa;color:#0f1a3d">Ver vagas</button></div>
 </div>
-
+<div class="bfds" id="bfds"></div>
+</div>
 <!-- TAB BAR -->
 <div class="tabbar">
-  <button class="tab on" onclick="irP('inicio',this)"><div class="tab-i">🏠</div><div class="tab-l">Início</div><div class="tab-d"></div></button>
-  <button class="tab" onclick="irP('ofertas',this)"><div class="tab-i">🔥</div><div class="tab-l">Ofertas</div><div class="tab-d"></div></button>
-  <button class="tab" onclick="irP('vagas',this)"><div class="tab-i">💼</div><div class="tab-l">Vagas</div><div class="tab-d"></div></button>
-  <button class="tab" onclick="irP('emp',this)"><div class="tab-i">🏪</div><div class="tab-l">Empresas</div><div class="tab-d"></div></button>
-  <button class="tab" onclick="oM('login')"><div class="tab-i">👤</div><div class="tab-l">Entrar</div><div class="tab-d"></div></button>
+<button class="tab on" onclick="irP('inicio',this)"><div class="tab-i">🏠</div><div class="tab-l">Início</div><div class="tab-d"></div></button>
+<button class="tab" onclick="irP('ofertas',this)"><div class="tab-i">🔥</div><div class="tab-l">Ofertas</div><div class="tab-d"></div></button>
+<button class="tab" onclick="irP('vagas',this)"><div class="tab-i">💼</div><div class="tab-l">Vagas</div><div class="tab-d"></div></button>
+<button class="tab" onclick="irP('emp',this)"><div class="tab-i">🏪</div><div class="tab-l">Empresas</div><div class="tab-d"></div></button>
+<button class="tab" onclick="oM('login')"><div class="tab-i">👤</div><div class="tab-l">Entrar</div><div class="tab-d"></div></button>
 </div>
-
 <!-- MODAL LOGIN -->
 <div class="mbg" id="m-login">
-  <div class="modal">
-    <div class="mhd"><div class="mtt">Guia <span style="color:var(--gl)">Codoense</span></div><button class="mcl" onclick="cM('login')">×</button></div>
-    <div class="mbod">
-      <div style="text-align:center;margin-bottom:16px"><div style="font-size:9px;letter-spacing:2px;color:var(--mu);text-transform:uppercase">cidade de codó · ma</div></div>
-      <div class="ltbs">
-        <button class="ltb on" onclick="ltab('e',this)">Entrar</button>
-        <button class="ltb" onclick="ltab('c',this)">Criar conta</button>
-      </div>
-      <!-- ENTRAR -->
-      <div class="lpanel on" id="lp-e">
-        <button class="bsoc">🌐 Continuar com Google</button>
-        <button class="bsoc">📘 Continuar com Facebook</button>
-        <div class="ldiv">ou use seu e-mail</div>
-        <div class="fi"><label>E-mail</label><input type="email" placeholder="seu@email.com"></div>
-        <div class="fi"><label>Senha</label><input type="password" placeholder="••••••••"></div>
-        <div style="text-align:right;margin-bottom:14px"><span style="font-size:11px;color:var(--g);cursor:pointer;font-weight:600">Esqueci minha senha</span></div>
-        <button class="bm2 bcf" style="width:100%;margin-bottom:10px" onclick="simL()">Entrar</button>
-        <div style="text-align:center;font-size:12px;color:var(--mu)">Não tem conta? <span style="color:var(--g);cursor:pointer;font-weight:600" onclick="ltab('c',null)">Criar grátis</span></div>
-        <div style="border-top:1px solid var(--bo);margin-top:16px;padding-top:12px;text-align:center"><span style="font-size:11px;color:var(--mu)">É empresa? </span><span style="font-size:11px;color:var(--g);cursor:pointer;font-weight:600" onclick="cM('login');oM('cadastro')">Cadastre seu negócio aqui</span></div>
-      </div>
-      <!-- CRIAR CONTA -->
-      <div class="lpanel" id="lp-c">
-        <div style="font-size:12px;color:var(--mu);margin-bottom:12px">Você é:</div>
-        <div class="tpsl">
-          <div class="tpb on" id="tp-p" onclick="selT('p')"><div class="tpi">👤</div><div class="tpl">Pessoa física</div><div class="tps">Buscar vagas e ofertas</div></div>
-          <div class="tpb" id="tp-e" onclick="selT('e')"><div class="tpi">🏪</div><div class="tpl">Empresa</div><div class="tps">Divulgar meu negócio</div></div>
-        </div>
-        <button class="bsoc">🌐 Cadastrar com Google</button>
-        <div class="ldiv">ou preencha os dados</div>
-        <div class="form-erro-geral" id="err-usuario">Verifique os campos em vermelho antes de continuar.</div>
-        <div class="fi">
-          <label>Nome completo <span class="err-msg" id="e-u-nome">⚠ Campo obrigatório</span></label>
-          <input type="text" id="u-nome" placeholder="Seu nome completo" oninput="limparErro('u-nome','e-u-nome')">
-        </div>
-        <div class="fi">
-          <label>E-mail <span class="err-msg" id="e-u-email">⚠ E-mail inválido</span></label>
-          <input type="email" id="u-email" placeholder="seu@email.com" oninput="limparErro('u-email','e-u-email')">
-        </div>
-        <div class="fi">
-          <label>WhatsApp <span class="err-msg" id="e-u-wpp">⚠ Mínimo 10 dígitos</span></label>
-          <input type="tel" id="u-wpp" placeholder="(99) 99999-9999" oninput="limparErro('u-wpp','e-u-wpp')">
-        </div>
-        <input type="hidden" id="u-tipo" value="pessoa_fisica">
-        <button class="bm2 bcf" id="btn-usuario" style="width:100%;margin-top:6px" onclick="enviarUsuario()">
+<div class="modal">
+<div class="mhd"><div class="mtt">Guia <span style="color:var(--gl)">Codoense</span></div><button class="mcl" onclick="cM('login')">×</button></div>
+<div class="mbod">
+<div style="text-align:center;margin-bottom:16px"><div style="font-size:9px;letter-spacing:2px;color:var(--mu);text-transform:uppercase">cidade de codó · ma</div></div>
+<div class="ltbs">
+<button class="ltb on" onclick="ltab('e',this)">Entrar</button>
+<button class="ltb" onclick="ltab('c',this)">Criar conta</button>
+</div>
+<!-- ENTRAR -->
+<div class="lpanel on" id="lp-e">
+<button class="bsoc">🌐 Continuar com Google</button>
+<button class="bsoc">📘 Continuar com Facebook</button>
+<div class="ldiv">ou use seu e-mail</div>
+<div class="fi"><label>E-mail</label><input placeholder="seu@email.com" type="email"/></div>
+<div class="fi"><label>Senha</label><input placeholder="••••••••" type="password"/></div>
+<div style="text-align:right;margin-bottom:14px"><span style="font-size:11px;color:var(--g);cursor:pointer;font-weight:600">Esqueci minha senha</span></div>
+<button class="bm2 bcf" onclick="simL()" style="width:100%;margin-bottom:10px">Entrar</button>
+<div style="text-align:center;font-size:12px;color:var(--mu)">Não tem conta? <span onclick="ltab('c',null)" style="color:var(--g);cursor:pointer;font-weight:600">Criar grátis</span></div>
+<div style="border-top:1px solid var(--bo);margin-top:16px;padding-top:12px;text-align:center"><span style="font-size:11px;color:var(--mu)">É empresa? </span><span onclick="cM('login');oM('cadastro')" style="font-size:11px;color:var(--g);cursor:pointer;font-weight:600">Cadastre seu negócio aqui</span></div>
+</div>
+<!-- CRIAR CONTA -->
+<div class="lpanel" id="lp-c">
+<div style="font-size:12px;color:var(--mu);margin-bottom:12px">Você é:</div>
+<div class="tpsl">
+<div class="tpb on" id="tp-p" onclick="selT('p')"><div class="tpi">👤</div><div class="tpl">Pessoa física</div><div class="tps">Buscar vagas e ofertas</div></div>
+<div class="tpb" id="tp-e" onclick="selT('e')"><div class="tpi">🏪</div><div class="tpl">Empresa</div><div class="tps">Divulgar meu negócio</div></div>
+</div>
+<button class="bsoc">🌐 Cadastrar com Google</button>
+<div class="ldiv">ou preencha os dados</div>
+<div class="form-erro-geral" id="err-usuario">Verifique os campos em vermelho antes de continuar.</div>
+<div class="fi">
+<label>Nome completo <span class="err-msg" id="e-u-nome">⚠ Campo obrigatório</span></label>
+<input id="u-nome" oninput="limparErro('u-nome','e-u-nome')" placeholder="Seu nome completo" type="text"/>
+</div>
+<div class="fi">
+<label>E-mail <span class="err-msg" id="e-u-email">⚠ E-mail inválido</span></label>
+<input id="u-email" oninput="limparErro('u-email','e-u-email')" placeholder="seu@email.com" type="email"/>
+</div>
+<div class="fi">
+<label>WhatsApp <span class="err-msg" id="e-u-wpp">⚠ Mínimo 10 dígitos</span></label>
+<input id="u-wpp" oninput="limparErro('u-wpp','e-u-wpp')" placeholder="(99) 99999-9999" type="tel"/>
+</div>
+<input id="u-tipo" type="hidden" value="pessoa_fisica"/>
+<button class="bm2 bcf" id="btn-usuario" onclick="enviarUsuario()" style="width:100%;margin-top:6px">
           Criar conta grátis
         </button>
-        <div style="text-align:center;font-size:11px;color:var(--mu);margin-top:12px">É empresa? <span style="color:var(--g);cursor:pointer;font-weight:600" onclick="cM('login');oM('cadastro')">Cadastre seu negócio aqui</span></div>
-      </div>
-      <!-- SUCESSO USUÁRIO -->
-      <div class="form-success" id="fs-usuario">
-        <div class="fs-icon">🎉</div>
-        <div class="fs-title">Conta criada!</div>
-        <div class="fs-msg">Bem-vindo ao Guia Codoense!<br>Agora você pode acompanhar vagas e ofertas da cidade.</div>
-        <div class="fs-detalhe">O sistema de login completo chegará em breve.</div>
-        <button class="bm2 bcf" style="width:100%;margin-top:20px" onclick="cM('login')">Fechar</button>
-      </div>
-    </div>
-  </div>
+<div style="text-align:center;font-size:11px;color:var(--mu);margin-top:12px">É empresa? <span onclick="cM('login');oM('cadastro')" style="color:var(--g);cursor:pointer;font-weight:600">Cadastre seu negócio aqui</span></div>
 </div>
-
+<!-- SUCESSO USUÁRIO -->
+<div class="form-success" id="fs-usuario">
+<div class="fs-icon">🎉</div>
+<div class="fs-title">Conta criada!</div>
+<div class="fs-msg">Bem-vindo ao Guia Codoense!<br/>Agora você pode acompanhar vagas e ofertas da cidade.</div>
+<div class="fs-detalhe">O sistema de login completo chegará em breve.</div>
+<button class="bm2 bcf" onclick="cM('login')" style="width:100%;margin-top:20px">Fechar</button>
+</div>
+</div>
+</div>
+</div>
 <!-- MODAL CADASTRO EMPRESA -->
 <div class="mbg" id="m-cadastro">
-  <div class="modal">
-    <div class="mhd"><div class="mtt">🏪 Cadastrar empresa</div><button class="mcl" onclick="cM('cadastro')">×</button></div>
-    <div class="form-body" id="fb-cadastro">
-      <div class="mbod">
-        <p style="font-size:12px;color:var(--mu);margin-bottom:16px;line-height:1.6">Preencha os dados abaixo. O cadastro básico é <strong style="color:var(--g)">100% gratuito</strong> e sua empresa aparecerá no Guia Codoense em até 24h após aprovação.</p>
-        <div class="form-erro-geral" id="err-cadastro">Verifique os campos em vermelho antes de continuar.</div>
-        <div class="fi">
-          <label>Nome da empresa / profissional <span class="err-msg" id="e-c-nome">⚠ Campo obrigatório</span></label>
-          <input type="text" id="c-nome" placeholder="Ex: Padaria Central" oninput="limparErro('c-nome','e-c-nome')">
-        </div>
-        <div class="fi">
-          <label>Categoria <span class="err-msg" id="e-c-cat">⚠ Selecione uma categoria</span></label>
-          <select id="c-cat" onchange="limparErro('c-cat','e-c-cat')">
-            <option value="">Selecione...</option>
-            <option>Alimentação</option><option>Saúde</option><option>Beleza</option>
-            <option>Educação</option><option>Serviços</option><option>Comércio</option>
-            <option>Profissionais</option><option>Outro</option>
-          </select>
-        </div>
-        <div class="fi">
-          <label>Descrição do negócio <span class="err-msg" id="e-c-desc">⚠ Mínimo 20 caracteres</span></label>
-          <textarea id="c-desc" placeholder="O que sua empresa oferece? Descreva seus principais produtos ou serviços." oninput="limparErro('c-desc','e-c-desc')"></textarea>
-        </div>
-        <div class="fi-row">
-          <div class="fi">
-            <label>WhatsApp <span class="err-msg" id="e-c-wpp">⚠ Mínimo 10 dígitos</span></label>
-            <input type="tel" id="c-wpp" placeholder="(99) 99999-9999" oninput="limparErro('c-wpp','e-c-wpp')">
-          </div>
-          <div class="fi">
-            <label>Telefone fixo</label>
-            <input type="tel" id="c-tel" placeholder="(99) 3333-3333">
-          </div>
-        </div>
-        <div class="fi">
-          <label>Endereço completo <span class="err-msg" id="e-c-end">⚠ Campo obrigatório</span></label>
-          <input type="text" id="c-end" placeholder="Rua, número, bairro – Codó/MA" oninput="limparErro('c-end','e-c-end')">
-        </div>
-        <div class="fi">
-          <label>Horário de funcionamento <span class="err-msg" id="e-c-hora">⚠ Campo obrigatório</span></label>
-          <input type="text" id="c-hora" placeholder="Ex: Seg–Sex 8h–18h / Sáb 8h–12h" oninput="limparErro('c-hora','e-c-hora')">
-        </div>
-        <div class="fi">
-          <label>Instagram (opcional)</label>
-          <input type="text" id="c-insta" placeholder="@suaempresa">
-        </div>
-        <div class="fi">
-          <label>Especialidades <span style="font-size:9px;font-weight:400;color:var(--mu);text-transform:none;letter-spacing:0">(separadas por vírgula)</span></label>
-          <input type="text" id="c-tags" placeholder="Ex: Delivery, Convênios, Manipulação">
-        </div>
-        <div class="fi">
-          <label>Plano de interesse</label>
-          <select id="c-plano">
-            <option value="Básico (Grátis)">Básico – Listagem gratuita</option>
-            <option value="Destaque R$49/mês">Destaque – R$ 49/mês</option>
-            <option value="Premium R$129/mês">Premium – R$ 129/mês</option>
-          </select>
-        </div>
-        <div class="fi-hint" style="margin-bottom:16px">Após o envio, entraremos em contato pelo WhatsApp para confirmar o cadastro em até 24h.</div>
-        <button id="btn-cadastro" class="bm2 bcf" style="width:100%;padding:12px;font-size:14px" onclick="enviarCadastro()">
+<div class="modal">
+<div class="mhd"><div class="mtt">🏪 Cadastrar empresa</div><button class="mcl" onclick="cM('cadastro')">×</button></div>
+<div class="form-body" id="fb-cadastro">
+<div class="mbod">
+<p style="font-size:12px;color:var(--mu);margin-bottom:16px;line-height:1.6">Preencha os dados abaixo. O cadastro básico é <strong style="color:var(--g)">100% gratuito</strong> e sua empresa aparecerá no Guia Codoense em até 24h após aprovação.</p>
+<div class="form-erro-geral" id="err-cadastro">Verifique os campos em vermelho antes de continuar.</div>
+<div class="fi">
+<label>Nome da empresa / profissional <span class="err-msg" id="e-c-nome">⚠ Campo obrigatório</span></label>
+<input id="c-nome" oninput="limparErro('c-nome','e-c-nome')" placeholder="Ex: Padaria Central" type="text"/>
+</div>
+<div class="fi">
+<label>Categoria <span class="err-msg" id="e-c-cat">⚠ Selecione uma categoria</span></label>
+<select id="c-cat" onchange="limparErro('c-cat','e-c-cat')">
+<option value="">Selecione...</option>
+<option>Alimentação</option><option>Saúde</option><option>Beleza</option>
+<option>Educação</option><option>Serviços</option><option>Comércio</option>
+<option>Profissionais</option><option>Outro</option>
+</select>
+</div>
+<div class="fi">
+<label>Descrição do negócio <span class="err-msg" id="e-c-desc">⚠ Mínimo 20 caracteres</span></label>
+<textarea id="c-desc" oninput="limparErro('c-desc','e-c-desc')" placeholder="O que sua empresa oferece? Descreva seus principais produtos ou serviços."></textarea>
+</div>
+<div class="fi-row">
+<div class="fi">
+<label>WhatsApp <span class="err-msg" id="e-c-wpp">⚠ Mínimo 10 dígitos</span></label>
+<input id="c-wpp" oninput="limparErro('c-wpp','e-c-wpp')" placeholder="(99) 99999-9999" type="tel"/>
+</div>
+<div class="fi">
+<label>Telefone fixo</label>
+<input id="c-tel" placeholder="(99) 3333-3333" type="tel"/>
+</div>
+</div>
+<div class="fi">
+<label>Endereço completo <span class="err-msg" id="e-c-end">⚠ Campo obrigatório</span></label>
+<input id="c-end" oninput="limparErro('c-end','e-c-end')" placeholder="Rua, número, bairro – Codó/MA" type="text"/>
+</div>
+<div class="fi">
+<label>Horário de funcionamento <span class="err-msg" id="e-c-hora">⚠ Campo obrigatório</span></label>
+<input id="c-hora" oninput="limparErro('c-hora','e-c-hora')" placeholder="Ex: Seg–Sex 8h–18h / Sáb 8h–12h" type="text"/>
+</div>
+<div class="fi">
+<label>Instagram (opcional)</label>
+<input id="c-insta" placeholder="@suaempresa" type="text"/>
+</div>
+<div class="fi">
+<label>Especialidades <span style="font-size:9px;font-weight:400;color:var(--mu);text-transform:none;letter-spacing:0">(separadas por vírgula)</span></label>
+<input id="c-tags" placeholder="Ex: Delivery, Convênios, Manipulação" type="text"/>
+</div>
+<div class="fi">
+<label>Plano de interesse</label>
+<select id="c-plano">
+<option value="Básico (Grátis)">Básico – Listagem gratuita</option>
+<option value="Destaque R$49/mês">Destaque – R$ 49/mês</option>
+<option value="Premium R$129/mês">Premium – R$ 129/mês</option>
+</select>
+</div>
+<div class="fi-hint" style="margin-bottom:16px">Após o envio, entraremos em contato pelo WhatsApp para confirmar o cadastro em até 24h.</div>
+<button class="bm2 bcf" id="btn-cadastro" onclick="enviarCadastro()" style="width:100%;padding:12px;font-size:14px">
           Enviar cadastro grátis ✓
         </button>
-      </div>
-    </div>
-    <div class="form-success" id="fs-cadastro">
-      <div class="fs-icon">🎉</div>
-      <div class="fs-title">Cadastro enviado!</div>
-      <div class="fs-msg">Recebemos os dados da sua empresa com sucesso.<br>Nossa equipe vai analisar e entrar em contato pelo WhatsApp em até <strong>24 horas</strong>.</div>
-      <div class="fs-detalhe">📱 Fique atento ao seu WhatsApp!</div>
-      <button class="bm2 bcf" style="width:100%;margin-top:20px" onclick="cM('cadastro')">Fechar</button>
-    </div>
-  </div>
 </div>
-
+</div>
+<div class="form-success" id="fs-cadastro">
+<div class="fs-icon">🎉</div>
+<div class="fs-title">Cadastro enviado!</div>
+<div class="fs-msg">Recebemos os dados da sua empresa com sucesso.<br/>Nossa equipe vai analisar e entrar em contato pelo WhatsApp em até <strong>24 horas</strong>.</div>
+<div class="fs-detalhe">📱 Fique atento ao seu WhatsApp!</div>
+<button class="bm2 bcf" onclick="cM('cadastro')" style="width:100%;margin-top:20px">Fechar</button>
+</div>
+</div>
+</div>
 <!-- MODAL PLANOS -->
 <div class="mbg" id="m-planos">
-  <div class="modal">
-    <div class="mhd"><div class="mtt">⭐ Planos de destaque</div><button class="mcl" onclick="cM('planos')">×</button></div>
-    <div class="form-body" id="fb-planos">
-      <div class="mbod">
-        <p style="font-size:12px;color:var(--mu);margin-bottom:16px;line-height:1.6">Escolha o plano ideal e apareça primeiro para quem busca em Codó.</p>
-        <div class="plano" id="pl-basico" onclick="selPlano('Básico (Grátis)','Básico – Gratuito','pl-basico')"><div class="pln">Básico</div><div class="pld">Listagem com nome, contato, endereço e horário.</div><div class="plp">Grátis</div></div>
-        <div class="plano ft" id="pl-dest" onclick="selPlano('Destaque R$49/mês','Destaque – R$ 49/mês','pl-dest')"><div class="plb">Mais popular</div><div class="pln">Destaque</div><div class="pld">Aparece no topo + selo dourado + banner rotativo + publicar vagas e ofertas.</div><div class="plp">R$ 49<span>/mês</span></div></div>
-        <div class="plano" id="pl-prem" onclick="selPlano('Premium R$129/mês','Premium – R$ 129/mês','pl-prem')"><div class="pln">Premium</div><div class="pld">Tudo do Destaque + banner no rodapé + divulgação nas redes do Guia.</div><div class="plp">R$ 129<span>/mês</span></div></div>
-        <div style="border-top:1px solid var(--bo);margin-top:16px;padding-top:16px">
-          <p style="font-size:12px;font-weight:600;color:var(--tx);margin-bottom:12px">Deixe seu contato e te retornamos:</p>
-          <div class="form-erro-geral" id="err-planos">Verifique os campos em vermelho antes de continuar.</div>
-          <div class="fi">
-            <label>Nome da empresa <span class="err-msg" id="e-p-nome">⚠ Campo obrigatório</span></label>
-            <input type="text" id="p-nome" placeholder="Nome da sua empresa" oninput="limparErro('p-nome','e-p-nome')">
-          </div>
-          <div class="fi-row">
-            <div class="fi">
-              <label>WhatsApp <span class="err-msg" id="e-p-wpp">⚠ Mínimo 10 dígitos</span></label>
-              <input type="tel" id="p-wpp" placeholder="(99) 99999-9999" oninput="limparErro('p-wpp','e-p-wpp')">
-            </div>
-            <div class="fi">
-              <label>Plano escolhido</label>
-              <input type="text" id="plano-disp" value="Destaque – R$ 49/mês" readonly style="background:var(--cr);color:var(--g);font-weight:600">
-            </div>
-          </div>
-          <input type="hidden" id="plano-val" value="Destaque R$49/mês">
-          <button id="btn-planos" class="bm2 bcf" style="width:100%;padding:12px;font-size:14px" onclick="enviarPlano()">
+<div class="modal">
+<div class="mhd"><div class="mtt">⭐ Planos de destaque</div><button class="mcl" onclick="cM('planos')">×</button></div>
+<div class="form-body" id="fb-planos">
+<div class="mbod">
+<p style="font-size:12px;color:var(--mu);margin-bottom:16px;line-height:1.6">Escolha o plano ideal e apareça primeiro para quem busca em Codó.</p>
+<div class="plano" id="pl-basico" onclick="selPlano('Básico (Grátis)','Básico – Gratuito','pl-basico')"><div class="pln">Básico</div><div class="pld">Listagem com nome, contato, endereço e horário.</div><div class="plp">Grátis</div></div>
+<div class="plano ft" id="pl-dest" onclick="selPlano('Destaque R$49/mês','Destaque – R$ 49/mês','pl-dest')"><div class="plb">Mais popular</div><div class="pln">Destaque</div><div class="pld">Aparece no topo + selo dourado + banner rotativo + publicar vagas e ofertas.</div><div class="plp">R$ 49<span>/mês</span></div></div>
+<div class="plano" id="pl-prem" onclick="selPlano('Premium R$129/mês','Premium – R$ 129/mês','pl-prem')"><div class="pln">Premium</div><div class="pld">Tudo do Destaque + banner no rodapé + divulgação nas redes do Guia.</div><div class="plp">R$ 129<span>/mês</span></div></div>
+<div style="border-top:1px solid var(--bo);margin-top:16px;padding-top:16px">
+<p style="font-size:12px;font-weight:600;color:var(--tx);margin-bottom:12px">Deixe seu contato e te retornamos:</p>
+<div class="form-erro-geral" id="err-planos">Verifique os campos em vermelho antes de continuar.</div>
+<div class="fi">
+<label>Nome da empresa <span class="err-msg" id="e-p-nome">⚠ Campo obrigatório</span></label>
+<input id="p-nome" oninput="limparErro('p-nome','e-p-nome')" placeholder="Nome da sua empresa" type="text"/>
+</div>
+<div class="fi-row">
+<div class="fi">
+<label>WhatsApp <span class="err-msg" id="e-p-wpp">⚠ Mínimo 10 dígitos</span></label>
+<input id="p-wpp" oninput="limparErro('p-wpp','e-p-wpp')" placeholder="(99) 99999-9999" type="tel"/>
+</div>
+<div class="fi">
+<label>Plano escolhido</label>
+<input id="plano-disp" readonly="" style="background:var(--cr);color:var(--g);font-weight:600" type="text" value="Destaque – R$ 49/mês"/>
+</div>
+</div>
+<input id="plano-val" type="hidden" value="Destaque R$49/mês"/>
+<button class="bm2 bcf" id="btn-planos" onclick="enviarPlano()" style="width:100%;padding:12px;font-size:14px">
             Quero me destacar ✓
           </button>
-        </div>
-      </div>
-    </div>
-    <div class="form-success" id="fs-planos">
-      <div class="fs-icon">🚀</div>
-      <div class="fs-title">Interesse registrado!</div>
-      <div class="fs-msg">Ótima escolha! Nossa equipe entrará em contato pelo WhatsApp em breve para ativar seu plano e turbinar sua presença no Guia Codoense.</div>
-      <div class="fs-detalhe">📱 Aguarde nosso contato!</div>
-      <button class="bm2 bcf" style="width:100%;margin-top:20px" onclick="cM('planos')">Fechar</button>
-    </div>
-  </div>
 </div>
-
+</div>
+</div>
+<div class="form-success" id="fs-planos">
+<div class="fs-icon">🚀</div>
+<div class="fs-title">Interesse registrado!</div>
+<div class="fs-msg">Ótima escolha! Nossa equipe entrará em contato pelo WhatsApp em breve para ativar seu plano e turbinar sua presença no Guia Codoense.</div>
+<div class="fs-detalhe">📱 Aguarde nosso contato!</div>
+<button class="bm2 bcf" onclick="cM('planos')" style="width:100%;margin-top:20px">Fechar</button>
+</div>
+</div>
+</div>
 <!-- MODAL DETALHE EMPRESA -->
 <div class="mbg" id="m-detail">
-  <div class="modal" style="overflow:hidden">
-    <div id="m-din"></div>
-    <div class="mft"><button class="bm2 bcn" style="width:100%" onclick="cM('detail')">Fechar</button></div>
-  </div>
+<div class="modal" style="overflow:hidden">
+<div id="m-din"></div>
+<div class="mft"><button class="bm2 bcn" onclick="cM('detail')" style="width:100%">Fechar</button></div>
+</div>
+</div>
+<!-- Avaliação da Empresa -->
+<div class="avaliacao-empresa">
+<div class="avaliacao-titulo">
+<span>Avalie esta empresa</span>
+</div>
+<div class="avaliacao-estrelas">
+<span class="estrela" onclick="setEstrela(1)">⭐</span>
+<span class="estrela" onclick="setEstrela(2)">⭐</span>
+<span class="estrela" onclick="setEstrela(3)">⭐</span>
+<span class="estrela" onclick="setEstrela(4)">⭐</span>
+<span class="estrela" onclick="setEstrela(5)">⭐</span>
+</div>
+<div class="avaliacao-mensagem" id="avaliacao-mensagem">Avalie de 1 a 5 estrelas</div>
+<button class="bm2 bcf" onclick="enviarAvaliacao()">Enviar Avaliação</button>
 </div>
 
 <!-- MODAL VAGA + CANDIDATURA -->
 <div class="mbg" id="m-vaga">
-  <div class="modal" style="overflow:hidden">
-    <div id="m-vin"></div>
-    <div class="form-body" id="fb-vaga">
-      <div style="padding:14px 18px;border-top:1px solid var(--bo);background:#f9fafb">
-        <p style="font-size:12px;font-weight:600;color:var(--tx);margin-bottom:12px">Candidate-se agora:</p>
-        <div class="form-erro-geral" id="err-vaga">Verifique os campos em vermelho antes de continuar.</div>
-        <div class="fi">
-          <label>Seu nome completo <span class="err-msg" id="e-v-nome">⚠ Campo obrigatório</span></label>
-          <input type="text" id="v-nome" placeholder="Digite seu nome" oninput="limparErro('v-nome','e-v-nome')">
-        </div>
-        <div class="fi-row">
-          <div class="fi">
-            <label>WhatsApp <span class="err-msg" id="e-v-wpp">⚠ Mínimo 10 dígitos</span></label>
-            <input type="tel" id="v-wpp" placeholder="(99) 99999-9999" oninput="limparErro('v-wpp','e-v-wpp')">
-          </div>
-          <div class="fi">
-            <label>Idade</label>
-            <input type="number" id="v-idade" placeholder="Ex: 25" min="14" max="70">
-          </div>
-        </div>
-        <div class="fi">
-          <label>Escolaridade <span class="err-msg" id="e-v-esc">⚠ Selecione uma opção</span></label>
-          <select id="v-esc" onchange="limparErro('v-esc','e-v-esc')">
-            <option value="">Selecione...</option>
-            <option>Ensino Fundamental</option>
-            <option>Ensino Médio incompleto</option>
-            <option>Ensino Médio completo</option>
-            <option>Superior incompleto</option>
-            <option>Superior completo</option>
-            <option>Pós-graduação</option>
-          </select>
-        </div>
-        <div class="fi">
-          <label>Experiência na área</label>
-          <textarea id="v-exp" placeholder="Descreva brevemente. Se não tiver, escreva 'Sem experiência'." style="min-height:60px"></textarea>
-        </div>
-        <button id="btn-vaga" class="bm2 bcf" style="width:100%;padding:12px;font-size:14px" onclick="enviarCandidatura()">
+<div class="modal" style="overflow:hidden">
+<div id="m-vin"></div>
+<div class="form-body" id="fb-vaga">
+<div style="padding:14px 18px;border-top:1px solid var(--bo);background:#f9fafb">
+<p style="font-size:12px;font-weight:600;color:var(--tx);margin-bottom:12px">Candidate-se agora:</p>
+<div class="form-erro-geral" id="err-vaga">Verifique os campos em vermelho antes de continuar.</div>
+<div class="fi">
+<label>Seu nome completo <span class="err-msg" id="e-v-nome">⚠ Campo obrigatório</span></label>
+<input id="v-nome" oninput="limparErro('v-nome','e-v-nome')" placeholder="Digite seu nome" type="text"/>
+</div>
+<div class="fi-row">
+<div class="fi">
+<label>WhatsApp <span class="err-msg" id="e-v-wpp">⚠ Mínimo 10 dígitos</span></label>
+<input id="v-wpp" oninput="limparErro('v-wpp','e-v-wpp')" placeholder="(99) 99999-9999" type="tel"/>
+</div>
+<div class="fi">
+<label>Idade</label>
+<input id="v-idade" max="70" min="14" placeholder="Ex: 25" type="number"/>
+</div>
+</div>
+<div class="fi">
+<label>Escolaridade <span class="err-msg" id="e-v-esc">⚠ Selecione uma opção</span></label>
+<select id="v-esc" onchange="limparErro('v-esc','e-v-esc')">
+<option value="">Selecione...</option>
+<option>Ensino Fundamental</option>
+<option>Ensino Médio incompleto</option>
+<option>Ensino Médio completo</option>
+<option>Superior incompleto</option>
+<option>Superior completo</option>
+<option>Pós-graduação</option>
+</select>
+</div>
+<div class="fi">
+<label>Experiência na área</label>
+<textarea id="v-exp" placeholder="Descreva brevemente. Se não tiver, escreva 'Sem experiência'." style="min-height:60px"></textarea>
+</div>
+<button class="bm2 bcf" id="btn-vaga" onclick="enviarCandidatura()" style="width:100%;padding:12px;font-size:14px">
           Enviar candidatura ✓
         </button>
-      </div>
-    </div>
-    <div class="form-success" id="fs-vaga">
-      <div class="fs-icon">✅</div>
-      <div class="fs-title">Candidatura enviada!</div>
-      <div class="fs-msg">Sua candidatura foi registrada com sucesso.<br>A empresa receberá seus dados e entrará em contato pelo WhatsApp em breve.</div>
-      <div class="fs-detalhe">📱 Fique atento ao seu WhatsApp. Boa sorte! 🍀</div>
-      <button class="bm2 bcf" style="width:100%;margin-top:20px" onclick="cM('vaga')">Fechar</button>
-    </div>
-  </div>
 </div>
-
+</div>
+<div class="form-success" id="fs-vaga">
+<div class="fs-icon">✅</div>
+<div class="fs-title">Candidatura enviada!</div>
+<div class="fs-msg">Sua candidatura foi registrada com sucesso.<br/>A empresa receberá seus dados e entrará em contato pelo WhatsApp em breve.</div>
+<div class="fs-detalhe">📱 Fique atento ao seu WhatsApp. Boa sorte! 🍀</div>
+<button class="bm2 bcf" onclick="cM('vaga')" style="width:100%;margin-top:20px">Fechar</button>
+</div>
+</div>
+</div>
 <!-- MODAL OFERTA -->
 <div class="mbg" id="m-oferta">
-  <div class="modal" style="overflow:hidden">
-    <div id="m-oin"></div>
-    <div class="mft">
-      <button class="bm2 bcn" onclick="cM('oferta')">Fechar</button>
-      <button class="bm2 bcf" style="flex:2" id="btn-oferta-w">Ver no WhatsApp ↗</button>
-    </div>
-  </div>
+<div class="modal" style="overflow:hidden">
+<div id="m-oin"></div>
+<div class="mft">
+<button class="bm2 bcn" onclick="cM('oferta')">Fechar</button>
+<button class="bm2 bcf" id="btn-oferta-w" style="flex:2">Ver no WhatsApp ↗</button>
 </div>
-
+</div>
+</div>
 <script>
 // ===== SUPABASE =====
 var SUPA_URL = 'https://xzcqsyqgtmbfsufezuyp.supabase.co';
@@ -1055,5 +1061,79 @@ carregarEmpresas();
 rO(ofertas);
 rV(vagas.slice(0,3));
 </script>
+<script>
+    let rating = 0;
+
+    // Função para definir as estrelas
+    function setEstrela(n) {
+        rating = n;
+        document.querySelectorAll('.estrela').forEach((estrela, index) => {
+            if (index < n) {
+                estrela.style.color = '#fbbf24';
+            } else {
+                estrela.style.color = '#ccc';
+            }
+        });
+
+        // Atualiza o texto de feedback
+        let message = '';
+        switch (n) {
+            case 1:
+                message = 'Ruim';
+                break;
+            case 2:
+                message = 'Regular';
+                break;
+            case 3:
+                message = 'Bom';
+                break;
+            case 4:
+                message = 'Muito Bom';
+                break;
+            case 5:
+                message = 'Excelente';
+                break;
+        }
+        document.getElementById('avaliacao-mensagem').innerText = message;
+    }
+
+    // Função para enviar a avaliação para o Supabase
+    function enviarAvaliacao() {
+        const empresaId = document.getElementById('empresa-id').value; // Assuming the company ID is stored here
+        if (rating === 0) {
+            alert('Por favor, selecione uma avaliação.');
+            return;
+        }
+
+        const avaliacao = {
+            empresa_id: empresaId,
+            estrelas: rating,
+            data: new Date().toISOString()
+        };
+
+        // Enviar a avaliação para o Supabase
+        fetch('https://xzcqsyqgtmbfsufezuyp.supabase.co/rest/v1/avaliacoes', {
+            method: 'POST',
+            headers: {
+                'apikey': 'YOUR_SUPABASE_KEY',
+                'Authorization': 'Bearer YOUR_SUPABASE_KEY',
+                'Content-Type': 'application/json',
+                'Prefer': 'return=representation'
+            },
+            body: JSON.stringify(avaliacao)
+        })
+        .then(response => response.json())
+        .then(data => {
+            alert('Sua avaliação foi enviada com sucesso!');
+            // Reset the rating after submission
+            setEstrela(0);
+        })
+        .catch(error => {
+            console.error('Erro ao enviar avaliação:', error);
+            alert('Ocorreu um erro ao enviar sua avaliação. Tente novamente.');
+        });
+    }
+</script>
+
 </body>
 </html>

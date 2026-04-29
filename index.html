@@ -444,16 +444,8 @@ body{font-family:'DM Sans',sans-serif;background:#faf7f2;color:#1c2b22;overflow-
           <input type="text" id="c-end" placeholder="Rua, número, bairro – Codó/MA" oninput="limparErro('c-end','e-c-end')">
         </div>
         <div class="fi">
-          <label>Horário de funcionamento <span class="err-msg" id="e-c-hora">⚠ Campo obrigatório</span></label>
-          <input type="text" id="c-hora" placeholder="Ex: Seg–Sex 8h–18h / Sáb 8h–12h" oninput="limparErro('c-hora','e-c-hora')">
-        </div>
-        <div class="fi">
           <label>Instagram (opcional)</label>
           <input type="text" id="c-insta" placeholder="@suaempresa">
-        </div>
-        <div class="fi">
-          <label>Especialidades <span style="font-size:9px;font-weight:400;color:var(--mu);text-transform:none;letter-spacing:0">(separadas por vírgula)</span></label>
-          <input type="text" id="c-tags" placeholder="Ex: Delivery, Convênios, Manipulação">
         </div>
         <div class="fi">
           <label>Plano de interesse</label>
@@ -708,14 +700,12 @@ function enviarCadastro() {
   var desc = document.getElementById('c-desc').value.trim();
   var wpp = document.getElementById('c-wpp').value.trim();
   var end = document.getElementById('c-end').value.trim();
-  var hora = document.getElementById('c-hora').value.trim();
 
   if (!nome) { marcarErro('c-nome','e-c-nome'); ok = false; }
   if (!cat) { marcarErro('c-cat','e-c-cat'); ok = false; }
   if (desc.length < 20) { marcarErro('c-desc','e-c-desc'); ok = false; }
   if (!isTel(wpp)) { marcarErro('c-wpp','e-c-wpp'); ok = false; }
   if (!end) { marcarErro('c-end','e-c-end'); ok = false; }
-  if (!hora) { marcarErro('c-hora','e-c-hora'); ok = false; }
 
   if (!ok) { document.getElementById('err-cadastro').classList.add('on'); return; }
 
@@ -729,9 +719,9 @@ function enviarCadastro() {
     whatsapp: wpp.replace(/\D/g,''),
     telefone: document.getElementById('c-tel').value.trim(),
     endereco: end,
-    horario: hora,
+    horario: '',
     instagram: document.getElementById('c-insta').value.trim(),
-    tags: document.getElementById('c-tags').value.trim(),
+    tags: '',
     plano: document.getElementById('c-plano').value,
     iniciais: iniciais,
     aprovado: false,
@@ -742,6 +732,7 @@ function enviarCadastro() {
 
   supaFetch('empresas', dados)
     .then(function(r) {
+      btnReset('btn-cadastro', 'Enviar cadastro grátis ✓');
       if (r.ok || r.status === 201) {
         showSucesso('cadastro');
       } else {
@@ -822,6 +813,7 @@ function enviarUsuario() {
 
   supaFetch('usuarios', dados)
     .then(function(r) {
+      btnReset('btn-usuario', 'Criar conta grátis');
       if (r.ok || r.status === 201) {
         var fb = document.getElementById('lp-c');
         fb.classList.add('hide');

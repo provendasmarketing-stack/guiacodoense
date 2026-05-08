@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Painel Empresarial - Guia Codoense</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --g:#1a6b3c;--gl:#2d9e5f;--go:#c8922a;--gol:#e8b04a;
+  --cr:#faf7f2;--dk:#0f1f16;--tx:#1c2b22;--mu:#6b7f72;
+  --bo:rgba(26,107,60,.15);--err:#e11d48;--fd:'Playfair Display',serif
+}
+body{font-family:'DM Sans',sans-serif;background:var(--cr);color:var(--tx);overflow-x:hidden;margin:0}
+
+/* Header */
+.header{background:linear-gradient(135deg,var(--dk),#1a5c35);padding:20px 32px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 4px 20px rgba(0,0,0,.15)}
+.header-left h1{font-family:var(--fd);font-size:24px;color:#fff;margin:0;font-weight:900}
+.header-left h1 span{color:var(--gol)}
+.header-left p{font-size:10px;color:var(--gol);text-transform:uppercase;letter-spacing:2px;margin:0 0 4px}
+.header-right{display:flex;align-items:center;gap:16px}
+.empresa-badge{background:var(--gl);color:#fff;padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600;display:flex;align-items:center;gap:6px}
+.btn-sair{background:transparent;border:1px solid rgba(255,255,255,.3);color:#fff;padding:8px 16px;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer;transition:all .2s}
+.btn-sair:hover{background:rgba(255,255,255,.1)}
+
+/* Layout */
+.container{display:flex;min-height:calc(100vh - 80px)}
+.sidebar{width:240px;background:#fff;border-right:1px solid var(--bo);padding:24px 16px;position:sticky;top:0;height:calc(100vh - 80px);overflow-y:auto}
+.main-content{flex:1;padding:32px;max-width:1200px}
+
+/* Menu */
+.menu-title{font-size:10px;color:var(--mu);text-transform:uppercase;letter-spacing:1px;margin-bottom:16px;font-weight:600}
+.menu-item{display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:8px;margin-bottom:6px;cursor:pointer;transition:all .2s;font-size:14px;color:var(--tx);text-decoration:none;position:relative}
+.menu-item:hover{background:rgba(26,107,60,.05)}
+.menu-item.active{background:#f0f9f4;color:var(--g);font-weight:600}
+.menu-item .icon{font-size:16px}
+.menu-item .badge{position:absolute;right:12px;background:var(--err);color:#fff;font-size:10px;font-weight:700;padding:2px 6px;border-radius:10px;min-width:18px;text-align:center}
+.menu-divider{height:1px;background:var(--bo);margin:16px 0}
+.plano-box{background:var(--dk);border-radius:10px;padding:16px;margin-top:24px;text-align:center}
+.plano-box .badge{font-size:9px;color:var(--gol);letter-spacing:1px;margin-bottom:6px;display:block}
+.plano-box .valor{font-size:14px;color:#fff;font-weight:600}
+
+/* Cards de Métricas */
+.welcome{margin-bottom:32px}
+.welcome h2{font-size:22px;font-weight:700;margin-bottom:6px}
+.welcome p{color:var(--mu);font-size:14px}
+.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:40px}
+.metric-card{background:#fff;border:1px solid var(--bo);border-radius:12px;padding:20px;transition:all .2s}
+.metric-card:hover{box-shadow:0 4px 16px rgba(26,107,60,.1);transform:translateY(-2px)}
+.metric-label{font-size:12px;color:var(--mu);margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px}
+.metric-value{font-size:32px;font-weight:700;color:var(--g);margin-bottom:6px;line-height:1}
+.metric-change{font-size:11px;color:var(--gl);font-weight:600}
+.metric-change.down{color:var(--err)}
+.metric-subtitle{font-size:10px;color:var(--mu);margin-top:4px}
+
+/* Seções */
+.section{margin-bottom:40px}
+.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+.section-title{font-size:18px;font-weight:700;color:var(--tx)}
+.btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;border:none;transition:all .2s;font-family:'DM Sans',sans-serif}
+.btn-primary{background:var(--g);color:#fff}
+.btn-primary:hover{background:#1a5c35;transform:translateY(-1px)}
+.btn-secondary{background:var(--go);color:#fff}
+.btn-secondary:hover{background:#a67722}
+.btn-outline{background:transparent;border:1px solid var(--g);color:var(--g)}
+.btn-outline:hover{background:var(--g);color:#fff}
+.btn-ghost{background:transparent;border:1px solid var(--mu);color:var(--mu)}
+.btn-ghost:hover{background:rgba(107,127,114,.1)}
+
+/* Cards de Vaga */
+.vaga-card{background:#fff;border:1px solid var(--bo);border-radius:12px;padding:20px;margin-bottom:12px;display:flex;align-items:center;gap:16px;transition:all .2s}
+.vaga-card:hover{box-shadow:0 3px 12px rgba(26,107,60,.08)}
+.vaga-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
+.vaga-info{flex:1}
+.vaga-title{font-size:15px;font-weight:600;margin-bottom:4px;display:flex;align-items:center;gap:8px}
+.vaga-meta{font-size:12px;color:var(--mu);margin-bottom:6px}
+.vaga-badges{display:flex;gap:6px;flex-wrap:wrap}
+.badge{font-size:9px;padding:3px 8px;border-radius:12px;font-weight:600;text-transform:uppercase}
+.badge-new{background:#fef3c7;color:#92400e}
+.badge-count{background:#f0f9f4;color:var(--g);border:1px solid rgba(26,107,60,.2)}
+.vaga-actions{display:flex;gap:8px}
+
+/* Card de Oferta */
+.oferta-card{background:#fff;border:1px solid var(--bo);border-radius:12px;padding:20px;margin-bottom:12px;display:flex;align-items:center;gap:16px}
+.oferta-thumb{width:70px;height:70px;border-radius:10px;background:var(--err-bg,#fff1f2);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0}
+.oferta-info{flex:1}
+.oferta-title{font-size:15px;font-weight:600;margin-bottom:4px}
+.oferta-preco{display:flex;align-items:baseline;gap:8px;margin-bottom:6px}
+.preco-de{font-size:12px;color:var(--mu);text-decoration:line-through}
+.preco-por{font-size:18px;font-weight:700;color:var(--err)}
+.oferta-desconto{background:var(--err);color:#fff;padding:2px 8px;border-radius:12px;font-size:10px;font-weight:700}
+.oferta-meta{font-size:11px;color:var(--mu)}
+
+/* Status do Plano */
+.plano-status{background:var(--dk);border-radius:12px;padding:24px;color:#fff;margin-bottom:40px}
+.plano-status-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.plano-badge-big{font-size:14px;color:var(--gol);font-weight:700;letter-spacing:1px}
+.plano-desc{font-size:13px;color:rgba(255,255,255,.7);margin-bottom:16px}
+.progress-bar{height:8px;background:rgba(255,255,255,.2);border-radius:4px;overflow:hidden;margin-bottom:10px}
+.progress-fill{height:100%;background:var(--gl);border-radius:4px;transition:width .3s}
+.progress-label{font-size:11px;color:rgba(255,255,255,.6)}
+
+/* Ações Rápidas */
+.quick-actions{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+
+/* Empty State */
+.empty-state{text-align:center;padding:60px 20px;color:var(--mu)}
+.empty-state .icon{font-size:48px;margin-bottom:16px;opacity:.5}
+.empty-state p{font-size:14px;margin-bottom:20px}
+
+/* Responsivo */
+@media(max-width:768px){
+  .sidebar{position:fixed;left:-240px;z-index:100;transition:left .3s;box-shadow:4px 0 20px rgba(0,0,0,.1)}
+  .sidebar.open{left:0}
+  .main-content{padding:20px}
+  .metrics{grid-template-columns:1fr}
+  .header{padding:16px 20px}
+  .header-left h1{font-size:18px}
+  .empresa-badge{font-size:11px;padding:6px 12px}
+}
+
+/* Modal */
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(4px)}
+.modal.show{display:flex}
+.modal-content{background:#fff;border-radius:16px;max-width:600px;width:100%;max-height:90vh;overflow-y:auto;animation:slideIn .2s}
+@keyframes slideIn{from{transform:translateY(-20px);opacity:0}to{transform:translateY(0);opacity:1}}
+.modal-header{padding:20px 24px;border-bottom:1px solid var(--bo);display:flex;align-items:center;justify-content:space-between}
+.modal-title{font-size:18px;font-weight:700}
+.modal-close{background:transparent;border:none;font-size:24px;color:var(--mu);cursor:pointer;line-height:1}
+.modal-body{padding:24px}
+.form-group{margin-bottom:20px}
+.form-group label{display:block;font-size:12px;font-weight:600;color:var(--mu);margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px}
+.form-group input,.form-group textarea,.form-group select{width:100%;padding:12px;border:1px solid var(--bo);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:14px;transition:all .2s}
+.form-group input:focus,.form-group textarea:focus,.form-group select:focus{outline:none;border-color:var(--gl);box-shadow:0 0 0 3px rgba(45,158,95,.1)}
+.form-group textarea{min-height:100px;resize:vertical}
+.modal-footer{padding:16px 24px;border-top:1px solid var(--bo);display:flex;gap:12px;justify-content:flex-end}
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="header">
+  <div class="header-left">
+    <p>Painel Empresarial</p>
+    <h1>Guia <span>Codoense</span></h1>
+  </div>
+  <div class="header-right">
+    <div class="empresa-badge">🏪 Farmácia São João</div>
+    <button class="btn-sair" onclick="fazerLogout()">🚪 Sair</button>
+  </div>
+</div>
+
+<div class="container">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="menu-title">Menu</div>
+    
+    <a href="#dashboard" class="menu-item active" onclick="showPage('dashboard')">
+      <span class="icon">📊</span>
+      <span>Dashboard</span>
+    </a>
+    
+    <a href="#perfil" class="menu-item" onclick="showPage('perfil')">
+      <span class="icon">🏢</span>
+      <span>Meu Perfil</span>
+    </a>
+    
+    <a href="#vagas" class="menu-item" onclick="showPage('vagas')">
+      <span class="icon">💼</span>
+      <span>Vagas</span>
+    </a>
+    
+    <a href="#ofertas" class="menu-item" onclick="showPage('ofertas')">
+      <span class="icon">🔥</span>
+      <span>Ofertas</span>
+    </a>
+    
+    <a href="#candidatos" class="menu-item" onclick="showPage('candidatos')">
+      <span class="icon">👥</span>
+      <span>Candidatos</span>
+      <span class="badge">3</span>
+    </a>
+    
+    <a href="#avaliacoes" class="menu-item" onclick="showPage('avaliacoes')">
+      <span class="icon">⭐</span>
+      <span>Avaliações</span>
+    </a>
+    
+    <a href="#plano" class="menu-item" onclick="showPage('plano')">
+      <span class="icon">💎</span>
+      <span>Plano Atual</span>
+    </a>
+    
+    <div class="menu-divider"></div>
+    
+    <a href="#ajuda" class="menu-item">
+      <span class="icon">❓</span>
+      <span>Ajuda</span>
+    </a>
+    
+    <div class="plano-box">
+      <span class="badge">PLANO DESTAQUE</span>
+      <span class="valor">R$ 49/mês</span>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <!-- Dashboard Page -->
+    <div id="page-dashboard" class="page">
+      <div class="welcome">
+        <h2>Olá, Farmácia São João! 👋</h2>
+        <p>Aqui está o resumo do seu perfil no Guia Codoense</p>
+      </div>
+
+      <!-- Métricas -->
+      <div class="metrics">
+        <div class="metric-card">
+          <div class="metric-label">Visualizações</div>
+          <div class="metric-value">2.847</div>
+          <div class="metric-change">↑ 12% este mês</div>
+          <div class="metric-subtitle">Últimos 30 dias</div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-label">Cliques WhatsApp</div>
+          <div class="metric-value">342</div>
+          <div class="metric-change">↑ 8% este mês</div>
+          <div class="metric-subtitle">Últimos 30 dias</div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-label">Avaliação média</div>
+          <div class="metric-value" style="color:#c8922a">4.8</div>
+          <div style="color:#c8922a;font-size:14px;margin-bottom:4px">★★★★★</div>
+          <div class="metric-subtitle">27 avaliações</div>
+        </div>
+      </div>
+
+      <!-- Vagas Ativas -->
+      <div class="section">
+        <div class="section-header">
+          <h3 class="section-title">Vagas ativas (2)</h3>
+        </div>
+
+        <div class="vaga-card">
+          <div class="vaga-icon" style="background:#0f1a3d22">💊</div>
+          <div class="vaga-info">
+            <div class="vaga-title">
+              Atendente de Farmácia
+              <span class="badge badge-new">Nova</span>
+            </div>
+            <div class="vaga-meta">CLT • R$ 1.400 • 12 candidatos</div>
+            <div class="vaga-badges">
+              <span class="badge badge-count">📍 Codó</span>
+              <span class="badge badge-count">⏰ Tarde</span>
+            </div>
+          </div>
+          <div class="vaga-actions">
+            <button class="btn btn-outline" onclick="alert('Ver candidatos')">Ver candidatos</button>
+          </div>
+        </div>
+
+        <div class="vaga-card">
+          <div class="vaga-icon" style="background:#2e1a3d22">💅</div>
+          <div class="vaga-info">
+            <div class="vaga-title">Manicure (freelancer)</div>
+            <div class="vaga-meta">Autônomo • Comissão 50% • 5 candidatos</div>
+            <div class="vaga-badges">
+              <span class="badge badge-count">💼 Flexível</span>
+            </div>
+          </div>
+          <div class="vaga-actions">
+            <button class="btn btn-outline" onclick="alert('Ver candidatos')">Ver candidatos</button>
+          </div>
+        </div>
+
+        <button class="btn btn-primary" style="width:100%;margin-top:12px" onclick="openModal('modal-vaga')">+ Publicar nova vaga</button>
+      </div>
+
+      <!-- Ofertas -->
+      <div class="section">
+        <div class="section-header">
+          <h3 class="section-title">Ofertas ativas (1)</h3>
+        </div>
+
+        <div class="oferta-card">
+          <div class="oferta-thumb">💊</div>
+          <div class="oferta-info">
+            <div class="oferta-title">Kit Vitaminas C+D</div>
+            <div class="oferta-preco">
+              <span class="preco-de">R$ 45</span>
+              <span class="preco-por">R$ 32</span>
+              <span class="oferta-desconto">-29%</span>
+            </div>
+            <div class="oferta-meta">Válido até amanhã • 87 visualizações hoje</div>
+          </div>
+          <div class="vaga-actions">
+            <button class="btn btn-ghost" onclick="alert('Editar oferta')">✏️ Editar</button>
+          </div>
+        </div>
+
+        <button class="btn btn-secondary" style="width:100%;margin-top:12px" onclick="openModal('modal-oferta')">🔥 Criar nova oferta</button>
+      </div>
+
+      <!-- Status do Plano -->
+      <div class="plano-status">
+        <div class="plano-status-header">
+          <div>
+            <div class="plano-badge-big">PLANO DESTAQUE ATIVO</div>
+            <div class="plano-desc">Seu perfil aparece no topo da lista e tem selo dourado</div>
+          </div>
+          <button class="btn btn-secondary" style="flex-shrink:0" onclick="alert('Upgrade para Premium')">Upgrade ⭐</button>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" style="width:75%"></div>
+        </div>
+        <div class="progress-label">21 dias restantes até renovação (27/05/2026)</div>
+      </div>
+
+      <!-- Ações Rápidas -->
+      <div class="section">
+        <div class="section-header">
+          <h3 class="section-title">Ações rápidas</h3>
+        </div>
+        <div class="quick-actions">
+          <button class="btn btn-outline" onclick="showPage('perfil')">✏️ Editar perfil</button>
+          <button class="btn btn-outline" onclick="alert('Ver estatísticas')">📊 Estatísticas</button>
+          <button class="btn btn-outline" onclick="alert('Compartilhar')">🔗 Compartilhar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Perfil Page -->
+    <div id="page-perfil" class="page" style="display:none">
+      <div class="welcome">
+        <h2>✏️ Editar Perfil</h2>
+        <p>Atualize as informações da sua empresa</p>
+      </div>
+
+      <div style="background:#fff;border:1px solid var(--bo);border-radius:12px;padding:32px;max-width:700px">
+        <div class="form-group">
+          <label>Nome da Empresa</label>
+          <input type="text" value="Farmácia São João" placeholder="Nome da empresa">
+        </div>
+
+        <div class="form-group">
+          <label>Categoria</label>
+          <select>
+            <option selected>Saúde</option>
+            <option>Alimentação</option>
+            <option>Beleza</option>
+            <option>Educação</option>
+            <option>Serviços</option>
+            <option>Comércio</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Descrição</label>
+          <textarea placeholder="Descreva seu negócio...">Medicamentos, perfumaria e atendimento farmacêutico personalizado para toda a família.</textarea>
+        </div>
+
+        <div class="form-group">
+          <label>WhatsApp</label>
+          <input type="tel" value="(99) 98765-4321" placeholder="(99) 99999-9999">
+        </div>
+
+        <div class="form-group">
+          <label>Endereço</label>
+          <input type="text" value="Rua Coronel Tito, 120 – Centro, Codó/MA" placeholder="Endereço completo">
+        </div>
+
+        <div class="form-group">
+          <label>Horário de Funcionamento</label>
+          <input type="text" value="Seg–Sáb 7h–22h" placeholder="Ex: Seg–Sex 8h–18h">
+        </div>
+
+        <div class="form-group">
+          <label>Instagram (opcional)</label>
+          <input type="text" value="@farmaciasaojoao" placeholder="@suaempresa">
+        </div>
+
+        <div class="form-group">
+          <label>Especialidades (separadas por vírgula)</label>
+          <input type="text" value="Delivery, Manipulação, Convênios" placeholder="Ex: Delivery, Convênios">
+        </div>
+
+        <div style="display:flex;gap:12px;margin-top:24px">
+          <button class="btn btn-primary" onclick="alert('Perfil atualizado com sucesso!');showPage('dashboard')">💾 Salvar alterações</button>
+          <button class="btn btn-ghost" onclick="showPage('dashboard')">Cancelar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Outras páginas (placeholder) -->
+    <div id="page-vagas" class="page" style="display:none">
+      <div class="welcome">
+        <h2>💼 Gestão de Vagas</h2>
+        <p>Gerencie suas vagas de emprego</p>
+      </div>
+      <div class="empty-state">
+        <div class="icon">💼</div>
+        <p>Página em desenvolvimento</p>
+      </div>
+    </div>
+
+    <div id="page-ofertas" class="page" style="display:none">
+      <div class="welcome">
+        <h2>🔥 Gestão de Ofertas</h2>
+        <p>Crie e gerencie ofertas especiais</p>
+      </div>
+      <div class="empty-state">
+        <div class="icon">🔥</div>
+        <p>Página em desenvolvimento</p>
+      </div>
+    </div>
+
+    <div id="page-candidatos" class="page" style="display:none">
+      <div class="welcome">
+        <h2>👥 Candidatos</h2>
+        <p>Veja quem se candidatou às suas vagas</p>
+      </div>
+      <div class="empty-state">
+        <div class="icon">👥</div>
+        <p>Página em desenvolvimento</p>
+      </div>
+    </div>
+
+    <div id="page-avaliacoes" class="page" style="display:none">
+      <div class="welcome">
+        <h2>⭐ Avaliações</h2>
+        <p>Veja o que seus clientes estão dizendo</p>
+      </div>
+      <div class="empty-state">
+        <div class="icon">⭐</div>
+        <p>Página em desenvolvimento</p>
+      </div>
+    </div>
+
+    <div id="page-plano" class="page" style="display:none">
+      <div class="welcome">
+        <h2>💎 Plano Atual</h2>
+        <p>Gerencie sua assinatura</p>
+      </div>
+      <div class="empty-state">
+        <div class="icon">💎</div>
+        <p>Página em desenvolvimento</p>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- Modal Nova Vaga -->
+<div id="modal-vaga" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3 class="modal-title">💼 Publicar Nova Vaga</h3>
+      <button class="modal-close" onclick="closeModal('modal-vaga')">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label>Título da Vaga</label>
+        <input type="text" placeholder="Ex: Vendedor(a)">
+      </div>
+      <div class="form-group">
+        <label>Tipo de Contrato</label>
+        <select>
+          <option>CLT</option>
+          <option>PJ</option>
+          <option>Autônomo</option>
+          <option>Temporário</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Salário / Remuneração</label>
+        <input type="text" placeholder="Ex: R$ 1.500 ou Comissão 50%">
+      </div>
+      <div class="form-group">
+        <label>Turno</label>
+        <select>
+          <option>Comercial</option>
+          <option>Manhã</option>
+          <option>Tarde</option>
+          <option>Noite</option>
+          <option>Flexível</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Descrição da Vaga</label>
+        <textarea placeholder="Descreva as responsabilidades e requisitos..."></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('modal-vaga')">Cancelar</button>
+      <button class="btn btn-primary" onclick="alert('Vaga publicada!');closeModal('modal-vaga')">Publicar vaga</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Nova Oferta -->
+<div id="modal-oferta" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3 class="modal-title">🔥 Criar Nova Oferta</h3>
+      <button class="modal-close" onclick="closeModal('modal-oferta')">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label>Nome do Produto/Serviço</label>
+        <input type="text" placeholder="Ex: Shampoo Anticaspa">
+      </div>
+      <div class="form-group">
+        <label>Emoji/Ícone</label>
+        <input type="text" placeholder="Ex: 💊 ou 💇" maxlength="2">
+      </div>
+      <div class="form-group">
+        <label>Preço Original (De)</label>
+        <input type="number" placeholder="45.00" step="0.01">
+      </div>
+      <div class="form-group">
+        <label>Preço Promocional (Por)</label>
+        <input type="number" placeholder="32.00" step="0.01">
+      </div>
+      <div class="form-group">
+        <label>Descrição da Oferta</label>
+        <textarea placeholder="Descreva a oferta..."></textarea>
+      </div>
+      <div class="form-group">
+        <label>Válido até</label>
+        <input type="date">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('modal-oferta')">Cancelar</button>
+      <button class="btn btn-secondary" onclick="alert('Oferta criada!');closeModal('modal-oferta')">Criar oferta</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ===== PROTEÇÃO DE AUTENTICAÇÃO =====
+let empresaLogada = null;
+
+window.addEventListener('DOMContentLoaded', function() {
+  verificarAutenticacao();
+});
+
+function verificarAutenticacao() {
+  const sessao = localStorage.getItem('guia_sessao');
+  
+  if (!sessao) {
+    // Não está logado - redirecionar
+    window.location.href = 'login.html';
+    return;
+  }
+  
+  try {
+    const dados = JSON.parse(sessao);
+    
+    // Verificar se não expirou
+    const agora = new Date().getTime();
+    if (agora >= dados.expira) {
+      // Sessão expirou
+      localStorage.removeItem('guia_sessao');
+      alert('Sua sessão expirou. Faça login novamente.');
+      window.location.href = 'login.html';
+      return;
+    }
+    
+    // Sessão válida - carregar dados da empresa
+    empresaLogada = dados;
+    carregarDadosEmpresa();
+    
+  } catch(e) {
+    // Erro ao ler sessão
+    localStorage.removeItem('guia_sessao');
+    window.location.href = 'login.html';
+  }
+}
+
+function carregarDadosEmpresa() {
+  // Atualizar nome da empresa no header
+  const badge = document.querySelector('.empresa-badge');
+  if (badge && empresaLogada) {
+    badge.textContent = '🏪 ' + empresaLogada.nome;
+  }
+  
+  // Atualizar título da página
+  const welcome = document.querySelector('.welcome h2');
+  if (welcome && empresaLogada) {
+    welcome.textContent = `Olá, ${empresaLogada.nome}! 👋`;
+  }
+  
+  // Carregar dados específicos da empresa do Supabase
+  // TODO: Implementar carregamento de métricas reais
+}
+
+function fazerLogout() {
+  if (confirm('Tem certeza que deseja sair?')) {
+    localStorage.removeItem('guia_sessao');
+    window.location.href = 'login.html';
+  }
+}
+
+// Navegação entre páginas
+function showPage(pageId) {
+  // Esconder todas as páginas
+  document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
+  
+  // Mostrar página selecionada
+  document.getElementById('page-' + pageId).style.display = 'block';
+  
+  // Atualizar menu ativo
+  document.querySelectorAll('.menu-item').forEach(m => m.classList.remove('active'));
+  event.target.closest('.menu-item').classList.add('active');
+  
+  // Scroll para o topo
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+// Modais
+function openModal(modalId) {
+  document.getElementById(modalId).classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal(modalId) {
+  document.getElementById(modalId).classList.remove('show');
+  document.body.style.overflow = '';
+}
+
+// Fechar modal clicando fora
+document.querySelectorAll('.modal').forEach(modal => {
+  modal.addEventListener('click', function(e) {
+    if (e.target === this) {
+      closeModal(this.id);
+    }
+  });
+});
+
+// Toggle sidebar mobile
+function toggleSidebar() {
+  document.querySelector('.sidebar').classList.toggle('open');
+}
+</script>
+
+</body>
+</html>

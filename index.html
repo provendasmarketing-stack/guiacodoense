@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -28,7 +29,7 @@ body{font-family:'DM Sans',sans-serif;background:#faf7f2;color:#1c2b22;overflow-
 .lm{font-family:var(--fd);font-size:clamp(20px,5vw,28px);font-weight:900;color:#fff;line-height:1}
 .lm span{color:var(--gol)}
 .bh{font-size:11px;padding:7px 14px;border-radius:5px;cursor:pointer;font-weight:600;border:none;white-space:nowrap;font-family:'DM Sans',sans-serif}
-.sw{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);border-radius:10px;padding:10px;display:flex;gap:8px}
+.sw{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);border-radius:10px;padding:10px;display:flex;gap:8px;margin-bottom:14px}
 .sw input{flex:1;background:transparent;border:none;outline:none;font-size:14px;color:#fff;padding:3px 6px;font-family:'DM Sans',sans-serif}
 .sw input::placeholder{color:rgba(255,255,255,.4)}
 .sw button{background:var(--gl);color:#fff;border:none;border-radius:7px;padding:9px 18px;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif}
@@ -163,9 +164,9 @@ body{font-family:'DM Sans',sans-serif;background:#faf7f2;color:#1c2b22;overflow-
 .tab.on .tab-d{display:block}
 
 /* === MODAIS === */
-.mbg{display:none;position:fixed;inset:0;background:rgba(10,20,14,.65);z-index:200;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(4px)}
+.mbg{display:none;position:fixed;inset:0;background:rgba(10,20,14,.65);z-index:200;align-items:flex-start;justify-content:center;padding:20px;backdrop-filter:blur(4px);overflow-y:auto}
 .mbg.on{display:flex}
-.modal{background:#fff;border-radius:16px;width:100%;max-width:480px;max-height:88vh;overflow-y:auto;animation:popin .22s ease}
+.modal{background:#fff;border-radius:16px;width:100%;max-width:480px;max-height:calc(100vh - 40px);overflow-y:auto;-webkit-overflow-scrolling:touch;animation:popin .22s ease;margin:auto}
 @keyframes popin{from{transform:scale(.94);opacity:0}to{transform:scale(1);opacity:1}}
 .mhd{padding:14px 18px 12px;border-bottom:1px solid var(--bo);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:#fff;z-index:10;border-radius:16px 16px 0 0}
 .mtt{font-family:var(--fd);font-size:16px;font-weight:700;color:var(--tx)}
@@ -291,9 +292,7 @@ body{font-family:'DM Sans',sans-serif;background:#faf7f2;color:#1c2b22;overflow-
     </div>
   </div>
   <div class="cw"><div class="ci"><div class="cs">
-    <div class="cp on" onclick="sC(this,'','inicio')"><div class="cpi">🏠</div><div class="cpl">Início</div></div>
-    <div class="cp" onclick="sC(this,'ofertas','ofertas')"><div class="cpi">🔥</div><div class="cpl">Ofertas</div></div>
-    <div class="cp" onclick="sC(this,'vagas','vagas')"><div class="cpi">💼</div><div class="cpl">Vagas</div></div>
+    <div class="cp on" onclick="sC(this,'','emp')"><div class="cpi">🏪</div><div class="cpl">Todas</div></div>
     <div class="cp" onclick="sC(this,'Alimentação','emp')"><div class="cpi">🍽️</div><div class="cpl">Alimentação</div></div>
     <div class="cp" onclick="sC(this,'Saúde','emp')"><div class="cpi">🏥</div><div class="cpl">Saúde</div></div>
     <div class="cp" onclick="sC(this,'Beleza','emp')"><div class="cpi">💇</div><div class="cpl">Beleza</div></div>
@@ -313,7 +312,7 @@ body{font-family:'DM Sans',sans-serif;background:#faf7f2;color:#1c2b22;overflow-
 
 <!-- MAIN -->
 <div class="main">
-  <div id="so"><div class="sh"><div class="stt">🔥 Ofertas do dia</div><button class="svm" onclick="sC(document.querySelector('.cp:nth-child(2)'),'ofertas','ofertas')">Ver todas</button></div><div class="osc" id="oc"></div></div>
+  <div id="so"><div class="sh"><div class="stt">🔥 Ofertas do dia</div><button class="svm" onclick="irP('ofertas',null)">Ver todas</button></div><div class="osc" id="oc"></div></div>
   <div id="sv"><div class="sh"><div class="stt">💼 Vagas em Codó</div><button class="svm" onclick="irP('vagas',null)">Ver todas</button></div><div class="vlist" id="vc"></div></div>
   <div id="sd"><div class="sh"><div class="stt">⭐ Destaques</div><div id="dcnt" style="font-size:10px;color:var(--mu)"></div></div><div class="dgrid" id="cd"></div></div>
   <div id="sn"><div class="sh"><div class="stt">Todas as empresas</div><div id="ncnt" style="font-size:10px;color:var(--mu)"></div></div><div class="ngrid" id="cn"></div></div>
@@ -370,26 +369,38 @@ body{font-family:'DM Sans',sans-serif;background:#faf7f2;color:#1c2b22;overflow-
           <div class="tpb on" id="tp-p" onclick="selT('p')"><div class="tpi">👤</div><div class="tpl">Pessoa física</div><div class="tps">Buscar vagas e ofertas</div></div>
           <div class="tpb" id="tp-e" onclick="selT('e')"><div class="tpi">🏪</div><div class="tpl">Empresa</div><div class="tps">Divulgar meu negócio</div></div>
         </div>
-        <button class="bsoc">🌐 Cadastrar com Google</button>
-        <div class="ldiv">ou preencha os dados</div>
-        <div class="form-erro-geral" id="err-usuario">Verifique os campos em vermelho antes de continuar.</div>
-        <div class="fi">
-          <label>Nome completo <span class="err-msg" id="e-u-nome">⚠ Campo obrigatório</span></label>
-          <input type="text" id="u-nome" placeholder="Seu nome completo" oninput="limparErro('u-nome','e-u-nome')">
+        <div id="cad-pessoa">
+          <button class="bsoc">🌐 Cadastrar com Google</button>
+          <div class="ldiv">ou preencha os dados</div>
+          <div class="form-erro-geral" id="err-usuario">Verifique os campos em vermelho antes de continuar.</div>
+          <div class="fi">
+            <label>Nome completo <span class="err-msg" id="e-u-nome">⚠ Campo obrigatório</span></label>
+            <input type="text" id="u-nome" placeholder="Seu nome completo" oninput="limparErro('u-nome','e-u-nome')">
+          </div>
+          <div class="fi">
+            <label>E-mail <span class="err-msg" id="e-u-email">⚠ E-mail inválido</span></label>
+            <input type="email" id="u-email" placeholder="seu@email.com" oninput="limparErro('u-email','e-u-email')">
+          </div>
+          <div class="fi">
+            <label>WhatsApp <span class="err-msg" id="e-u-wpp">⚠ Mínimo 10 dígitos</span></label>
+            <input type="tel" id="u-wpp" placeholder="(99) 99999-9999" oninput="limparErro('u-wpp','e-u-wpp')">
+          </div>
+          <input type="hidden" id="u-tipo" value="pessoa_fisica">
+          <button class="bm2 bcf" id="btn-usuario" style="width:100%;margin-top:6px" onclick="enviarUsuario()">
+            Criar conta grátis
+          </button>
+          <div style="text-align:center;font-size:11px;color:var(--mu);margin-top:12px">É empresa? <span style="color:var(--g);cursor:pointer;font-weight:600" onclick="abrirCadastroEmpresa()">Cadastre seu negócio aqui</span></div>
         </div>
-        <div class="fi">
-          <label>E-mail <span class="err-msg" id="e-u-email">⚠ E-mail inválido</span></label>
-          <input type="email" id="u-email" placeholder="seu@email.com" oninput="limparErro('u-email','e-u-email')">
+        <div id="cad-empresa" style="display:none">
+          <div style="padding:14px 0 4px;text-align:center">
+            <div style="font-size:13px;font-weight:600;color:var(--tx);margin-bottom:6px">Cadastro empresarial</div>
+            <div style="font-size:12px;color:var(--mu);line-height:1.6">Para divulgar seu negócio, usar planos e acessar o painel, preencha o cadastro completo da empresa.</div>
+          </div>
+          <button class="bm2 bcf" style="width:100%;margin-top:14px" onclick="abrirCadastroEmpresa()">
+            Ir para cadastro da empresa
+          </button>
+          <div style="text-align:center;font-size:11px;color:var(--mu);margin-top:12px">Você preencherá o mesmo formulário oficial de cadastro da plataforma.</div>
         </div>
-        <div class="fi">
-          <label>WhatsApp <span class="err-msg" id="e-u-wpp">⚠ Mínimo 10 dígitos</span></label>
-          <input type="tel" id="u-wpp" placeholder="(99) 99999-9999" oninput="limparErro('u-wpp','e-u-wpp')">
-        </div>
-        <input type="hidden" id="u-tipo" value="pessoa_fisica">
-        <button class="bm2 bcf" id="btn-usuario" style="width:100%;margin-top:6px" onclick="enviarUsuario()">
-          Criar conta grátis
-        </button>
-        <div style="text-align:center;font-size:11px;color:var(--mu);margin-top:12px">É empresa? <span style="color:var(--g);cursor:pointer;font-weight:600" onclick="cM('login');oM('cadastro')">Cadastre seu negócio aqui</span></div>
       </div>
       <!-- SUCESSO USUÁRIO -->
       <div class="form-success" id="fs-usuario">
@@ -438,21 +449,27 @@ body{font-family:'DM Sans',sans-serif;background:#faf7f2;color:#1c2b22;overflow-
             <input type="tel" id="c-tel" placeholder="(99) 3333-3333">
           </div>
         </div>
+        <div class="fi-row">
+          <div class="fi">
+            <label>E-mail de acesso <span class="err-msg" id="e-c-email">⚠ E-mail inválido</span></label>
+            <input type="email" id="c-email" placeholder="empresa@email.com" oninput="limparErro('c-email','e-c-email')">
+          </div>
+          <div class="fi">
+            <label>Senha do painel <span class="err-msg" id="e-c-senha">⚠ Mínimo 6 caracteres</span></label>
+            <input type="password" id="c-senha" placeholder="Mínimo 6 caracteres" oninput="limparErro('c-senha','e-c-senha')">
+          </div>
+        </div>
+        <div class="fi">
+          <label>Confirmar senha <span class="err-msg" id="e-c-senha2">⚠ As senhas não conferem</span></label>
+          <input type="password" id="c-senha2" placeholder="Repita a senha do painel" oninput="limparErro('c-senha2','e-c-senha2')">
+        </div>
         <div class="fi">
           <label>Endereço completo <span class="err-msg" id="e-c-end">⚠ Campo obrigatório</span></label>
           <input type="text" id="c-end" placeholder="Rua, número, bairro – Codó/MA" oninput="limparErro('c-end','e-c-end')">
         </div>
         <div class="fi">
-          <label>Horário de funcionamento <span class="err-msg" id="e-c-hora">⚠ Campo obrigatório</span></label>
-          <input type="text" id="c-hora" placeholder="Ex: Seg–Sex 8h–18h / Sáb 8h–12h" oninput="limparErro('c-hora','e-c-hora')">
-        </div>
-        <div class="fi">
           <label>Instagram (opcional)</label>
           <input type="text" id="c-insta" placeholder="@suaempresa">
-        </div>
-        <div class="fi">
-          <label>Especialidades <span style="font-size:9px;font-weight:400;color:var(--mu);text-transform:none;letter-spacing:0">(separadas por vírgula)</span></label>
-          <input type="text" id="c-tags" placeholder="Ex: Delivery, Convênios, Manipulação">
         </div>
         <div class="fi">
           <label>Plano de interesse</label>
@@ -462,7 +479,7 @@ body{font-family:'DM Sans',sans-serif;background:#faf7f2;color:#1c2b22;overflow-
             <option value="Premium R$129/mês">Premium – R$ 129/mês</option>
           </select>
         </div>
-        <div class="fi-hint" style="margin-bottom:16px">Após o envio, entraremos em contato pelo WhatsApp para confirmar o cadastro em até 24h.</div>
+        <div class="fi-hint" style="margin-bottom:16px">Após o envio, sua empresa entra em análise. Quando for aprovada, esse e-mail e essa senha servirão para acessar o painel.</div>
         <button id="btn-cadastro" class="bm2 bcf" style="width:100%;padding:12px;font-size:14px" onclick="enviarCadastro()">
           Enviar cadastro grátis ✓
         </button>
@@ -471,8 +488,8 @@ body{font-family:'DM Sans',sans-serif;background:#faf7f2;color:#1c2b22;overflow-
     <div class="form-success" id="fs-cadastro">
       <div class="fs-icon">🎉</div>
       <div class="fs-title">Cadastro enviado!</div>
-      <div class="fs-msg">Recebemos os dados da sua empresa com sucesso.<br>Nossa equipe vai analisar e entrar em contato pelo WhatsApp em até <strong>24 horas</strong>.</div>
-      <div class="fs-detalhe">📱 Fique atento ao seu WhatsApp!</div>
+      <div class="fs-msg">Recebemos os dados da sua empresa com sucesso.<br>Nossa equipe vai analisar o cadastro e liberar o acesso ao painel após a aprovação.</div>
+      <div class="fs-detalhe">📱 Fique atento ao seu WhatsApp e ao seu e-mail.</div>
       <button class="bm2 bcf" style="width:100%;margin-top:20px" onclick="cM('cadastro')">Fechar</button>
     </div>
   </div>
@@ -486,38 +503,17 @@ body{font-family:'DM Sans',sans-serif;background:#faf7f2;color:#1c2b22;overflow-
       <div class="mbod">
         <p style="font-size:12px;color:var(--mu);margin-bottom:16px;line-height:1.6">Escolha o plano ideal e apareça primeiro para quem busca em Codó.</p>
         <div class="plano" id="pl-basico" onclick="selPlano('Básico (Grátis)','Básico – Gratuito','pl-basico')"><div class="pln">Básico</div><div class="pld">Listagem com nome, contato, endereço e horário.</div><div class="plp">Grátis</div></div>
-        <div class="plano ft" id="pl-dest" onclick="selPlano('Destaque R$49/mês','Destaque – R$ 49/mês','pl-dest')"><div class="plb">Mais popular</div><div class="pln">Destaque</div><div class="pld">Aparece no topo + selo dourado + banner rotativo + publicar vagas e ofertas.</div><div class="plp">R$ 49<span>/mês</span></div></div>
+        <div class="plano sel" id="pl-dest" onclick="selPlano('Destaque R$49/mês','Destaque – R$ 49/mês','pl-dest')"><div class="plb">Mais popular</div><div class="pln">Destaque</div><div class="pld">Aparece no topo + selo dourado + banner rotativo + publicar vagas e ofertas.</div><div class="plp">R$ 49<span>/mês</span></div></div>
         <div class="plano" id="pl-prem" onclick="selPlano('Premium R$129/mês','Premium – R$ 129/mês','pl-prem')"><div class="pln">Premium</div><div class="pld">Tudo do Destaque + banner no rodapé + divulgação nas redes do Guia.</div><div class="plp">R$ 129<span>/mês</span></div></div>
         <div style="border-top:1px solid var(--bo);margin-top:16px;padding-top:16px">
-          <p style="font-size:12px;font-weight:600;color:var(--tx);margin-bottom:12px">Deixe seu contato e te retornamos:</p>
-          <div class="form-erro-geral" id="err-planos">Verifique os campos em vermelho antes de continuar.</div>
-          <div class="fi">
-            <label>Nome da empresa <span class="err-msg" id="e-p-nome">⚠ Campo obrigatório</span></label>
-            <input type="text" id="p-nome" placeholder="Nome da sua empresa" oninput="limparErro('p-nome','e-p-nome')">
-          </div>
-          <div class="fi-row">
-            <div class="fi">
-              <label>WhatsApp <span class="err-msg" id="e-p-wpp">⚠ Mínimo 10 dígitos</span></label>
-              <input type="tel" id="p-wpp" placeholder="(99) 99999-9999" oninput="limparErro('p-wpp','e-p-wpp')">
-            </div>
-            <div class="fi">
-              <label>Plano escolhido</label>
-              <input type="text" id="plano-disp" value="Destaque – R$ 49/mês" readonly style="background:var(--cr);color:var(--g);font-weight:600">
-            </div>
-          </div>
+          <div style="font-size:12px;color:var(--mu);margin-bottom:12px">Plano selecionado:</div>
+          <input type="text" id="plano-disp" value="Destaque – R$ 49/mês" readonly style="width:100%;padding:10px 12px;border:1px solid var(--bo);border-radius:8px;background:var(--cr);color:var(--g);font-weight:600;font-family:'DM Sans',sans-serif;font-size:13px">
           <input type="hidden" id="plano-val" value="Destaque R$49/mês">
-          <button id="btn-planos" class="bm2 bcf" style="width:100%;padding:12px;font-size:14px" onclick="enviarPlano()">
+          <button id="btn-planos" class="bm2 bcf" style="width:100%;padding:12px;font-size:14px;margin-top:12px" onclick="abrirCadastroEmpresa(document.getElementById('plano-val').value, document.getElementById('plano-disp').value)">
             Quero me destacar ✓
           </button>
         </div>
       </div>
-    </div>
-    <div class="form-success" id="fs-planos">
-      <div class="fs-icon">🚀</div>
-      <div class="fs-title">Interesse registrado!</div>
-      <div class="fs-msg">Ótima escolha! Nossa equipe entrará em contato pelo WhatsApp em breve para ativar seu plano e turbinar sua presença no Guia Codoense.</div>
-      <div class="fs-detalhe">📱 Aguarde nosso contato!</div>
-      <button class="bm2 bcf" style="width:100%;margin-top:20px" onclick="cM('planos')">Fechar</button>
     </div>
   </div>
 </div>
@@ -594,32 +590,18 @@ body{font-family:'DM Sans',sans-serif;background:#faf7f2;color:#1c2b22;overflow-
   </div>
 </div>
 
+<script src="https://www.gstatic.com/firebasejs/12.7.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/12.7.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/12.7.0/firebase-firestore-compat.js"></script>
+<script src="./firebase-config.js"></script>
+<script src="./firebase-bridge.js"></script>
 <script>
-// ===== SUPABASE =====
-var SUPA_URL = 'https://xzcqsyqgtmbfsufezuyp.supabase.co';
-var SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh6Y3FzeXFndG1iZnN1ZmV6dXlwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY0NDE5MTYsImV4cCI6MjA5MjAxNzkxNn0.Rw0OSqhlqpczFk0gX7-jSOXa1AOR0M04TAf0BlD-WtU';
-
-function supaFetch(tabela, dados) {
-  return fetch(SUPA_URL + '/rest/v1/' + tabela, {
-    method: 'POST',
-    headers: {
-      'apikey': SUPA_KEY,
-      'Authorization': 'Bearer ' + SUPA_KEY,
-      'Content-Type': 'application/json',
-      'Prefer': 'return=minimal'
-    },
-    body: JSON.stringify(dados)
-  });
+function firebaseDisponivel() {
+  return window.guiaFirebase && window.guiaFirebase.isConfigured();
 }
 
-function supaGet(endpoint) {
-  return fetch(SUPA_URL + '/rest/v1/' + endpoint, {
-    headers: {
-      'apikey': SUPA_KEY,
-      'Authorization': 'Bearer ' + SUPA_KEY,
-      'Content-Type': 'application/json'
-    }
-  });
+function erroFirebasePadrao() {
+  return window.guiaFirebase ? window.guiaFirebase.getConfigError() : 'Firebase não carregou corretamente.';
 }
 
 // ===== DADOS =====
@@ -666,8 +648,16 @@ function carregarEmpresas() {
   document.getElementById('loading').style.display = 'block';
   document.getElementById('sd').style.display = 'none';
   document.getElementById('sn').style.display = 'none';
-  supaGet('empresas?select=*&aprovado=eq.true&order=premium.desc,created_at.asc')
-    .then(function(r) { return r.json(); })
+
+  if (!firebaseDisponivel()) {
+    document.getElementById('loading').style.display = 'none';
+    empresas = dadosExemplo;
+    document.getElementById('total-emp').textContent = empresas.length;
+    rE();
+    return;
+  }
+
+  window.guiaFirebase.carregarEmpresasAprovadas()
     .then(function(data) {
       document.getElementById('loading').style.display = 'none';
       empresas = (Array.isArray(data) && data.length > 0) ? data : dadosExemplo;
@@ -731,17 +721,26 @@ function enviarCadastro() {
   var cat = document.getElementById('c-cat').value;
   var desc = document.getElementById('c-desc').value.trim();
   var wpp = document.getElementById('c-wpp').value.trim();
+  var email = document.getElementById('c-email').value.trim();
+  var senha = document.getElementById('c-senha').value;
+  var senha2 = document.getElementById('c-senha2').value;
   var end = document.getElementById('c-end').value.trim();
-  var hora = document.getElementById('c-hora').value.trim();
 
   if (!nome) { marcarErro('c-nome','e-c-nome'); ok = false; }
   if (!cat) { marcarErro('c-cat','e-c-cat'); ok = false; }
   if (desc.length < 20) { marcarErro('c-desc','e-c-desc'); ok = false; }
   if (!isTel(wpp)) { marcarErro('c-wpp','e-c-wpp'); ok = false; }
+  if (!isEmail(email)) { marcarErro('c-email','e-c-email'); ok = false; }
+  if (senha.length < 6) { marcarErro('c-senha','e-c-senha'); ok = false; }
+  if (senha !== senha2) { marcarErro('c-senha2','e-c-senha2'); ok = false; }
   if (!end) { marcarErro('c-end','e-c-end'); ok = false; }
-  if (!hora) { marcarErro('c-hora','e-c-hora'); ok = false; }
 
   if (!ok) { document.getElementById('err-cadastro').classList.add('on'); return; }
+  if (!firebaseDisponivel()) {
+    document.getElementById('err-cadastro').textContent = erroFirebasePadrao();
+    document.getElementById('err-cadastro').classList.add('on');
+    return;
+  }
 
   btnEnviando('btn-cadastro', 'Enviando cadastro...');
 
@@ -752,10 +751,12 @@ function enviarCadastro() {
     descricao: desc,
     whatsapp: wpp.replace(/\D/g,''),
     telefone: document.getElementById('c-tel').value.trim(),
+    email: email,
+    senha: senha,
     endereco: end,
-    horario: hora,
+    horario: '',
     instagram: document.getElementById('c-insta').value.trim(),
-    tags: document.getElementById('c-tags').value.trim(),
+    tags: '',
     plano: document.getElementById('c-plano').value,
     iniciais: iniciais,
     aprovado: false,
@@ -764,57 +765,17 @@ function enviarCadastro() {
     av_index: Math.floor(Math.random() * 6)
   };
 
-  supaFetch('empresas', dados)
-    .then(function(r) {
-      if (r.ok || r.status === 201) {
-        showSucesso('cadastro');
-      } else {
-        return r.text().then(function(t) { throw new Error(t); });
-      }
+  window.guiaFirebase.registrarEmpresa(dados, senha)
+    .then(function() {
+      showSucesso('cadastro');
     })
     .catch(function(err) {
       console.error(err);
       btnReset('btn-cadastro', 'Enviar cadastro grátis ✓');
-      document.getElementById('err-cadastro').textContent = 'Erro ao enviar. Tente novamente.';
+      document.getElementById('err-cadastro').textContent = err && err.code === 'auth/email-already-in-use'
+        ? 'Esse e-mail já está em uso. Tente outro e-mail.'
+        : 'Erro ao enviar. Revise os dados e tente novamente.';
       document.getElementById('err-cadastro').classList.add('on');
-    });
-}
-
-// ===== ENVIO: PLANO =====
-function enviarPlano() {
-  var ok = true;
-  document.getElementById('err-planos').classList.remove('on');
-
-  var nome = document.getElementById('p-nome').value.trim();
-  var wpp = document.getElementById('p-wpp').value.trim();
-
-  if (!nome) { marcarErro('p-nome','e-p-nome'); ok = false; }
-  if (!isTel(wpp)) { marcarErro('p-wpp','e-p-wpp'); ok = false; }
-
-  if (!ok) { document.getElementById('err-planos').classList.add('on'); return; }
-
-  btnEnviando('btn-planos', 'Registrando interesse...');
-
-  var dados = {
-    nome: nome,
-    whatsapp: wpp.replace(/\D/g,''),
-    tipo: 'empresa',
-    aprovado: true
-  };
-
-  supaFetch('usuarios', dados)
-    .then(function(r) {
-      if (r.ok || r.status === 201) {
-        showSucesso('planos');
-      } else {
-        return r.text().then(function(t) { throw new Error(t); });
-      }
-    })
-    .catch(function(err) {
-      console.error(err);
-      btnReset('btn-planos', 'Quero me destacar ✓');
-      document.getElementById('err-planos').textContent = 'Erro ao enviar. Tente novamente.';
-      document.getElementById('err-planos').classList.add('on');
     });
 }
 
@@ -833,6 +794,11 @@ function enviarUsuario() {
   if (!isTel(wpp)) { marcarErro('u-wpp','e-u-wpp'); ok = false; }
 
   if (!ok) { document.getElementById('err-usuario').classList.add('on'); return; }
+  if (!firebaseDisponivel()) {
+    document.getElementById('err-usuario').textContent = erroFirebasePadrao();
+    document.getElementById('err-usuario').classList.add('on');
+    return;
+  }
 
   btnEnviando('btn-usuario', 'Criando conta...');
 
@@ -844,15 +810,11 @@ function enviarUsuario() {
     aprovado: true
   };
 
-  supaFetch('usuarios', dados)
-    .then(function(r) {
-      if (r.ok || r.status === 201) {
-        var fb = document.getElementById('lp-c');
-        fb.classList.add('hide');
-        document.getElementById('fs-usuario').classList.add('on');
-      } else {
-        return r.text().then(function(t) { throw new Error(t); });
-      }
+  window.guiaFirebase.registrarUsuario(dados)
+    .then(function() {
+      var fb = document.getElementById('lp-c');
+      fb.classList.add('hide');
+      document.getElementById('fs-usuario').classList.add('on');
     })
     .catch(function(err) {
       console.error(err);
@@ -876,6 +838,11 @@ function enviarCandidatura() {
   if (!esc) { marcarErro('v-esc','e-v-esc'); ok = false; }
 
   if (!ok) { document.getElementById('err-vaga').classList.add('on'); return; }
+  if (!firebaseDisponivel()) {
+    document.getElementById('err-vaga').textContent = erroFirebasePadrao();
+    document.getElementById('err-vaga').classList.add('on');
+    return;
+  }
 
   btnEnviando('btn-vaga', 'Enviando candidatura...');
 
@@ -889,13 +856,9 @@ function enviarCandidatura() {
     empresa: vagaAtual ? vagaAtual.emp : ''
   };
 
-  supaFetch('candidaturas', dados)
-    .then(function(r) {
-      if (r.ok || r.status === 201) {
-        showSucesso('vaga');
-      } else {
-        return r.text().then(function(t) { throw new Error(t); });
-      }
+  window.guiaFirebase.registrarCandidatura(dados)
+    .then(function() {
+      showSucesso('vaga');
     })
     .catch(function(err) {
       console.error(err);
@@ -911,6 +874,14 @@ function selPlano(val, label, elId) {
   document.getElementById('plano-disp').value = label;
   document.querySelectorAll('.plano').forEach(function(p) { p.classList.remove('sel'); });
   if (elId) document.getElementById(elId).classList.add('sel');
+}
+
+function abrirCadastroEmpresa(planoVal, planoLabel) {
+  var planoFinal = planoVal || 'Básico (Grátis)';
+  cM('login');
+  cM('planos');
+  oM('cadastro');
+  document.getElementById('c-plano').value = planoFinal;
 }
 
 // ===== HELPERS =====
@@ -962,11 +933,13 @@ function abrirEmpresa(id){
   var d=empresas.find(function(x){return x.id===id;});if(!d)return;
   var av=d.av_index||0;var c=AV[av%AV.length];var ini=getIni(d);var tags=getTags(d);
   var tel=d.whatsapp||'';var msg='Olá, '+d.nome+'! Vi seu perfil no Guia Codoense e gostaria de mais informações.';
+  var contato = '<div class="crow"><div class="cico">📍</div>'+d.endereco+'</div>'+(d.horario?'<div class="crow"><div class="cico">⏰</div>'+d.horario+'</div>':'')+(d.instagram?'<div class="crow"><div class="cico">📷</div>'+d.instagram+'</div>':'');
+  var secTags = tags.length ? '<div class="dsec" style="border-bottom:none"><h4>Especialidades</h4><div>'+tags.map(function(t){return '<span class="ntd">'+t+'</span>';}).join('')+'</div></div>' : '<div class="dsec" style="border-bottom:none"><h4>Categoria</h4><div><span class="ntd">'+getCat(d)+'</span></div></div>';
   document.getElementById('m-din').innerHTML=
     '<div class="dth"><div class="dtav" style="background:'+c.bg+';color:'+c.c+'">'+ini+'</div>'+(d.premium?'<div style="display:inline-flex;align-items:center;background:var(--go);color:#fff;font-size:9px;font-weight:600;padding:2px 9px;border-radius:20px;margin-bottom:6px;text-transform:uppercase">⭐ Destaque</div><br>':'')+'<div class="dtnm">'+d.nome+'</div><div class="dtct">'+getCat(d)+' · <span style="color:var(--gol)">'+stars(d.rating)+' '+d.rating+'</span></div></div>'+
     '<div class="dsec"><h4>Sobre</h4><p>'+d.descricao+'</p></div>'+
-    '<div class="dsec"><h4>Contato &amp; Localização</h4><div class="crow"><div class="cico">📍</div>'+d.endereco+'</div><div class="crow"><div class="cico">⏰</div>'+d.horario+'</div>'+(d.instagram?'<div class="crow"><div class="cico">📷</div>'+d.instagram+'</div>':'')+'</div>'+
-    '<div class="dsec" style="border-bottom:none"><h4>Especialidades</h4><div>'+tags.map(function(t){return '<span class="ntd">'+t+'</span>';}).join('')+'</div></div>'+
+    '<div class="dsec"><h4>Contato &amp; Localização</h4>'+contato+'</div>'+
+    secTags+
     '<div style="padding:12px 18px"><button class="wbtn" onclick="window.open(\''+wppLink(tel,msg)+'\',\'_blank\')">💬 Entrar em contato pelo WhatsApp</button></div>';
   oM('detail');
 }
@@ -1011,8 +984,10 @@ function selT(t){
   document.getElementById('tp-p').classList.toggle('on',t==='p');
   document.getElementById('tp-e').classList.toggle('on',t==='e');
   document.getElementById('u-tipo').value = t==='e' ? 'empresa' : 'pessoa_fisica';
+  document.getElementById('cad-pessoa').style.display = t==='e' ? 'none' : 'block';
+  document.getElementById('cad-empresa').style.display = t==='e' ? 'block' : 'none';
 }
-function simL(){cM('login');}
+function simL(){window.location.href='login.html';}
 
 // ===== BANNER PRINCIPAL =====
 var bi=0,bT=4,bTmr;
@@ -1041,9 +1016,9 @@ function rView(){
 
 // ===== MODAIS =====
 function oM(id){
-  if(id==='login'){document.querySelectorAll('.ltb').forEach(function(t,i){t.classList.toggle('on',i===0);});document.querySelectorAll('.lpanel').forEach(function(p){p.classList.remove('on');});document.getElementById('lp-e').classList.add('on');document.getElementById('fs-usuario').classList.remove('on');var lpc=document.getElementById('lp-c');lpc.classList.remove('hide');lpc.classList.remove('on');}
-  if(id==='cadastro'){esconderSucesso('cadastro');['c-nome','c-cat','c-desc','c-wpp','c-end','c-hora','c-tel','c-insta','c-tags'].forEach(function(fid){var el=document.getElementById(fid);if(el){el.value='';el.classList.remove('erro');}});document.querySelectorAll('#fb-cadastro .err-msg').forEach(function(e){e.classList.remove('on');});document.getElementById('err-cadastro').classList.remove('on');document.getElementById('err-cadastro').textContent='Verifique os campos em vermelho antes de continuar.';btnReset('btn-cadastro','Enviar cadastro grátis ✓');}
-  if(id==='planos'){esconderSucesso('planos');['p-nome','p-wpp'].forEach(function(fid){var el=document.getElementById(fid);if(el){el.value='';el.classList.remove('erro');}});document.querySelectorAll('#fb-planos .err-msg').forEach(function(e){e.classList.remove('on');});document.getElementById('err-planos').classList.remove('on');document.getElementById('err-planos').textContent='Verifique os campos em vermelho antes de continuar.';btnReset('btn-planos','Quero me destacar ✓');}
+  if(id==='login'){document.querySelectorAll('.ltb').forEach(function(t,i){t.classList.toggle('on',i===0);});document.querySelectorAll('.lpanel').forEach(function(p){p.classList.remove('on');});document.getElementById('lp-e').classList.add('on');document.getElementById('fs-usuario').classList.remove('on');var lpc=document.getElementById('lp-c');lpc.classList.remove('hide');lpc.classList.remove('on');selT('p');}
+  if(id==='cadastro'){esconderSucesso('cadastro');['c-nome','c-cat','c-desc','c-wpp','c-email','c-senha','c-senha2','c-end','c-tel','c-insta'].forEach(function(fid){var el=document.getElementById(fid);if(el){el.value='';el.classList.remove('erro');}});document.querySelectorAll('#fb-cadastro .err-msg').forEach(function(e){e.classList.remove('on');});document.getElementById('err-cadastro').classList.remove('on');document.getElementById('err-cadastro').textContent='Verifique os campos em vermelho antes de continuar.';document.getElementById('c-plano').value='Básico (Grátis)';btnReset('btn-cadastro','Enviar cadastro grátis ✓');}
+  if(id==='planos'){selPlano('Destaque R$49/mês','Destaque – R$ 49/mês','pl-dest');btnReset('btn-planos','Quero me destacar ✓');}
   document.getElementById('m-'+id).classList.add('on');
   document.body.style.overflow='hidden';
 }
@@ -1057,3 +1032,4 @@ rV(vagas.slice(0,3));
 </script>
 </body>
 </html>
+

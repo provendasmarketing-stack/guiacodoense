@@ -14,3 +14,7 @@ window.GUIA_FIREBASE_COLLECTIONS = {
   candidaturas: "candidaturas",
   interessesPlanos: "interesses_planos"
 };
+
+window.GUIA_ADMIN_EMAILS = [
+  "provendasmarketing@gmail.com"
+];

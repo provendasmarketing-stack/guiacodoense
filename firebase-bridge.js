@@ -24,6 +24,9 @@
   var app = firebase.apps && firebase.apps.length ? firebase.app() : firebase.initializeApp(config);
   var auth = app.auth();
   var db = app.firestore();
+  var adminEmails = (window.GUIA_ADMIN_EMAILS || []).map(function(email) {
+    return String(email || "").trim().toLowerCase();
+  }).filter(Boolean);
 
   function nowServer() {
     return firebase.firestore.FieldValue.serverTimestamp();
@@ -39,6 +42,10 @@
     if (!configured) {
       throw new Error(bridge.getConfigError());
     }
+  }
+
+  function isAdminEmail(email) {
+    return !!email && adminEmails.indexOf(String(email).trim().toLowerCase()) > -1;
   }
 
   function mapEmpresa(doc, fallbackEmail) {
@@ -69,6 +76,34 @@
     });
   }
 
+  function mapUsuario(doc, fallbackEmail) {
+    var data = doc ? normalizeSnapshot(doc) : {};
+    if (fallbackEmail && !data.email) {
+      data.email = fallbackEmail;
+    }
+    return data;
+  }
+
+  function buscarUsuarioPorUid(uid, emailFallback) {
+    return db.collection(collections.usuarios).doc(uid).get().then(function(doc) {
+      if (doc.exists) {
+        return mapUsuario(doc, emailFallback);
+      }
+
+      return db.collection(collections.usuarios)
+        .where("email", "==", emailFallback || "")
+        .limit(1)
+        .get()
+        .then(function(snapshot) {
+          if (snapshot.empty) {
+            return null;
+          }
+
+          return mapUsuario(snapshot.docs[0], emailFallback);
+        });
+    });
+  }
+
   bridge.carregarEmpresasAprovadas = function() {
     ensureConfigured();
 
@@ -88,6 +123,10 @@
         });
         return lista;
       });
+  };
+
+  bridge.isAdminEmail = function(email) {
+    return isAdminEmail(email);
   };
 
   bridge.registrarEmpresa = function(dados, senha) {
@@ -114,12 +153,22 @@
   bridge.registrarUsuario = function(dados) {
     ensureConfigured();
 
-    var payload = Object.assign({}, dados, {
-      createdAt: nowServer(),
-      atualizadoEm: nowServer()
-    });
+    return auth.createUserWithEmailAndPassword(dados.email, dados.senha)
+      .then(function(cred) {
+        var payload = Object.assign({}, dados, {
+          authUid: cred.user.uid,
+          createdAt: nowServer(),
+          atualizadoEm: nowServer()
+        });
 
-    return db.collection(collections.usuarios).add(payload);
+        delete payload.senha;
+
+        return db.collection(collections.usuarios).doc(cred.user.uid).set(payload).then(function() {
+          return auth.signOut().then(function() {
+            return { id: cred.user.uid };
+          });
+        });
+      });
   };
 
   bridge.registrarInteressePlano = function(dados) {
@@ -188,6 +237,70 @@
     return buscarEmpresaPorUid(auth.currentUser.uid, auth.currentUser.email);
   };
 
+  bridge.signInUsuario = function(email, senha, lembrar) {
+    ensureConfigured();
+
+    var persistence = lembrar
+      ? firebase.auth.Auth.Persistence.LOCAL
+      : firebase.auth.Auth.Persistence.SESSION;
+
+    return auth.setPersistence(persistence)
+      .then(function() {
+        return auth.signInWithEmailAndPassword(email, senha);
+      })
+      .then(function(cred) {
+        return buscarUsuarioPorUid(cred.user.uid, cred.user.email || email).then(function(usuario) {
+          if (!usuario) {
+            return auth.signOut().then(function() {
+              var error = new Error("Usuario nao encontrado.");
+              error.code = "usuario/not-found";
+              throw error;
+            });
+          }
+
+          return usuario;
+        });
+      });
+  };
+
+  bridge.getUsuarioAtual = function() {
+    ensureConfigured();
+
+    if (!auth.currentUser) {
+      return Promise.resolve(null);
+    }
+
+    return buscarUsuarioPorUid(auth.currentUser.uid, auth.currentUser.email);
+  };
+
+  bridge.signInGestor = function(email, senha, lembrar) {
+    ensureConfigured();
+
+    var persistence = lembrar
+      ? firebase.auth.Auth.Persistence.LOCAL
+      : firebase.auth.Auth.Persistence.SESSION;
+
+    return auth.setPersistence(persistence)
+      .then(function() {
+        return auth.signInWithEmailAndPassword(email, senha);
+      })
+      .then(function(cred) {
+        var userEmail = cred.user && cred.user.email ? cred.user.email : email;
+        if (!isAdminEmail(userEmail)) {
+          return auth.signOut().then(function() {
+            var error = new Error("Acesso de gestor nao autorizado.");
+            error.code = "admin/not-allowed";
+            throw error;
+          });
+        }
+
+        return {
+          uid: cred.user.uid,
+          email: userEmail
+        };
+      });
+  };
+
   bridge.observarEmpresaLogada = function(callback) {
     ensureConfigured();
 
@@ -207,7 +320,67 @@
     });
   };
 
+  bridge.observarGestorLogado = function(callback) {
+    ensureConfigured();
+
+    return auth.onAuthStateChanged(function(user) {
+      if (!user || !isAdminEmail(user.email)) {
+        callback(null, user || null);
+        return;
+      }
+
+      callback({
+        uid: user.uid,
+        email: user.email
+      }, user);
+    });
+  };
+
+  bridge.listarEmpresasGestor = function() {
+    ensureConfigured();
+
+    return db.collection(collections.empresas)
+      .get()
+      .then(function(snapshot) {
+        var lista = snapshot.docs.map(normalizeSnapshot);
+        lista.sort(function(a, b) {
+          function stamp(item) {
+            var value = item && item.createdAt;
+            if (value && typeof value.toMillis === "function") {
+              return value.toMillis();
+            }
+            if (value && typeof value.seconds === "number") {
+              return value.seconds * 1000;
+            }
+            return 0;
+          }
+          return stamp(b) - stamp(a);
+        });
+        return lista;
+      });
+  };
+
+  bridge.atualizarEmpresaGestor = function(empresaId, dados) {
+    ensureConfigured();
+
+    var payload = Object.assign({}, dados, {
+      atualizadoEm: nowServer()
+    });
+
+    return db.collection(collections.empresas).doc(empresaId).set(payload, { merge: true });
+  };
+
   bridge.signOutEmpresa = function() {
+    ensureConfigured();
+    return auth.signOut();
+  };
+
+  bridge.signOutUsuario = function() {
+    ensureConfigured();
+    return auth.signOut();
+  };
+
+  bridge.signOutGestor = function() {
     ensureConfigured();
     return auth.signOut();
   };

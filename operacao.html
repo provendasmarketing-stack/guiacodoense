@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Operação - Guia Codoense</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --g:#1a6b3c;--gl:#2d9e5f;--go:#c8922a;--gol:#e8b04a;
+  --cr:#faf7f2;--dk:#0f1f16;--tx:#1c2b22;--mu:#6b7f72;
+  --bo:rgba(26,107,60,.15);--err:#e11d48;--fd:'Playfair Display',serif
+}
+body{font-family:'DM Sans',sans-serif;background:var(--cr);color:var(--tx);min-height:100vh}
+.wrap{max-width:1180px;margin:0 auto;padding:28px 20px 40px}
+.hero{background:linear-gradient(135deg,var(--dk),#1a5c35);border-radius:18px;padding:26px 24px;color:#fff;margin-bottom:24px}
+.eyebrow{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gol);margin-bottom:8px}
+.title{font-family:var(--fd);font-size:30px;font-weight:900;line-height:1}
+.subtitle{font-size:14px;color:rgba(255,255,255,.72);margin-top:10px;max-width:680px;line-height:1.6}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:22px}
+.btn{border:none;border-radius:10px;padding:11px 18px;font:600 13px 'DM Sans',sans-serif;cursor:pointer}
+.btn-primary{background:var(--g);color:#fff}
+.btn-primary:hover{background:#1a5c35}
+.btn-ghost{background:#fff;color:var(--mu);border:1px solid var(--bo)}
+.btn-ghost:hover{background:#f3f1ec}
+.btn-go{background:var(--go);color:#fff}
+.btn-go:hover{background:#ac7b23}
+.btn-danger{background:#fef2f2;color:#b91c1c;border:1px solid rgba(185,28,28,.12)}
+.btn-danger:hover{background:#fee2e2}
+.btn-row{display:flex;gap:8px;flex-wrap:wrap}
+.card{background:#fff;border:1px solid var(--bo);border-radius:16px;padding:20px}
+.login-card{max-width:480px;margin:34px auto 0}
+.form-group{margin-bottom:16px}
+.form-group label{display:block;font-size:11px;color:var(--mu);text-transform:uppercase;letter-spacing:.6px;font-weight:600;margin-bottom:6px}
+.form-group input,.form-group select{width:100%;padding:12px;border:1px solid var(--bo);border-radius:10px;font:14px 'DM Sans',sans-serif}
+.form-group input:focus,.form-group select:focus{outline:none;border-color:var(--gl);box-shadow:0 0 0 3px rgba(45,158,95,.1)}
+.hint{font-size:12px;color:var(--mu);line-height:1.6}
+.alert{display:none;padding:12px 14px;border-radius:10px;font-size:13px;line-height:1.5;margin-bottom:14px}
+.alert.show{display:block}
+.alert.err{background:#fff1f2;color:#be123c;border:1px solid rgba(190,18,60,.14)}
+.alert.ok{background:#f0fdf4;color:#166534;border:1px solid rgba(22,101,52,.14)}
+.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:22px}
+.metric{background:#fff;border:1px solid var(--bo);border-radius:14px;padding:18px}
+.metric-label{font-size:11px;color:var(--mu);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
+.metric-value{font-size:30px;font-weight:700;color:var(--g);line-height:1}
+.filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px}
+.filters input,.filters select{padding:11px 12px;border:1px solid var(--bo);border-radius:10px;background:#fff;font:13px 'DM Sans',sans-serif}
+.filters input{min-width:240px;flex:1}
+.list{display:flex;flex-direction:column;gap:14px}
+.empresa{background:#fff;border:1px solid var(--bo);border-radius:16px;padding:18px}
+.empresa-top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:12px}
+.empresa-name{font-size:18px;font-weight:700}
+.empresa-meta{font-size:13px;color:var(--mu);margin-top:4px;line-height:1.6}
+.badges{display:flex;gap:6px;flex-wrap:wrap}
+.badge{padding:4px 9px;border-radius:999px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.4px}
+.badge.pending{background:#fff7ed;color:#9a3412}
+.badge.approved{background:#f0fdf4;color:#166534}
+.badge.featured{background:#fef3c7;color:#92400e}
+.badge.basic{background:#eef2f7;color:#475569}
+.empresa-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:18px}
+.empresa-desc{font-size:13px;color:var(--tx);line-height:1.7}
+.empresa-side{font-size:12px;color:var(--mu);line-height:1.8}
+.empresa-side strong{color:var(--tx)}
+.empty{padding:34px 20px;text-align:center;font-size:14px;color:var(--mu)}
+.muted{font-size:12px;color:var(--mu)}
+@media(max-width:760px){
+  .topbar,.empresa-top,.empresa-grid{display:block}
+  .empresa-grid{display:block}
+  .badges{margin-top:10px}
+  .btn-row{margin-top:12px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hero">
+    <div class="eyebrow">Operação interna</div>
+    <div class="title">Guia Codoense</div>
+    <div class="subtitle">Aprove empresas, marque destaque e acompanhe o que chegou na plataforma sem precisar abrir o código.</div>
+  </div>
+
+  <div id="estado-logado" style="display:none">
+    <div class="topbar">
+      <div>
+        <div style="font-size:21px;font-weight:700">Painel de operação comercial</div>
+        <div class="muted" id="gestor-email">Carregando acesso...</div>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-ghost" onclick="carregarEmpresasOperacao()">Atualizar</button>
+        <button class="btn btn-primary" onclick="logoutGestor()">Sair</button>
+      </div>
+    </div>
+
+    <div class="metrics">
+      <div class="metric"><div class="metric-label">Pendentes</div><div class="metric-value" id="m-pend">0</div></div>
+      <div class="metric"><div class="metric-label">Aprovadas</div><div class="metric-value" id="m-apr">0</div></div>
+      <div class="metric"><div class="metric-label">Em destaque</div><div class="metric-value" id="m-des">0</div></div>
+      <div class="metric"><div class="metric-label">Total</div><div class="metric-value" id="m-total">0</div></div>
+    </div>
+
+    <div class="card" style="margin-bottom:20px">
+      <div class="filters">
+        <input type="text" id="f-busca" placeholder="Buscar empresa, categoria ou e-mail..." oninput="renderEmpresasOperacao()">
+        <select id="f-status" onchange="renderEmpresasOperacao()">
+          <option value="todos">Todos os cadastros</option>
+          <option value="pendentes">Somente pendentes</option>
+          <option value="aprovadas">Somente aprovadas</option>
+          <option value="destaque">Somente destaque</option>
+        </select>
+      </div>
+      <div class="alert ok" id="msg-ok"></div>
+      <div class="alert err" id="msg-err"></div>
+      <div class="list" id="lista-empresas"></div>
+      <div class="empty" id="lista-vazia" style="display:none">Nenhuma empresa encontrada nesse filtro.</div>
+    </div>
+  </div>
+
+  <div id="estado-login" class="login-card card">
+    <div style="font-size:22px;font-weight:700;margin-bottom:6px">Entrar como gestor</div>
+    <div class="hint" style="margin-bottom:18px">Use um e-mail que esteja listado em <strong>GUIA_ADMIN_EMAILS</strong> no arquivo <strong>firebase-config.js</strong>.</div>
+    <div class="alert err show" id="alerta-admin">Antes de usar esta tela, confirme que seu e-mail de gestor está cadastrado em <strong>firebase-config.js</strong> e que a conta existe no Firebase Auth.</div>
+    <div class="alert err" id="login-err"></div>
+    <div class="form-group">
+      <label>E-mail do gestor</label>
+      <input type="email" id="g-email" placeholder="seu@email.com">
+    </div>
+    <div class="form-group">
+      <label>Senha</label>
+      <input type="password" id="g-senha" placeholder="Digite sua senha">
+    </div>
+    <div class="form-group">
+      <label>Manter conectado</label>
+      <select id="g-lembrar">
+        <option value="sim">Sim, neste aparelho</option>
+        <option value="nao">Não, apenas nesta sessão</option>
+      </select>
+    </div>
+    <button class="btn btn-primary" style="width:100%" id="btn-gestor" onclick="loginGestor()">Entrar na operação</button>
+  </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/12.7.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/12.7.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/12.7.0/firebase-firestore-compat.js"></script>
+<script src="./firebase-config.js"></script>
+<script src="./firebase-bridge.js"></script>
+<script>
+let gestorAtual = null;
+let empresasOperacao = [];
+const emailGestorPadrao = (window.GUIA_ADMIN_EMAILS && window.GUIA_ADMIN_EMAILS[0]) || '';
+
+window.addEventListener('DOMContentLoaded', function() {
+  const adminEmails = window.GUIA_ADMIN_EMAILS || [];
+  if (adminEmails.length === 1 && adminEmails[0] === 'seu-email@exemplo.com') {
+    document.getElementById('alerta-admin').classList.add('show');
+  } else {
+    document.getElementById('alerta-admin').classList.remove('show');
+  }
+
+  if (emailGestorPadrao) {
+    const campoEmail = document.getElementById('g-email');
+    if (campoEmail && !campoEmail.value) {
+      campoEmail.value = emailGestorPadrao;
+    }
+  }
+
+  if (!window.guiaFirebase || !window.guiaFirebase.isConfigured()) {
+    showError('login-err', 'Configure primeiro o Firebase no arquivo firebase-config.js.');
+    return;
+  }
+
+  window.guiaFirebase.observarGestorLogado(function(gestor) {
+    if (!gestor) {
+      gestorAtual = null;
+      mostrarLogin();
+      return;
+    }
+
+    gestorAtual = gestor;
+    mostrarOperacao();
+    carregarEmpresasOperacao();
+  });
+});
+
+function showError(id, text) {
+  const el = document.getElementById(id);
+  el.innerHTML = text;
+  el.classList.add('show');
+}
+
+function hideError(id) {
+  document.getElementById(id).classList.remove('show');
+}
+
+function showOk(text) {
+  const el = document.getElementById('msg-ok');
+  el.textContent = text;
+  el.classList.add('show');
+  setTimeout(function() {
+    el.classList.remove('show');
+  }, 2500);
+}
+
+function mostrarLogin() {
+  document.getElementById('estado-login').style.display = 'block';
+  document.getElementById('estado-logado').style.display = 'none';
+}
+
+function mostrarOperacao() {
+  document.getElementById('estado-login').style.display = 'none';
+  document.getElementById('estado-logado').style.display = 'block';
+  document.getElementById('gestor-email').textContent = 'Gestor conectado: ' + (gestorAtual ? gestorAtual.email : '');
+  hideError('login-err');
+}
+
+function btnLoading(texto) {
+  const btn = document.getElementById('btn-gestor');
+  btn.disabled = true;
+  btn.textContent = texto;
+}
+
+function btnReset() {
+  const btn = document.getElementById('btn-gestor');
+  btn.disabled = false;
+  btn.textContent = 'Entrar na operação';
+}
+
+function loginGestor() {
+  hideError('login-err');
+  const email = document.getElementById('g-email').value.trim();
+  const senha = document.getElementById('g-senha').value;
+  const lembrar = document.getElementById('g-lembrar').value === 'sim';
+
+  if (!email || !senha) {
+    showError('login-err', 'Preencha e-mail e senha do gestor.');
+    return;
+  }
+
+  btnLoading('Entrando...');
+  window.guiaFirebase.signInGestor(email, senha, lembrar)
+    .then(function() {
+      btnReset();
+    })
+    .catch(function(error) {
+      console.error(error);
+      btnReset();
+      showError('login-err', error && error.code === 'admin/not-allowed'
+        ? 'Esse e-mail não está liberado como gestor. Atualize a lista GUIA_ADMIN_EMAILS.'
+        : 'Não foi possível entrar agora. Revise os dados e tente novamente.');
+    });
+}
+
+function logoutGestor() {
+  window.guiaFirebase.signOutGestor().catch(function(error) {
+    console.error(error);
+    alert('Não foi possível sair agora.');
+  });
+}
+
+function fmtPlano(item) {
+  return item.plano || (item.premium ? 'Destaque' : 'Básico');
+}
+
+function fmtContato(item) {
+  const tel = item.whatsapp || item.telefone || '';
+  return tel ? tel.replace(/(\d{2})(\d{4,5})(\d{4})/, '($1) $2-$3') : 'Não informado';
+}
+
+function carregarEmpresasOperacao() {
+  hideError('msg-err');
+  window.guiaFirebase.listarEmpresasGestor()
+    .then(function(lista) {
+      empresasOperacao = lista;
+      renderMetricas();
+      renderEmpresasOperacao();
+    })
+    .catch(function(error) {
+      console.error(error);
+      showError('msg-err', 'Não foi possível carregar as empresas. Você provavelmente precisa ajustar as regras do Firestore para acesso do gestor.');
+    });
+}
+
+function renderMetricas() {
+  const pend = empresasOperacao.filter(function(item) { return !item.aprovado; }).length;
+  const apr = empresasOperacao.filter(function(item) { return !!item.aprovado; }).length;
+  const des = empresasOperacao.filter(function(item) { return !!item.premium; }).length;
+  document.getElementById('m-pend').textContent = pend;
+  document.getElementById('m-apr').textContent = apr;
+  document.getElementById('m-des').textContent = des;
+  document.getElementById('m-total').textContent = empresasOperacao.length;
+}
+
+function renderEmpresasOperacao() {
+  const busca = (document.getElementById('f-busca').value || '').trim().toLowerCase();
+  const status = document.getElementById('f-status').value;
+  const host = document.getElementById('lista-empresas');
+
+  const filtradas = empresasOperacao.filter(function(item) {
+    const texto = [item.nome, item.categoria, item.email].join(' ').toLowerCase();
+    const bateBusca = !busca || texto.indexOf(busca) > -1;
+    const bateStatus =
+      status === 'todos' ||
+      (status === 'pendentes' && !item.aprovado) ||
+      (status === 'aprovadas' && !!item.aprovado) ||
+      (status === 'destaque' && !!item.premium);
+    return bateBusca && bateStatus;
+  });
+
+  document.getElementById('lista-vazia').style.display = filtradas.length ? 'none' : 'block';
+  host.innerHTML = filtradas.map(function(item) {
+    return '<div class="empresa">' +
+      '<div class="empresa-top">' +
+        '<div>' +
+          '<div class="empresa-name">' + (item.nome || 'Empresa sem nome') + '</div>' +
+          '<div class="empresa-meta">' + (item.categoria || 'Sem categoria') + ' • ' + fmtPlano(item) + '<br>' + (item.email || 'Sem e-mail') + '</div>' +
+        '</div>' +
+        '<div class="badges">' +
+          '<span class="badge ' + (item.aprovado ? 'approved' : 'pending') + '">' + (item.aprovado ? 'Aprovada' : 'Pendente') + '</span>' +
+          '<span class="badge ' + (item.premium ? 'featured' : 'basic') + '">' + (item.premium ? 'Destaque' : 'Básico') + '</span>' +
+        '</div>' +
+      '</div>' +
+      '<div class="empresa-grid">' +
+        '<div class="empresa-desc">' + (item.descricao || 'Sem descrição cadastrada.') + '</div>' +
+        '<div class="empresa-side">' +
+          '<div><strong>WhatsApp:</strong> ' + fmtContato(item) + '</div>' +
+          '<div><strong>Endereço:</strong> ' + (item.endereco || 'Não informado') + '</div>' +
+          '<div><strong>Instagram:</strong> ' + (item.instagram || 'Não informado') + '</div>' +
+        '</div>' +
+      '</div>' +
+      '<div class="btn-row" style="margin-top:14px">' +
+        '<button class="btn btn-primary" onclick="atualizarEmpresaOperacao(\'' + item.id + '\',{aprovado:true})">Aprovar</button>' +
+        '<button class="btn btn-danger" onclick="atualizarEmpresaOperacao(\'' + item.id + '\',{aprovado:false,premium:false})">Voltar para pendente</button>' +
+        '<button class="btn btn-go" onclick="atualizarEmpresaOperacao(\'' + item.id + '\',{premium:true,aprovado:true})">Marcar destaque</button>' +
+        '<button class="btn btn-ghost" onclick="atualizarEmpresaOperacao(\'' + item.id + '\',{premium:false})">Plano básico</button>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+}
+
+function atualizarEmpresaOperacao(id, dados) {
+  hideError('msg-err');
+  window.guiaFirebase.atualizarEmpresaGestor(id, dados)
+    .then(function() {
+      showOk('Empresa atualizada com sucesso.');
+      return carregarEmpresasOperacao();
+    })
+    .catch(function(error) {
+      console.error(error);
+      showError('msg-err', 'Não foi possível salvar essa alteração.');
+    });
+}
+</script>
+</body>
+</html>

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
@@ -540,88 +540,98 @@ body{font-family:'DM Sans',sans-serif;background:var(--cr);color:var(--tx);overf
   </div>
 </div>
 
+<script src="https://www.gstatic.com/firebasejs/12.7.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/12.7.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/12.7.0/firebase-firestore-compat.js"></script>
+<script src="./firebase-config.js"></script>
+<script src="./firebase-bridge.js"></script>
 <script>
-// ===== PROTEÇÃO DE AUTENTICAÇÃO =====
 let empresaLogada = null;
+let authInicializada = false;
 
 window.addEventListener('DOMContentLoaded', function() {
   verificarAutenticacao();
 });
 
 function verificarAutenticacao() {
-  const sessao = localStorage.getItem('guia_sessao');
-  
-  if (!sessao) {
-    // Não está logado - redirecionar
+  if (!window.guiaFirebase || !window.guiaFirebase.isConfigured()) {
+    alert('Configure o Firebase no arquivo firebase-config.js antes de usar o painel.');
     window.location.href = 'login.html';
     return;
   }
-  
-  try {
-    const dados = JSON.parse(sessao);
-    
-    // Verificar se não expirou
-    const agora = new Date().getTime();
-    if (agora >= dados.expira) {
-      // Sessão expirou
-      localStorage.removeItem('guia_sessao');
-      alert('Sua sessão expirou. Faça login novamente.');
-      window.location.href = 'login.html';
+
+  window.guiaFirebase.observarEmpresaLogada(function(empresa, user, error) {
+    if (error) {
+      console.error('Erro ao carregar sessão:', error);
+    }
+
+    if (!empresa || !user) {
+      if (authInicializada) {
+        window.location.href = 'login.html';
+      }
+      authInicializada = true;
       return;
     }
-    
-    // Sessão válida - carregar dados da empresa
-    empresaLogada = dados;
+
+    authInicializada = true;
+    empresaLogada = empresa;
     carregarDadosEmpresa();
-    
-  } catch(e) {
-    // Erro ao ler sessão
-    localStorage.removeItem('guia_sessao');
-    window.location.href = 'login.html';
-  }
+  });
 }
 
 function carregarDadosEmpresa() {
-  // Atualizar nome da empresa no header
+  if (!empresaLogada) return;
+
   const badge = document.querySelector('.empresa-badge');
-  if (badge && empresaLogada) {
-    badge.textContent = '🏪 ' + empresaLogada.nome;
+  if (badge) {
+    badge.textContent = '🏪 ' + (empresaLogada.nome || 'Minha empresa');
   }
-  
-  // Atualizar título da página
-  const welcome = document.querySelector('.welcome h2');
-  if (welcome && empresaLogada) {
-    welcome.textContent = `Olá, ${empresaLogada.nome}! 👋`;
+
+  const welcome = document.querySelector('#page-dashboard .welcome h2');
+  if (welcome) {
+    welcome.textContent = 'Olá, ' + (empresaLogada.nome || 'Minha empresa') + '! 👋';
   }
-  
-  // Carregar dados específicos da empresa do Supabase
-  // TODO: Implementar carregamento de métricas reais
+
+  const perfilTitulo = document.querySelector('#page-perfil .welcome p');
+  if (perfilTitulo && empresaLogada.email) {
+    perfilTitulo.textContent = 'Atualize as informações da sua empresa. Login vinculado a ' + empresaLogada.email;
+  }
 }
 
 function fazerLogout() {
-  if (confirm('Tem certeza que deseja sair?')) {
-    localStorage.removeItem('guia_sessao');
-    window.location.href = 'login.html';
+  if (!confirm('Tem certeza que deseja sair?')) {
+    return;
   }
+
+  window.guiaFirebase.signOutEmpresa().then(function() {
+    window.location.href = 'login.html';
+  }).catch(function(error) {
+    console.error('Erro ao sair:', error);
+    alert('Não foi possível sair agora. Tente novamente.');
+  });
 }
 
-// Navegação entre páginas
 function showPage(pageId) {
-  // Esconder todas as páginas
-  document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
-  
-  // Mostrar página selecionada
+  document.querySelectorAll('.page').forEach(function(p) {
+    p.style.display = 'none';
+  });
+
   document.getElementById('page-' + pageId).style.display = 'block';
-  
-  // Atualizar menu ativo
-  document.querySelectorAll('.menu-item').forEach(m => m.classList.remove('active'));
-  event.target.closest('.menu-item').classList.add('active');
-  
-  // Scroll para o topo
+
+  document.querySelectorAll('.menu-item').forEach(function(m) {
+    m.classList.remove('active');
+  });
+
+  if (window.event && window.event.target) {
+    const item = window.event.target.closest('.menu-item');
+    if (item) {
+      item.classList.add('active');
+    }
+  }
+
   window.scrollTo({top: 0, behavior: 'smooth'});
 }
 
-// Modais
 function openModal(modalId) {
   document.getElementById(modalId).classList.add('show');
   document.body.style.overflow = 'hidden';
@@ -632,8 +642,7 @@ function closeModal(modalId) {
   document.body.style.overflow = '';
 }
 
-// Fechar modal clicando fora
-document.querySelectorAll('.modal').forEach(modal => {
+document.querySelectorAll('.modal').forEach(function(modal) {
   modal.addEventListener('click', function(e) {
     if (e.target === this) {
       closeModal(this.id);
@@ -641,11 +650,13 @@ document.querySelectorAll('.modal').forEach(modal => {
   });
 });
 
-// Toggle sidebar mobile
 function toggleSidebar() {
   document.querySelector('.sidebar').classList.toggle('open');
 }
 </script>
-
 </body>
 </html>
+
+
+
+

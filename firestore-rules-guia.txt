@@ -1,0 +1,54 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isSignedIn() &&
+        request.auth.token.email in [
+          "seu-email@exemplo.com"
+        ];
+    }
+
+    function isEmpresaOwner(docId) {
+      return isSignedIn() && request.auth.uid == docId;
+    }
+
+    match /empresas/{empresaId} {
+      allow read: if isAdmin() || resource.data.aprovado == true || isEmpresaOwner(empresaId);
+
+      allow create: if isEmpresaOwner(empresaId)
+        && request.resource.data.authUid == request.auth.uid
+        && request.resource.data.aprovado == false;
+
+      allow update: if isAdmin() || isEmpresaOwner(empresaId);
+      allow delete: if false;
+    }
+
+    match /usuarios/{userId} {
+      allow create: if isSignedIn() && request.auth.uid == userId;
+      allow read, update: if isAdmin() || (isSignedIn() && request.auth.uid == userId);
+      allow delete: if false;
+    }
+
+    match /candidaturas/{candidaturaId} {
+      allow create: if true;
+      allow read: if isAdmin();
+      allow update, delete: if false;
+    }
+
+    match /interesses_planos/{interesseId} {
+      allow create: if true;
+      allow read: if isAdmin();
+      allow update, delete: if false;
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

@@ -1,10 +1,9 @@
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Painel Empresarial - Guia Codoense</title>
+<title>Login Empresarial - Guia Codoense</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -12,532 +11,418 @@
 :root{
   --g:#1a6b3c;--gl:#2d9e5f;--go:#c8922a;--gol:#e8b04a;
   --cr:#faf7f2;--dk:#0f1f16;--tx:#1c2b22;--mu:#6b7f72;
-  --bo:rgba(26,107,60,.15);--err:#e11d48;--fd:'Playfair Display',serif
+  --bo:rgba(26,107,60,.15);--err:#e11d48;--err-bg:#fff1f2;
+  --fd:'Playfair Display',serif
 }
-body{font-family:'DM Sans',sans-serif;background:var(--cr);color:var(--tx);overflow-x:hidden;margin:0}
+body{
+  font-family:'DM Sans',sans-serif;
+  background:linear-gradient(135deg,#0f1f16 0%,#1a5c35 100%);
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  position:relative;
+  overflow:hidden;
+}
+
+/* Padrão de fundo */
+body::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  opacity:.05;
+  background-image:repeating-linear-gradient(0deg,transparent,transparent 28px,rgba(200,146,42,.5) 28px,rgba(200,146,42,.5) 29px),
+                   repeating-linear-gradient(90deg,transparent,transparent 28px,rgba(200,146,42,.5) 28px,rgba(200,146,42,.5) 29px);
+}
+
+/* Container */
+.login-container{
+  background:#fff;
+  border-radius:20px;
+  max-width:440px;
+  width:100%;
+  box-shadow:0 20px 60px rgba(0,0,0,.3);
+  position:relative;
+  z-index:1;
+  overflow:hidden;
+  animation:slideUp .4s ease;
+}
+
+@keyframes slideUp{
+  from{transform:translateY(30px);opacity:0}
+  to{transform:translateY(0);opacity:1}
+}
 
 /* Header */
-.header{background:linear-gradient(135deg,var(--dk),#1a5c35);padding:20px 32px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 4px 20px rgba(0,0,0,.15)}
-.header-left h1{font-family:var(--fd);font-size:24px;color:#fff;margin:0;font-weight:900}
-.header-left h1 span{color:var(--gol)}
-.header-left p{font-size:10px;color:var(--gol);text-transform:uppercase;letter-spacing:2px;margin:0 0 4px}
-.header-right{display:flex;align-items:center;gap:16px}
-.empresa-badge{background:var(--gl);color:#fff;padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600;display:flex;align-items:center;gap:6px}
-.btn-sair{background:transparent;border:1px solid rgba(255,255,255,.3);color:#fff;padding:8px 16px;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer;transition:all .2s}
-.btn-sair:hover{background:rgba(255,255,255,.1)}
-
-/* Layout */
-.container{display:flex;min-height:calc(100vh - 80px)}
-.sidebar{width:240px;background:#fff;border-right:1px solid var(--bo);padding:24px 16px;position:sticky;top:0;height:calc(100vh - 80px);overflow-y:auto}
-.main-content{flex:1;padding:32px;max-width:1200px}
-
-/* Menu */
-.menu-title{font-size:10px;color:var(--mu);text-transform:uppercase;letter-spacing:1px;margin-bottom:16px;font-weight:600}
-.menu-item{display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:8px;margin-bottom:6px;cursor:pointer;transition:all .2s;font-size:14px;color:var(--tx);text-decoration:none;position:relative}
-.menu-item:hover{background:rgba(26,107,60,.05)}
-.menu-item.active{background:#f0f9f4;color:var(--g);font-weight:600}
-.menu-item .icon{font-size:16px}
-.menu-item .badge{position:absolute;right:12px;background:var(--err);color:#fff;font-size:10px;font-weight:700;padding:2px 6px;border-radius:10px;min-width:18px;text-align:center}
-.menu-divider{height:1px;background:var(--bo);margin:16px 0}
-.plano-box{background:var(--dk);border-radius:10px;padding:16px;margin-top:24px;text-align:center}
-.plano-box .badge{font-size:9px;color:var(--gol);letter-spacing:1px;margin-bottom:6px;display:block}
-.plano-box .valor{font-size:14px;color:#fff;font-weight:600}
-
-/* Cards de Métricas */
-.welcome{margin-bottom:32px}
-.welcome h2{font-size:22px;font-weight:700;margin-bottom:6px}
-.welcome p{color:var(--mu);font-size:14px}
-.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:40px}
-.metric-card{background:#fff;border:1px solid var(--bo);border-radius:12px;padding:20px;transition:all .2s}
-.metric-card:hover{box-shadow:0 4px 16px rgba(26,107,60,.1);transform:translateY(-2px)}
-.metric-label{font-size:12px;color:var(--mu);margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px}
-.metric-value{font-size:32px;font-weight:700;color:var(--g);margin-bottom:6px;line-height:1}
-.metric-change{font-size:11px;color:var(--gl);font-weight:600}
-.metric-change.down{color:var(--err)}
-.metric-subtitle{font-size:10px;color:var(--mu);margin-top:4px}
-
-/* Seções */
-.section{margin-bottom:40px}
-.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
-.section-title{font-size:18px;font-weight:700;color:var(--tx)}
-.btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;border:none;transition:all .2s;font-family:'DM Sans',sans-serif}
-.btn-primary{background:var(--g);color:#fff}
-.btn-primary:hover{background:#1a5c35;transform:translateY(-1px)}
-.btn-secondary{background:var(--go);color:#fff}
-.btn-secondary:hover{background:#a67722}
-.btn-outline{background:transparent;border:1px solid var(--g);color:var(--g)}
-.btn-outline:hover{background:var(--g);color:#fff}
-.btn-ghost{background:transparent;border:1px solid var(--mu);color:var(--mu)}
-.btn-ghost:hover{background:rgba(107,127,114,.1)}
-
-/* Cards de Vaga */
-.vaga-card{background:#fff;border:1px solid var(--bo);border-radius:12px;padding:20px;margin-bottom:12px;display:flex;align-items:center;gap:16px;transition:all .2s}
-.vaga-card:hover{box-shadow:0 3px 12px rgba(26,107,60,.08)}
-.vaga-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
-.vaga-info{flex:1}
-.vaga-title{font-size:15px;font-weight:600;margin-bottom:4px;display:flex;align-items:center;gap:8px}
-.vaga-meta{font-size:12px;color:var(--mu);margin-bottom:6px}
-.vaga-badges{display:flex;gap:6px;flex-wrap:wrap}
-.badge{font-size:9px;padding:3px 8px;border-radius:12px;font-weight:600;text-transform:uppercase}
-.badge-new{background:#fef3c7;color:#92400e}
-.badge-count{background:#f0f9f4;color:var(--g);border:1px solid rgba(26,107,60,.2)}
-.vaga-actions{display:flex;gap:8px}
-
-/* Card de Oferta */
-.oferta-card{background:#fff;border:1px solid var(--bo);border-radius:12px;padding:20px;margin-bottom:12px;display:flex;align-items:center;gap:16px}
-.oferta-thumb{width:70px;height:70px;border-radius:10px;background:var(--err-bg,#fff1f2);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0}
-.oferta-info{flex:1}
-.oferta-title{font-size:15px;font-weight:600;margin-bottom:4px}
-.oferta-preco{display:flex;align-items:baseline;gap:8px;margin-bottom:6px}
-.preco-de{font-size:12px;color:var(--mu);text-decoration:line-through}
-.preco-por{font-size:18px;font-weight:700;color:var(--err)}
-.oferta-desconto{background:var(--err);color:#fff;padding:2px 8px;border-radius:12px;font-size:10px;font-weight:700}
-.oferta-meta{font-size:11px;color:var(--mu)}
-
-/* Status do Plano */
-.plano-status{background:var(--dk);border-radius:12px;padding:24px;color:#fff;margin-bottom:40px}
-.plano-status-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
-.plano-badge-big{font-size:14px;color:var(--gol);font-weight:700;letter-spacing:1px}
-.plano-desc{font-size:13px;color:rgba(255,255,255,.7);margin-bottom:16px}
-.progress-bar{height:8px;background:rgba(255,255,255,.2);border-radius:4px;overflow:hidden;margin-bottom:10px}
-.progress-fill{height:100%;background:var(--gl);border-radius:4px;transition:width .3s}
-.progress-label{font-size:11px;color:rgba(255,255,255,.6)}
-
-/* Ações Rápidas */
-.quick-actions{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
-
-/* Empty State */
-.empty-state{text-align:center;padding:60px 20px;color:var(--mu)}
-.empty-state .icon{font-size:48px;margin-bottom:16px;opacity:.5}
-.empty-state p{font-size:14px;margin-bottom:20px}
-
-/* Responsivo */
-@media(max-width:768px){
-  .sidebar{position:fixed;left:-240px;z-index:100;transition:left .3s;box-shadow:4px 0 20px rgba(0,0,0,.1)}
-  .sidebar.open{left:0}
-  .main-content{padding:20px}
-  .metrics{grid-template-columns:1fr}
-  .header{padding:16px 20px}
-  .header-left h1{font-size:18px}
-  .empresa-badge{font-size:11px;padding:6px 12px}
+.login-header{
+  background:linear-gradient(135deg,var(--dk),#1a5c35);
+  padding:40px 32px;
+  text-align:center;
+  position:relative;
 }
 
-/* Modal */
-.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(4px)}
-.modal.show{display:flex}
-.modal-content{background:#fff;border-radius:16px;max-width:600px;width:100%;max-height:90vh;overflow-y:auto;animation:slideIn .2s}
-@keyframes slideIn{from{transform:translateY(-20px);opacity:0}to{transform:translateY(0);opacity:1}}
-.modal-header{padding:20px 24px;border-bottom:1px solid var(--bo);display:flex;align-items:center;justify-content:space-between}
-.modal-title{font-size:18px;font-weight:700}
-.modal-close{background:transparent;border:none;font-size:24px;color:var(--mu);cursor:pointer;line-height:1}
-.modal-body{padding:24px}
-.form-group{margin-bottom:20px}
-.form-group label{display:block;font-size:12px;font-weight:600;color:var(--mu);margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px}
-.form-group input,.form-group textarea,.form-group select{width:100%;padding:12px;border:1px solid var(--bo);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:14px;transition:all .2s}
-.form-group input:focus,.form-group textarea:focus,.form-group select:focus{outline:none;border-color:var(--gl);box-shadow:0 0 0 3px rgba(45,158,95,.1)}
-.form-group textarea{min-height:100px;resize:vertical}
-.modal-footer{padding:16px 24px;border-top:1px solid var(--bo);display:flex;gap:12px;justify-content:flex-end}
+.login-header::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  opacity:.1;
+  background:radial-gradient(circle at 80% 20%,var(--gol),transparent 70%);
+}
+
+.logo{
+  position:relative;
+  z-index:1;
+}
+
+.logo-subtitle{
+  font-size:10px;
+  color:var(--gol);
+  text-transform:uppercase;
+  letter-spacing:2.5px;
+  margin-bottom:8px;
+  font-weight:300;
+}
+
+.logo-title{
+  font-family:var(--fd);
+  font-size:32px;
+  color:#fff;
+  font-weight:900;
+  margin-bottom:6px;
+}
+
+.logo-title span{
+  color:var(--gol);
+}
+
+.logo-desc{
+  font-size:13px;
+  color:rgba(255,255,255,.7);
+}
+
+/* Body */
+.login-body{
+  padding:40px 32px;
+}
+
+.welcome-text{
+  text-align:center;
+  margin-bottom:32px;
+}
+
+.welcome-text h2{
+  font-size:22px;
+  font-weight:700;
+  color:var(--tx);
+  margin-bottom:6px;
+}
+
+.welcome-text p{
+  font-size:14px;
+  color:var(--mu);
+}
+
+/* Form */
+.form-group{
+  margin-bottom:20px;
+}
+
+.form-group label{
+  display:block;
+  font-size:12px;
+  font-weight:600;
+  color:var(--mu);
+  margin-bottom:8px;
+  text-transform:uppercase;
+  letter-spacing:.5px;
+}
+
+.form-group input{
+  width:100%;
+  padding:14px 16px;
+  border:1.5px solid var(--bo);
+  border-radius:10px;
+  font-family:'DM Sans',sans-serif;
+  font-size:15px;
+  transition:all .2s;
+  background:#fff;
+}
+
+.form-group input:focus{
+  outline:none;
+  border-color:var(--gl);
+  box-shadow:0 0 0 4px rgba(45,158,95,.1);
+}
+
+.form-group input.erro{
+  border-color:var(--err);
+  background:var(--err-bg);
+  box-shadow:0 0 0 4px rgba(225,29,72,.1);
+}
+
+.erro-msg{
+  font-size:12px;
+  color:var(--err);
+  margin-top:6px;
+  display:none;
+  font-weight:500;
+}
+
+.erro-msg.show{
+  display:block;
+}
+
+/* Alert */
+.alert{
+  display:none;
+  padding:14px 16px;
+  border-radius:10px;
+  margin-bottom:20px;
+  font-size:13px;
+  font-weight:500;
+  align-items:center;
+  gap:10px;
+}
+
+.alert.show{
+  display:flex;
+}
+
+.alert-erro{
+  background:var(--err-bg);
+  color:var(--err);
+  border:1px solid rgba(225,29,72,.3);
+}
+
+.alert-sucesso{
+  background:#f0f9f4;
+  color:var(--g);
+  border:1px solid rgba(26,107,60,.3);
+}
+
+/* Checkbox */
+.checkbox-group{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:24px;
+}
+
+.checkbox-group input[type="checkbox"]{
+  width:18px;
+  height:18px;
+  cursor:pointer;
+  accent-color:var(--g);
+}
+
+.checkbox-group label{
+  font-size:13px;
+  color:var(--tx);
+  cursor:pointer;
+  margin:0;
+  text-transform:none;
+  letter-spacing:0;
+  font-weight:400;
+}
+
+/* Botões */
+.btn{
+  width:100%;
+  padding:14px;
+  border-radius:10px;
+  font-size:15px;
+  font-weight:600;
+  cursor:pointer;
+  border:none;
+  transition:all .2s;
+  font-family:'DM Sans',sans-serif;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+}
+
+.btn-primary{
+  background:var(--g);
+  color:#fff;
+}
+
+.btn-primary:hover{
+  background:#1a5c35;
+  transform:translateY(-2px);
+  box-shadow:0 8px 20px rgba(26,107,60,.3);
+}
+
+.btn-primary:active{
+  transform:translateY(0);
+}
+
+.btn-primary:disabled{
+  background:#9abfac;
+  cursor:not-allowed;
+  transform:none;
+}
+
+.spinner{
+  width:16px;
+  height:16px;
+  border:2px solid rgba(255,255,255,.3);
+  border-top-color:#fff;
+  border-radius:50%;
+  animation:spin .7s linear infinite;
+}
+
+@keyframes spin{
+  to{transform:rotate(360deg)}
+}
+
+/* Links */
+.links{
+  text-align:center;
+  margin-top:24px;
+}
+
+.links a{
+  color:var(--g);
+  text-decoration:none;
+  font-size:13px;
+  font-weight:600;
+  transition:color .2s;
+}
+
+.links a:hover{
+  color:var(--gl);
+  text-decoration:underline;
+}
+
+.divider{
+  text-align:center;
+  margin:24px 0;
+  position:relative;
+  font-size:12px;
+  color:var(--mu);
+}
+
+.divider::before,
+.divider::after{
+  content:'';
+  position:absolute;
+  top:50%;
+  width:40%;
+  height:1px;
+  background:var(--bo);
+}
+
+.divider::before{left:0}
+.divider::after{right:0}
+
+/* Footer */
+.login-footer{
+  padding:20px 32px;
+  background:#faf7f2;
+  text-align:center;
+  border-top:1px solid var(--bo);
+}
+
+.login-footer p{
+  font-size:12px;
+  color:var(--mu);
+  margin-bottom:8px;
+}
+
+.login-footer a{
+  color:var(--g);
+  text-decoration:none;
+  font-weight:600;
+}
+
+.login-footer a:hover{
+  text-decoration:underline;
+}
+
+/* Responsivo */
+@media(max-width:480px){
+  .login-header{padding:32px 24px}
+  .login-body{padding:32px 24px}
+  .logo-title{font-size:28px}
+}
 </style>
 </head>
 <body>
 
-<!-- Header -->
-<div class="header">
-  <div class="header-left">
-    <p>Painel Empresarial</p>
-    <h1>Guia <span>Codoense</span></h1>
-  </div>
-  <div class="header-right">
-    <div class="empresa-badge">🏪 Farmácia São João</div>
-    <button class="btn-sair" onclick="fazerLogout()">🚪 Sair</button>
-  </div>
-</div>
-
-<div class="container">
-  <!-- Sidebar -->
-  <aside class="sidebar">
-    <div class="menu-title">Menu</div>
-    
-    <a href="#dashboard" class="menu-item active" onclick="showPage('dashboard')">
-      <span class="icon">📊</span>
-      <span>Dashboard</span>
-    </a>
-    
-    <a href="#perfil" class="menu-item" onclick="showPage('perfil')">
-      <span class="icon">🏢</span>
-      <span>Meu Perfil</span>
-    </a>
-    
-    <a href="#vagas" class="menu-item" onclick="showPage('vagas')">
-      <span class="icon">💼</span>
-      <span>Vagas</span>
-    </a>
-    
-    <a href="#ofertas" class="menu-item" onclick="showPage('ofertas')">
-      <span class="icon">🔥</span>
-      <span>Ofertas</span>
-    </a>
-    
-    <a href="#candidatos" class="menu-item" onclick="showPage('candidatos')">
-      <span class="icon">👥</span>
-      <span>Candidatos</span>
-      <span class="badge">3</span>
-    </a>
-    
-    <a href="#avaliacoes" class="menu-item" onclick="showPage('avaliacoes')">
-      <span class="icon">⭐</span>
-      <span>Avaliações</span>
-    </a>
-    
-    <a href="#plano" class="menu-item" onclick="showPage('plano')">
-      <span class="icon">💎</span>
-      <span>Plano Atual</span>
-    </a>
-    
-    <div class="menu-divider"></div>
-    
-    <a href="#ajuda" class="menu-item">
-      <span class="icon">❓</span>
-      <span>Ajuda</span>
-    </a>
-    
-    <div class="plano-box">
-      <span class="badge">PLANO DESTAQUE</span>
-      <span class="valor">R$ 49/mês</span>
-    </div>
-  </aside>
-
-  <!-- Main Content -->
-  <main class="main-content">
-    <!-- Dashboard Page -->
-    <div id="page-dashboard" class="page">
-      <div class="welcome">
-        <h2>Olá, Farmácia São João! 👋</h2>
-        <p>Aqui está o resumo do seu perfil no Guia Codoense</p>
-      </div>
-
-      <!-- Métricas -->
-      <div class="metrics">
-        <div class="metric-card">
-          <div class="metric-label">Visualizações</div>
-          <div class="metric-value">2.847</div>
-          <div class="metric-change">↑ 12% este mês</div>
-          <div class="metric-subtitle">Últimos 30 dias</div>
-        </div>
-
-        <div class="metric-card">
-          <div class="metric-label">Cliques WhatsApp</div>
-          <div class="metric-value">342</div>
-          <div class="metric-change">↑ 8% este mês</div>
-          <div class="metric-subtitle">Últimos 30 dias</div>
-        </div>
-
-        <div class="metric-card">
-          <div class="metric-label">Avaliação média</div>
-          <div class="metric-value" style="color:#c8922a">4.8</div>
-          <div style="color:#c8922a;font-size:14px;margin-bottom:4px">★★★★★</div>
-          <div class="metric-subtitle">27 avaliações</div>
-        </div>
-      </div>
-
-      <!-- Vagas Ativas -->
-      <div class="section">
-        <div class="section-header">
-          <h3 class="section-title">Vagas ativas (2)</h3>
-        </div>
-
-        <div class="vaga-card">
-          <div class="vaga-icon" style="background:#0f1a3d22">💊</div>
-          <div class="vaga-info">
-            <div class="vaga-title">
-              Atendente de Farmácia
-              <span class="badge badge-new">Nova</span>
-            </div>
-            <div class="vaga-meta">CLT • R$ 1.400 • 12 candidatos</div>
-            <div class="vaga-badges">
-              <span class="badge badge-count">📍 Codó</span>
-              <span class="badge badge-count">⏰ Tarde</span>
-            </div>
-          </div>
-          <div class="vaga-actions">
-            <button class="btn btn-outline" onclick="alert('Ver candidatos')">Ver candidatos</button>
-          </div>
-        </div>
-
-        <div class="vaga-card">
-          <div class="vaga-icon" style="background:#2e1a3d22">💅</div>
-          <div class="vaga-info">
-            <div class="vaga-title">Manicure (freelancer)</div>
-            <div class="vaga-meta">Autônomo • Comissão 50% • 5 candidatos</div>
-            <div class="vaga-badges">
-              <span class="badge badge-count">💼 Flexível</span>
-            </div>
-          </div>
-          <div class="vaga-actions">
-            <button class="btn btn-outline" onclick="alert('Ver candidatos')">Ver candidatos</button>
-          </div>
-        </div>
-
-        <button class="btn btn-primary" style="width:100%;margin-top:12px" onclick="openModal('modal-vaga')">+ Publicar nova vaga</button>
-      </div>
-
-      <!-- Ofertas -->
-      <div class="section">
-        <div class="section-header">
-          <h3 class="section-title">Ofertas ativas (1)</h3>
-        </div>
-
-        <div class="oferta-card">
-          <div class="oferta-thumb">💊</div>
-          <div class="oferta-info">
-            <div class="oferta-title">Kit Vitaminas C+D</div>
-            <div class="oferta-preco">
-              <span class="preco-de">R$ 45</span>
-              <span class="preco-por">R$ 32</span>
-              <span class="oferta-desconto">-29%</span>
-            </div>
-            <div class="oferta-meta">Válido até amanhã • 87 visualizações hoje</div>
-          </div>
-          <div class="vaga-actions">
-            <button class="btn btn-ghost" onclick="alert('Editar oferta')">✏️ Editar</button>
-          </div>
-        </div>
-
-        <button class="btn btn-secondary" style="width:100%;margin-top:12px" onclick="openModal('modal-oferta')">🔥 Criar nova oferta</button>
-      </div>
-
-      <!-- Status do Plano -->
-      <div class="plano-status">
-        <div class="plano-status-header">
-          <div>
-            <div class="plano-badge-big">PLANO DESTAQUE ATIVO</div>
-            <div class="plano-desc">Seu perfil aparece no topo da lista e tem selo dourado</div>
-          </div>
-          <button class="btn btn-secondary" style="flex-shrink:0" onclick="alert('Upgrade para Premium')">Upgrade ⭐</button>
-        </div>
-        <div class="progress-bar">
-          <div class="progress-fill" style="width:75%"></div>
-        </div>
-        <div class="progress-label">21 dias restantes até renovação (27/05/2026)</div>
-      </div>
-
-      <!-- Ações Rápidas -->
-      <div class="section">
-        <div class="section-header">
-          <h3 class="section-title">Ações rápidas</h3>
-        </div>
-        <div class="quick-actions">
-          <button class="btn btn-outline" onclick="showPage('perfil')">✏️ Editar perfil</button>
-          <button class="btn btn-outline" onclick="alert('Ver estatísticas')">📊 Estatísticas</button>
-          <button class="btn btn-outline" onclick="alert('Compartilhar')">🔗 Compartilhar</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Perfil Page -->
-    <div id="page-perfil" class="page" style="display:none">
-      <div class="welcome">
-        <h2>✏️ Editar Perfil</h2>
-        <p>Atualize as informações da sua empresa</p>
-      </div>
-
-      <div style="background:#fff;border:1px solid var(--bo);border-radius:12px;padding:32px;max-width:700px">
-        <div class="form-group">
-          <label>Nome da Empresa</label>
-          <input type="text" value="Farmácia São João" placeholder="Nome da empresa">
-        </div>
-
-        <div class="form-group">
-          <label>Categoria</label>
-          <select>
-            <option selected>Saúde</option>
-            <option>Alimentação</option>
-            <option>Beleza</option>
-            <option>Educação</option>
-            <option>Serviços</option>
-            <option>Comércio</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label>Descrição</label>
-          <textarea placeholder="Descreva seu negócio...">Medicamentos, perfumaria e atendimento farmacêutico personalizado para toda a família.</textarea>
-        </div>
-
-        <div class="form-group">
-          <label>WhatsApp</label>
-          <input type="tel" value="(99) 98765-4321" placeholder="(99) 99999-9999">
-        </div>
-
-        <div class="form-group">
-          <label>Endereço</label>
-          <input type="text" value="Rua Coronel Tito, 120 – Centro, Codó/MA" placeholder="Endereço completo">
-        </div>
-
-        <div class="form-group">
-          <label>Horário de Funcionamento</label>
-          <input type="text" value="Seg–Sáb 7h–22h" placeholder="Ex: Seg–Sex 8h–18h">
-        </div>
-
-        <div class="form-group">
-          <label>Instagram (opcional)</label>
-          <input type="text" value="@farmaciasaojoao" placeholder="@suaempresa">
-        </div>
-
-        <div class="form-group">
-          <label>Especialidades (separadas por vírgula)</label>
-          <input type="text" value="Delivery, Manipulação, Convênios" placeholder="Ex: Delivery, Convênios">
-        </div>
-
-        <div style="display:flex;gap:12px;margin-top:24px">
-          <button class="btn btn-primary" onclick="alert('Perfil atualizado com sucesso!');showPage('dashboard')">💾 Salvar alterações</button>
-          <button class="btn btn-ghost" onclick="showPage('dashboard')">Cancelar</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Outras páginas (placeholder) -->
-    <div id="page-vagas" class="page" style="display:none">
-      <div class="welcome">
-        <h2>💼 Gestão de Vagas</h2>
-        <p>Gerencie suas vagas de emprego</p>
-      </div>
-      <div class="empty-state">
-        <div class="icon">💼</div>
-        <p>Página em desenvolvimento</p>
-      </div>
-    </div>
-
-    <div id="page-ofertas" class="page" style="display:none">
-      <div class="welcome">
-        <h2>🔥 Gestão de Ofertas</h2>
-        <p>Crie e gerencie ofertas especiais</p>
-      </div>
-      <div class="empty-state">
-        <div class="icon">🔥</div>
-        <p>Página em desenvolvimento</p>
-      </div>
-    </div>
-
-    <div id="page-candidatos" class="page" style="display:none">
-      <div class="welcome">
-        <h2>👥 Candidatos</h2>
-        <p>Veja quem se candidatou às suas vagas</p>
-      </div>
-      <div class="empty-state">
-        <div class="icon">👥</div>
-        <p>Página em desenvolvimento</p>
-      </div>
-    </div>
-
-    <div id="page-avaliacoes" class="page" style="display:none">
-      <div class="welcome">
-        <h2>⭐ Avaliações</h2>
-        <p>Veja o que seus clientes estão dizendo</p>
-      </div>
-      <div class="empty-state">
-        <div class="icon">⭐</div>
-        <p>Página em desenvolvimento</p>
-      </div>
-    </div>
-
-    <div id="page-plano" class="page" style="display:none">
-      <div class="welcome">
-        <h2>💎 Plano Atual</h2>
-        <p>Gerencie sua assinatura</p>
-      </div>
-      <div class="empty-state">
-        <div class="icon">💎</div>
-        <p>Página em desenvolvimento</p>
-      </div>
-    </div>
-  </main>
-</div>
-
-<!-- Modal Nova Vaga -->
-<div id="modal-vaga" class="modal">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h3 class="modal-title">💼 Publicar Nova Vaga</h3>
-      <button class="modal-close" onclick="closeModal('modal-vaga')">×</button>
-    </div>
-    <div class="modal-body">
-      <div class="form-group">
-        <label>Título da Vaga</label>
-        <input type="text" placeholder="Ex: Vendedor(a)">
-      </div>
-      <div class="form-group">
-        <label>Tipo de Contrato</label>
-        <select>
-          <option>CLT</option>
-          <option>PJ</option>
-          <option>Autônomo</option>
-          <option>Temporário</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label>Salário / Remuneração</label>
-        <input type="text" placeholder="Ex: R$ 1.500 ou Comissão 50%">
-      </div>
-      <div class="form-group">
-        <label>Turno</label>
-        <select>
-          <option>Comercial</option>
-          <option>Manhã</option>
-          <option>Tarde</option>
-          <option>Noite</option>
-          <option>Flexível</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label>Descrição da Vaga</label>
-        <textarea placeholder="Descreva as responsabilidades e requisitos..."></textarea>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-ghost" onclick="closeModal('modal-vaga')">Cancelar</button>
-      <button class="btn btn-primary" onclick="alert('Vaga publicada!');closeModal('modal-vaga')">Publicar vaga</button>
+<div class="login-container">
+  <!-- Header -->
+  <div class="login-header">
+    <div class="logo">
+      <div class="logo-subtitle">Painel Empresarial</div>
+      <div class="logo-title">Guia <span>Codoense</span></div>
+      <div class="logo-desc">Acesse sua conta</div>
     </div>
   </div>
-</div>
 
-<!-- Modal Nova Oferta -->
-<div id="modal-oferta" class="modal">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h3 class="modal-title">🔥 Criar Nova Oferta</h3>
-      <button class="modal-close" onclick="closeModal('modal-oferta')">×</button>
+  <!-- Body -->
+  <div class="login-body">
+    <div class="welcome-text">
+      <h2>🏪 Bem-vindo de volta!</h2>
+      <p>Entre com suas credenciais para acessar o painel</p>
     </div>
-    <div class="modal-body">
+
+    <!-- Alert -->
+    <div id="alert" class="alert"></div>
+
+    <!-- Form -->
+    <form id="login-form" onsubmit="fazerLogin(event)">
       <div class="form-group">
-        <label>Nome do Produto/Serviço</label>
-        <input type="text" placeholder="Ex: Shampoo Anticaspa">
+        <label for="email">E-mail</label>
+        <input 
+          type="email" 
+          id="email" 
+          placeholder="seu@email.com"
+          autocomplete="email"
+          required
+        >
+        <div class="erro-msg" id="erro-email">⚠ E-mail inválido</div>
       </div>
+
       <div class="form-group">
-        <label>Emoji/Ícone</label>
-        <input type="text" placeholder="Ex: 💊 ou 💇" maxlength="2">
+        <label for="senha">Senha</label>
+        <input 
+          type="password" 
+          id="senha" 
+          placeholder="••••••••"
+          autocomplete="current-password"
+          required
+        >
+        <div class="erro-msg" id="erro-senha">⚠ Senha deve ter no mínimo 6 caracteres</div>
       </div>
-      <div class="form-group">
-        <label>Preço Original (De)</label>
-        <input type="number" placeholder="45.00" step="0.01">
+
+      <div class="checkbox-group">
+        <input type="checkbox" id="lembrar" checked>
+        <label for="lembrar">Manter conectado</label>
       </div>
-      <div class="form-group">
-        <label>Preço Promocional (Por)</label>
-        <input type="number" placeholder="32.00" step="0.01">
-      </div>
-      <div class="form-group">
-        <label>Descrição da Oferta</label>
-        <textarea placeholder="Descreva a oferta..."></textarea>
-      </div>
-      <div class="form-group">
-        <label>Válido até</label>
-        <input type="date">
-      </div>
+
+      <button type="submit" class="btn btn-primary" id="btn-login">
+        <span id="btn-text">🔓 Entrar no painel</span>
+      </button>
+    </form>
+
+    <div class="links">
+      <a href="#" onclick="alert('Em breve: recuperação de senha via e-mail');return false">Esqueci minha senha</a>
     </div>
-    <div class="modal-footer">
-      <button class="btn btn-ghost" onclick="closeModal('modal-oferta')">Cancelar</button>
-      <button class="btn btn-secondary" onclick="alert('Oferta criada!');closeModal('modal-oferta')">Criar oferta</button>
+
+    <div class="divider">ou</div>
+
+    <div class="links">
+      <p style="font-size:13px;color:var(--mu);margin-bottom:8px">Ainda não tem conta?</p>
+      <a href="index.html#cadastro" style="font-size:14px">Cadastre sua empresa grátis →</a>
     </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="login-footer">
+    <p>Precisa de ajuda?</p>
+    <a href="mailto:contato@guiacodoense.com.br">contato@guiacodoense.com.br</a>
   </div>
 </div>
 
@@ -547,117 +432,131 @@ body{font-family:'DM Sans',sans-serif;background:var(--cr);color:var(--tx);overf
 <script src="./firebase-config.js"></script>
 <script src="./firebase-bridge.js"></script>
 <script>
-let empresaLogada = null;
-let authInicializada = false;
-
 window.addEventListener('DOMContentLoaded', function() {
-  verificarAutenticacao();
-});
-
-function verificarAutenticacao() {
   if (!window.guiaFirebase || !window.guiaFirebase.isConfigured()) {
-    alert('Configure o Firebase no arquivo firebase-config.js antes de usar o painel.');
-    window.location.href = 'login.html';
+    mostrarAlert('Configure o Firebase no arquivo firebase-config.js antes de usar o login.', 'erro');
     return;
   }
 
-  window.guiaFirebase.observarEmpresaLogada(function(empresa, user, error) {
-    if (error) {
-      console.error('Erro ao carregar sessão:', error);
-    }
-
-    if (!empresa || !user) {
-      if (authInicializada) {
-        window.location.href = 'login.html';
-      }
-      authInicializada = true;
-      return;
-    }
-
-    authInicializada = true;
-    empresaLogada = empresa;
-    carregarDadosEmpresa();
-  });
-}
-
-function carregarDadosEmpresa() {
-  if (!empresaLogada) return;
-
-  const badge = document.querySelector('.empresa-badge');
-  if (badge) {
-    badge.textContent = '🏪 ' + (empresaLogada.nome || 'Minha empresa');
-  }
-
-  const welcome = document.querySelector('#page-dashboard .welcome h2');
-  if (welcome) {
-    welcome.textContent = 'Olá, ' + (empresaLogada.nome || 'Minha empresa') + '! 👋';
-  }
-
-  const perfilTitulo = document.querySelector('#page-perfil .welcome p');
-  if (perfilTitulo && empresaLogada.email) {
-    perfilTitulo.textContent = 'Atualize as informações da sua empresa. Login vinculado a ' + empresaLogada.email;
-  }
-}
-
-function fazerLogout() {
-  if (!confirm('Tem certeza que deseja sair?')) {
-    return;
-  }
-
-  window.guiaFirebase.signOutEmpresa().then(function() {
-    window.location.href = 'login.html';
-  }).catch(function(error) {
-    console.error('Erro ao sair:', error);
-    alert('Não foi possível sair agora. Tente novamente.');
-  });
-}
-
-function showPage(pageId) {
-  document.querySelectorAll('.page').forEach(function(p) {
-    p.style.display = 'none';
-  });
-
-  document.getElementById('page-' + pageId).style.display = 'block';
-
-  document.querySelectorAll('.menu-item').forEach(function(m) {
-    m.classList.remove('active');
-  });
-
-  if (window.event && window.event.target) {
-    const item = window.event.target.closest('.menu-item');
-    if (item) {
-      item.classList.add('active');
-    }
-  }
-
-  window.scrollTo({top: 0, behavior: 'smooth'});
-}
-
-function openModal(modalId) {
-  document.getElementById(modalId).classList.add('show');
-  document.body.style.overflow = 'hidden';
-}
-
-function closeModal(modalId) {
-  document.getElementById(modalId).classList.remove('show');
-  document.body.style.overflow = '';
-}
-
-document.querySelectorAll('.modal').forEach(function(modal) {
-  modal.addEventListener('click', function(e) {
-    if (e.target === this) {
-      closeModal(this.id);
+  window.guiaFirebase.observarEmpresaLogada(function(empresa) {
+    if (empresa) {
+      window.location.href = 'painel.html';
     }
   });
 });
 
-function toggleSidebar() {
-  document.querySelector('.sidebar').classList.toggle('open');
+async function fazerLogin(event) {
+  event.preventDefault();
+  limparErros();
+  esconderAlert();
+
+  const email = document.getElementById('email').value.trim();
+  const senha = document.getElementById('senha').value;
+  const lembrar = document.getElementById('lembrar').checked;
+
+  let valido = true;
+
+  if (!validarEmail(email)) {
+    mostrarErro('email');
+    valido = false;
+  }
+
+  if (senha.length < 6) {
+    mostrarErro('senha');
+    valido = false;
+  }
+
+  if (!valido) {
+    mostrarAlert('Corrija os campos destacados.', 'erro');
+    return;
+  }
+
+  if (!window.guiaFirebase || !window.guiaFirebase.isConfigured()) {
+    mostrarAlert('Configure o Firebase no arquivo firebase-config.js antes de usar o login.', 'erro');
+    return;
+  }
+
+  setBtnLoading(true);
+
+  try {
+    await window.guiaFirebase.signInEmpresa(email, senha, lembrar);
+    mostrarAlert('Login realizado! Redirecionando...','sucesso');
+
+    setTimeout(function() {
+      window.location.href = 'painel.html';
+    }, 1000);
+  } catch (error) {
+    console.error('Erro no login:', error);
+
+    if (error && error.code === 'auth/user-not-found') {
+      mostrarAlert('E-mail não encontrado. Cadastre sua empresa primeiro.', 'erro');
+    } else if (error && error.code === 'auth/wrong-password') {
+      mostrarAlert('Senha incorreta. Tente novamente.', 'erro');
+    } else if (error && error.code === 'empresa/not-approved') {
+      mostrarAlert('Sua empresa ainda está em análise. O acesso ao painel será liberado após aprovação.', 'erro');
+    } else if (error && error.code === 'empresa/not-found') {
+      mostrarAlert('Encontramos o login, mas não localizamos o cadastro da empresa no painel.', 'erro');
+    } else {
+      mostrarAlert('Não foi possível entrar agora. Revise os dados e tente novamente.', 'erro');
+    }
+
+    setBtnLoading(false);
+  }
 }
+
+function validarEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+function mostrarErro(campo) {
+  document.getElementById(campo).classList.add('erro');
+  document.getElementById('erro-' + campo).classList.add('show');
+}
+
+function limparErros() {
+  document.querySelectorAll('input').forEach(function(input) {
+    input.classList.remove('erro');
+  });
+  document.querySelectorAll('.erro-msg').forEach(function(msg) {
+    msg.classList.remove('show');
+  });
+}
+
+function mostrarAlert(mensagem, tipo) {
+  const alert = document.getElementById('alert');
+  alert.textContent = mensagem;
+  alert.className = 'alert show alert-' + tipo;
+}
+
+function esconderAlert() {
+  document.getElementById('alert').classList.remove('show');
+}
+
+function setBtnLoading(loading) {
+  const btn = document.getElementById('btn-login');
+  const texto = document.getElementById('btn-text');
+
+  if (loading) {
+    btn.disabled = true;
+    texto.innerHTML = '<span class="spinner"></span> Entrando...';
+  } else {
+    btn.disabled = false;
+    texto.textContent = 'Entrar no painel';
+  }
+}
+
+document.getElementById('email').addEventListener('input', function() {
+  this.classList.remove('erro');
+  document.getElementById('erro-email').classList.remove('show');
+});
+
+document.getElementById('senha').addEventListener('input', function() {
+  this.classList.remove('erro');
+  document.getElementById('erro-senha').classList.remove('show');
+});
 </script>
 </body>
 </html>
-
 
 
 

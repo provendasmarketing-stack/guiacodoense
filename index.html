@@ -1,5 +1,4 @@
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
@@ -25,6 +24,7 @@ body{font-family:'DM Sans',sans-serif;background:#faf7f2;color:#1c2b22;overflow-
 .hp{position:absolute;inset:0;opacity:.07;background-image:repeating-linear-gradient(0deg,transparent,transparent 28px,rgba(200,146,42,.5) 28px,rgba(200,146,42,.5) 29px),repeating-linear-gradient(90deg,transparent,transparent 28px,rgba(200,146,42,.5) 28px,rgba(200,146,42,.5) 29px)}
 .hi{position:relative;z-index:1;padding:14px 20px 0;max-width:960px;margin:0 auto}
 .ht{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px}
+.ha{display:flex;gap:8px;align-items:center;flex-shrink:0}
 .ls{font-size:9px;letter-spacing:2.5px;color:var(--gol);text-transform:uppercase;font-weight:300}
 .lm{font-family:var(--fd);font-size:clamp(20px,5vw,28px);font-weight:900;color:#fff;line-height:1}
 .lm span{color:var(--gol)}
@@ -93,7 +93,7 @@ body{font-family:'DM Sans',sans-serif;background:#faf7f2;color:#1c2b22;overflow-
 
 /* === VAGAS === */
 .vlist{display:flex;flex-direction:column;gap:8px;margin-bottom:22px}
-.vcard{background:#fff;border:1px solid var(--bo);border-radius:10px;padding:11px;cursor:pointer;display:flex;align-items:center;gap:10px;transition:all .15s}
+.vcard{background:#fff;border:1px solid var(--bo);border-radius:10px;padding:11px;cursor:pointer;display:flex;align-items:center;gap:10px;transition:all .15s;position:relative;z-index:1}
 .vcard:hover{border-color:var(--gl);box-shadow:0 2px 12px rgba(26,107,60,.1)}
 .vic{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
 .vif{flex:1;min-width:0}
@@ -192,6 +192,13 @@ body{font-family:'DM Sans',sans-serif;background:#faf7f2;color:#1c2b22;overflow-
 .fi select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b7f72' d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px}
 .fi-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .fi-hint{font-size:10px;color:var(--mu);margin-top:4px;line-height:1.4}
+.checkbox-group{display:flex;align-items:center;gap:10px}
+.checkbox-group input[type="checkbox"]{width:18px;height:18px;cursor:pointer;accent-color:var(--g)}
+.checkbox-group label{font-size:13px;color:var(--tx);cursor:pointer;text-transform:none;letter-spacing:0;font-weight:400}
+.pw{position:relative}
+.pw input{padding-right:44px}
+.pwt{position:absolute;right:10px;top:50%;transform:translateY(-50%);width:28px;height:28px;border:none;background:transparent;color:var(--mu);cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center}
+.pwt:hover{color:var(--g)}
 
 /* === ESTADO FORMULÁRIO === */
 .form-body.hide{display:none}
@@ -252,10 +259,28 @@ body{font-family:'DM Sans',sans-serif;background:#faf7f2;color:#1c2b22;overflow-
 .wbtn{width:100%;padding:11px;background:#25d366;color:#fff;border:none;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;margin-top:4px;transition:background .15s}
 .wbtn:hover{background:#1da851}
 .vti{display:inline-block;padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;margin:2px}
+.favb{width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.08);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px}
+.favb.on{background:#fff1f2;border-color:rgba(225,29,72,.25);color:#e11d48}
+.favb-lite{width:30px;height:30px;border-radius:50%;border:1px solid var(--bo);background:#fff;color:var(--mu);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px}
+.favb-lite.on{background:#fff1f2;color:#e11d48;border-color:rgba(225,29,72,.25)}
+.rate{display:flex;align-items:center;gap:3px;flex-wrap:wrap}
+.rate button{border:none;background:transparent;color:rgba(255,255,255,.45);cursor:pointer;font-size:16px;line-height:1;padding:0}
+.rate button.on{color:#f5c451!important;text-shadow:0 0 10px rgba(245,196,81,.35)}
+.rate-note{font-size:10px;color:rgba(255,255,255,.55);margin-top:6px}
+.locked-note{display:none;background:#f0f7ff;border:1px solid rgba(30,64,175,.12);border-radius:8px;padding:10px 12px;font-size:12px;color:#1e40af;margin-bottom:12px;line-height:1.5}
+.locked-note.on{display:block}
+.v-actions{display:flex;gap:8px;margin-top:12px}
 .empty{text-align:center;padding:40px 20px;color:var(--mu);font-size:13px}
 .empty div{font-size:36px;margin-bottom:10px}
 .loading{text-align:center;padding:40px 20px;color:var(--mu);font-size:13px}
 .loading div{font-size:32px;margin-bottom:10px;animation:spin 1s linear infinite;display:inline-block}
+@media(max-width:639px){
+  .ht{flex-wrap:nowrap;align-items:flex-start}
+  .ha{gap:6px}
+  .bh{padding:7px 10px;font-size:10px}
+  .lm{font-size:18px}
+  .ls{font-size:8px;letter-spacing:2px}
+}
 @media(min-width:768px){.hi{padding:20px 24px 0}.cw{padding:0 24px 16px}.main{padding:20px 24px 110px}}
 </style>
 </head>
@@ -270,7 +295,7 @@ body{font-family:'DM Sans',sans-serif;background:#faf7f2;color:#1c2b22;overflow-
         <div class="ls">cidade de codó · ma</div>
         <div class="lm">Guia <span>Codoense</span></div>
       </div>
-      <div style="display:flex;gap:8px;align-items:center">
+      <div class="ha">
         <button class="bh" style="background:transparent;border:1px solid rgba(255,255,255,.3);color:#fff" onclick="oM('planos')">Planos</button>
         <button class="bh" style="background:var(--gl);color:#fff" onclick="oM('login')">Entre ou cadastre-se</button>
       </div>
@@ -292,7 +317,8 @@ body{font-family:'DM Sans',sans-serif;background:#faf7f2;color:#1c2b22;overflow-
     </div>
   </div>
   <div class="cw"><div class="ci"><div class="cs">
-    <div class="cp on" onclick="sC(this,'','emp')"><div class="cpi">🏪</div><div class="cpl">Todas</div></div>
+    <div class="cp" onclick="sC(this,'__favoritos__','emp')"><div class="cpi">❤️</div><div class="cpl">Favoritos</div></div>
+    <div class="cp on" id="cat-todas" onclick="sC(this,'','emp')"><div class="cpi">🏪</div><div class="cpl">Todas</div></div>
     <div class="cp" onclick="sC(this,'Alimentação','emp')"><div class="cpi">🍽️</div><div class="cpl">Alimentação</div></div>
     <div class="cp" onclick="sC(this,'Saúde','emp')"><div class="cpi">🏥</div><div class="cpl">Saúde</div></div>
     <div class="cp" onclick="sC(this,'Beleza','emp')"><div class="cpi">💇</div><div class="cpl">Beleza</div></div>
@@ -352,15 +378,27 @@ body{font-family:'DM Sans',sans-serif;background:#faf7f2;color:#1c2b22;overflow-
       </div>
       <!-- ENTRAR -->
       <div class="lpanel on" id="lp-e">
-        <button class="bsoc">🌐 Continuar com Google</button>
-        <button class="bsoc">📘 Continuar com Facebook</button>
-        <div class="ldiv">ou use seu e-mail</div>
-        <div class="fi"><label>E-mail</label><input type="email" placeholder="seu@email.com"></div>
-        <div class="fi"><label>Senha</label><input type="password" placeholder="••••••••"></div>
-        <div style="text-align:right;margin-bottom:14px"><span style="font-size:11px;color:var(--g);cursor:pointer;font-weight:600">Esqueci minha senha</span></div>
-        <button class="bm2 bcf" style="width:100%;margin-bottom:10px" onclick="simL()">Entrar</button>
+        <div style="font-size:12px;color:var(--mu);margin-bottom:12px">Acesso de pessoa física</div>
+        <div class="form-erro-geral" id="err-login">Confira seu e-mail e sua senha para entrar.</div>
+        <div class="fi">
+          <label>E-mail <span class="err-msg" id="e-l-email">⚠ E-mail inválido</span></label>
+          <input type="email" id="l-email" placeholder="seu@email.com" oninput="limparErro('l-email','e-l-email')">
+        </div>
+        <div class="fi">
+          <label>Senha <span class="err-msg" id="e-l-senha">⚠ Informe sua senha</span></label>
+          <div class="pw">
+            <input type="password" id="l-senha" placeholder="Digite sua senha" oninput="limparErro('l-senha','e-l-senha')">
+            <button type="button" class="pwt" onclick="toggleSenha('l-senha', this)" aria-label="Mostrar senha">👁</button>
+          </div>
+        </div>
+        <div class="checkbox-group" style="margin-bottom:14px">
+          <input type="checkbox" id="l-lembrar">
+          <label for="l-lembrar">Lembrar meu acesso neste aparelho</label>
+        </div>
+        <div style="text-align:right;margin-bottom:14px"><span style="font-size:11px;color:var(--g);cursor:pointer;font-weight:600">Recuperação de senha em breve</span></div>
+        <button class="bm2 bcf" id="btn-login-usuario" style="width:100%;margin-bottom:10px" onclick="entrarUsuario()">Entrar</button>
         <div style="text-align:center;font-size:12px;color:var(--mu)">Não tem conta? <span style="color:var(--g);cursor:pointer;font-weight:600" onclick="ltab('c',null)">Criar grátis</span></div>
-        <div style="border-top:1px solid var(--bo);margin-top:16px;padding-top:12px;text-align:center"><span style="font-size:11px;color:var(--mu)">É empresa? </span><span style="font-size:11px;color:var(--g);cursor:pointer;font-weight:600" onclick="cM('login');oM('cadastro')">Cadastre seu negócio aqui</span></div>
+        <div style="border-top:1px solid var(--bo);margin-top:16px;padding-top:12px;text-align:center"><span style="font-size:11px;color:var(--mu)">É empresa? </span><span style="font-size:11px;color:var(--g);cursor:pointer;font-weight:600" onclick="simL()">Entrar no painel empresarial</span></div>
       </div>
       <!-- CRIAR CONTA -->
       <div class="lpanel" id="lp-c">
@@ -385,6 +423,16 @@ body{font-family:'DM Sans',sans-serif;background:#faf7f2;color:#1c2b22;overflow-
             <label>WhatsApp <span class="err-msg" id="e-u-wpp">⚠ Mínimo 10 dígitos</span></label>
             <input type="tel" id="u-wpp" placeholder="(99) 99999-9999" oninput="limparErro('u-wpp','e-u-wpp')">
           </div>
+          <div class="fi-row">
+            <div class="fi">
+              <label>Senha <span class="err-msg" id="e-u-senha">⚠ Mínimo 6 caracteres</span></label>
+              <input type="password" id="u-senha" placeholder="Mínimo 6 caracteres" oninput="limparErro('u-senha','e-u-senha')">
+            </div>
+            <div class="fi">
+              <label>Confirmar senha <span class="err-msg" id="e-u-senha2">⚠ As senhas não conferem</span></label>
+              <input type="password" id="u-senha2" placeholder="Repita a senha" oninput="limparErro('u-senha2','e-u-senha2')">
+            </div>
+          </div>
           <input type="hidden" id="u-tipo" value="pessoa_fisica">
           <button class="bm2 bcf" id="btn-usuario" style="width:100%;margin-top:6px" onclick="enviarUsuario()">
             Criar conta grátis
@@ -406,9 +454,16 @@ body{font-family:'DM Sans',sans-serif;background:#faf7f2;color:#1c2b22;overflow-
       <div class="form-success" id="fs-usuario">
         <div class="fs-icon">🎉</div>
         <div class="fs-title">Conta criada!</div>
-        <div class="fs-msg">Bem-vindo ao Guia Codoense!<br>Agora você pode acompanhar vagas e ofertas da cidade.</div>
-        <div class="fs-detalhe">O sistema de login completo chegará em breve.</div>
+        <div class="fs-msg">Sua conta de pessoa física foi criada com sucesso.<br>Agora você já pode usar este e-mail e senha nas próximas etapas da plataforma.</div>
+        <div class="fs-detalhe">Seu acesso foi salvo com segurança no Firebase.</div>
         <button class="bm2 bcf" style="width:100%;margin-top:20px" onclick="cM('login')">Fechar</button>
+      </div>
+      <div class="form-success" id="fs-login-usuario">
+        <div class="fs-icon">✅</div>
+        <div class="fs-title">Login realizado!</div>
+        <div class="fs-msg">Você entrou com sucesso como pessoa física.<br>Agora já pode continuar navegando pela plataforma.</div>
+        <div class="fs-detalhe" id="fs-login-usuario-det">Seu acesso foi confirmado com segurança.</div>
+        <button class="bm2 bcf" style="width:100%;margin-top:20px" onclick="cM('login')">Continuar</button>
       </div>
     </div>
   </div>
@@ -533,6 +588,7 @@ body{font-family:'DM Sans',sans-serif;background:#faf7f2;color:#1c2b22;overflow-
     <div class="form-body" id="fb-vaga">
       <div style="padding:14px 18px;border-top:1px solid var(--bo);background:#f9fafb">
         <p style="font-size:12px;font-weight:600;color:var(--tx);margin-bottom:12px">Candidate-se agora:</p>
+        <div class="locked-note" id="vaga-usuario-logado"></div>
         <div class="form-erro-geral" id="err-vaga">Verifique os campos em vermelho antes de continuar.</div>
         <div class="fi">
           <label>Seu nome completo <span class="err-msg" id="e-v-nome">⚠ Campo obrigatório</span></label>
@@ -564,9 +620,12 @@ body{font-family:'DM Sans',sans-serif;background:#faf7f2;color:#1c2b22;overflow-
           <label>Experiência na área</label>
           <textarea id="v-exp" placeholder="Descreva brevemente. Se não tiver, escreva 'Sem experiência'." style="min-height:60px"></textarea>
         </div>
-        <button id="btn-vaga" class="bm2 bcf" style="width:100%;padding:12px;font-size:14px" onclick="enviarCandidatura()">
-          Enviar candidatura ✓
-        </button>
+        <div class="v-actions">
+          <button class="bm2 bcn" onclick="cM('vaga')">Fechar</button>
+          <button id="btn-vaga" class="bm2 bcf" style="flex:2;padding:12px;font-size:14px" onclick="enviarCandidatura()">
+            Enviar candidatura ✓
+          </button>
+        </div>
       </div>
     </div>
     <div class="form-success" id="fs-vaga">
@@ -787,11 +846,15 @@ function enviarUsuario() {
   var nome = document.getElementById('u-nome').value.trim();
   var email = document.getElementById('u-email').value.trim();
   var wpp = document.getElementById('u-wpp').value.trim();
+  var senha = document.getElementById('u-senha').value;
+  var senha2 = document.getElementById('u-senha2').value;
   var tipo = document.getElementById('u-tipo').value;
 
   if (!nome) { marcarErro('u-nome','e-u-nome'); ok = false; }
   if (!isEmail(email)) { marcarErro('u-email','e-u-email'); ok = false; }
   if (!isTel(wpp)) { marcarErro('u-wpp','e-u-wpp'); ok = false; }
+  if (senha.length < 6) { marcarErro('u-senha','e-u-senha'); ok = false; }
+  if (senha !== senha2) { marcarErro('u-senha2','e-u-senha2'); ok = false; }
 
   if (!ok) { document.getElementById('err-usuario').classList.add('on'); return; }
   if (!firebaseDisponivel()) {
@@ -807,6 +870,7 @@ function enviarUsuario() {
     email: email,
     whatsapp: wpp.replace(/\D/g,''),
     tipo: tipo,
+    senha: senha,
     aprovado: true
   };
 
@@ -819,8 +883,56 @@ function enviarUsuario() {
     .catch(function(err) {
       console.error(err);
       btnReset('btn-usuario', 'Criar conta grátis');
-      document.getElementById('err-usuario').textContent = 'Erro ao criar conta. Tente novamente.';
+      document.getElementById('err-usuario').textContent = err && err.code === 'auth/email-already-in-use'
+        ? 'Esse e-mail já está em uso. Tente outro e-mail.'
+        : 'Erro ao criar conta. Revise os dados e tente novamente.';
       document.getElementById('err-usuario').classList.add('on');
+    });
+}
+
+// ===== LOGIN: USUÁRIO =====
+function entrarUsuario() {
+  var ok = true;
+  document.getElementById('err-login').classList.remove('on');
+
+  var email = document.getElementById('l-email').value.trim();
+  var senha = document.getElementById('l-senha').value;
+  var lembrar = document.getElementById('l-lembrar').checked;
+
+  if (!isEmail(email)) { marcarErro('l-email','e-l-email'); ok = false; }
+  if (!senha) { marcarErro('l-senha','e-l-senha'); ok = false; }
+
+  if (!ok) { document.getElementById('err-login').classList.add('on'); return; }
+  if (!firebaseDisponivel()) {
+    document.getElementById('err-login').textContent = erroFirebasePadrao();
+    document.getElementById('err-login').classList.add('on');
+    return;
+  }
+
+  btnEnviando('btn-login-usuario', 'Entrando...');
+
+  window.guiaFirebase.signInUsuario(email, senha, lembrar)
+    .then(function(usuario) {
+      var nome = usuario && usuario.nome ? usuario.nome : 'Usuário';
+      var primeiroNome = nome.split(' ')[0];
+      localStorage.setItem('guia_usuario_nome', nome);
+      localStorage.setItem('guia_usuario_email', usuario.email || email);
+      localStorage.setItem('guia_usuario_whatsapp', usuario.whatsapp || '');
+      document.getElementById('fs-login-usuario-det').textContent = primeiroNome + ', seu acesso foi confirmado com segurança.';
+      document.getElementById('lp-e').classList.add('hide');
+      document.getElementById('fs-login-usuario').classList.add('on');
+      atualizarEstadoUsuario();
+    })
+    .catch(function(err) {
+      console.error(err);
+      btnReset('btn-login-usuario', 'Entrar');
+      document.getElementById('err-login').textContent =
+        err && err.code === 'auth/invalid-credential'
+          ? 'E-mail ou senha incorretos. Tente novamente.'
+          : err && err.code === 'usuario/not-found'
+            ? 'Esta conta não foi encontrada como pessoa física.'
+            : 'Não foi possível entrar agora. Tente novamente.';
+      document.getElementById('err-login').classList.add('on');
     });
 }
 
@@ -832,6 +944,7 @@ function enviarCandidatura() {
   var nome = document.getElementById('v-nome').value.trim();
   var wpp = document.getElementById('v-wpp').value.trim();
   var esc = document.getElementById('v-esc').value;
+  var usuario = getUsuarioLocal();
 
   if (!nome) { marcarErro('v-nome','e-v-nome'); ok = false; }
   if (!isTel(wpp)) { marcarErro('v-wpp','e-v-wpp'); ok = false; }
@@ -848,12 +961,15 @@ function enviarCandidatura() {
 
   var dados = {
     nome: nome,
+    email: usuario.email || '',
     whatsapp: wpp.replace(/\D/g,''),
     idade: parseInt(document.getElementById('v-idade').value) || null,
     escolaridade: esc,
     experiencia: document.getElementById('v-exp').value.trim(),
     vaga: vagaAtual ? vagaAtual.t : '',
-    empresa: vagaAtual ? vagaAtual.emp : ''
+    empresa: vagaAtual ? vagaAtual.emp : '',
+    usuarioNome: usuario.nome || '',
+    usuarioEmail: usuario.email || ''
   };
 
   window.guiaFirebase.registrarCandidatura(dados)
@@ -885,6 +1001,147 @@ function abrirCadastroEmpresa(planoVal, planoLabel) {
 }
 
 // ===== HELPERS =====
+function resetLoginUsuario(){
+  ['l-email','l-senha'].forEach(function(fid){
+    var el = document.getElementById(fid);
+    if (el) {
+      el.value = '';
+      el.classList.remove('erro');
+    }
+  });
+  document.getElementById('l-lembrar').checked = false;
+  document.querySelectorAll('#lp-e .err-msg').forEach(function(e){e.classList.remove('on');});
+  document.getElementById('err-login').classList.remove('on');
+  document.getElementById('err-login').textContent = 'Confira seu e-mail e sua senha para entrar.';
+  btnReset('btn-login-usuario', 'Entrar');
+  var olho = document.querySelector('.pwt');
+  if (olho) olho.textContent = '👁';
+}
+
+function resetCadastroUsuario(){
+  ['u-nome','u-email','u-wpp','u-senha','u-senha2'].forEach(function(fid){
+    var el = document.getElementById(fid);
+    if (el) {
+      el.value = '';
+      el.classList.remove('erro');
+    }
+  });
+  document.querySelectorAll('#cad-pessoa .err-msg').forEach(function(e){e.classList.remove('on');});
+  document.getElementById('err-usuario').classList.remove('on');
+  document.getElementById('err-usuario').textContent = 'Verifique os campos em vermelho antes de continuar.';
+  btnReset('btn-usuario', 'Criar conta grátis');
+}
+function atualizarEstadoUsuario(){
+  var nome = localStorage.getItem('guia_usuario_nome') || '';
+  var rotulo = nome ? nome.split(' ')[0] : 'Entrar';
+  document.querySelectorAll('.tab').forEach(function(tab){
+    var label = tab.querySelector('.tab-l');
+    var icon = tab.querySelector('.tab-i');
+    if (label && label.textContent.trim().toUpperCase() === 'ENTRAR') {
+      label.textContent = rotulo;
+      if (icon) icon.textContent = nome ? '✅' : '👤';
+    }
+  });
+}
+function chaveUsuario(base){
+  var email = localStorage.getItem('guia_usuario_email') || 'visitante';
+  return base + '::' + email.toLowerCase();
+}
+function getUsuarioLocal(){
+  return {
+    nome: localStorage.getItem('guia_usuario_nome') || '',
+    email: localStorage.getItem('guia_usuario_email') || '',
+    whatsapp: localStorage.getItem('guia_usuario_whatsapp') || ''
+  };
+}
+function usuarioLogado(){
+  var u = getUsuarioLocal();
+  return !!(u.nome && u.email);
+}
+function getFavoritos(){
+  try {
+    return JSON.parse(localStorage.getItem(chaveUsuario('guia_favoritos_empresas')) || '[]');
+  } catch (e) {
+    return [];
+  }
+}
+function salvarFavoritos(lista){
+  localStorage.setItem(chaveUsuario('guia_favoritos_empresas'), JSON.stringify(lista));
+}
+function ehFavorita(id){
+  return getFavoritos().indexOf(id) > -1;
+}
+function toggleFavorito(id){
+  var favs = getFavoritos();
+  var idx = favs.indexOf(id);
+  if (idx > -1) favs.splice(idx, 1);
+  else favs.push(id);
+  salvarFavoritos(favs);
+  rE();
+  if (document.getElementById('m-detail').classList.contains('on')) {
+    abrirEmpresa(id);
+  }
+}
+function getAvaliacoes(){
+  try {
+    return JSON.parse(localStorage.getItem(chaveUsuario('guia_avaliacoes_empresas')) || '{}');
+  } catch (e) {
+    return {};
+  }
+}
+function getAvaliacaoUsuario(id){
+  return getAvaliacoes()[id] || 0;
+}
+function getRatingEmpresa(d){
+  return getAvaliacaoUsuario(d.id) || d.rating || 0;
+}
+function salvarAvaliacao(id, nota){
+  var mapa = getAvaliacoes();
+  mapa[id] = nota;
+  localStorage.setItem(chaveUsuario('guia_avaliacoes_empresas'), JSON.stringify(mapa));
+  rE();
+  abrirEmpresa(id);
+}
+function estrelasInterativas(id){
+  var atual = getAvaliacaoUsuario(id);
+  var html = '<div class="rate">';
+  for (var i = 1; i <= 5; i++) {
+    html += '<button type="button" class="'+(i <= atual ? 'on' : '')+'" onclick="salvarAvaliacao('+id+','+i+')">★</button>';
+  }
+  html += '</div>';
+  html += '<div class="rate-note">' + (atual ? 'Sua avaliação: ' + atual + ' estrela' + (atual > 1 ? 's' : '') : 'Toque nas estrelas para avaliar') + '</div>';
+  return html;
+}
+function toggleSenha(inputId, btn){
+  var input = document.getElementById(inputId);
+  if (!input) return;
+  var mostrando = input.type === 'text';
+  input.type = mostrando ? 'password' : 'text';
+  btn.textContent = mostrando ? '👁' : '🙈';
+}
+function sincronizarUsuarioLogado(){
+  if (!firebaseDisponivel() || !window.guiaFirebase.getUsuarioAtual) {
+    atualizarEstadoUsuario();
+    return;
+  }
+
+  window.guiaFirebase.getUsuarioAtual()
+    .then(function(usuario){
+      if (usuario && usuario.nome) {
+        localStorage.setItem('guia_usuario_nome', usuario.nome);
+        localStorage.setItem('guia_usuario_email', usuario.email || '');
+        localStorage.setItem('guia_usuario_whatsapp', usuario.whatsapp || '');
+      } else {
+        localStorage.removeItem('guia_usuario_nome');
+        localStorage.removeItem('guia_usuario_email');
+        localStorage.removeItem('guia_usuario_whatsapp');
+      }
+      atualizarEstadoUsuario();
+    })
+    .catch(function(){
+      atualizarEstadoUsuario();
+    });
+}
 function avStyle(i,s){var c=AV[i%AV.length];return 'background:'+c.bg+';color:'+c.c+';width:'+s+'px;height:'+s+'px';}
 function stars(r){return '★'.repeat(Math.floor(r))+'☆'.repeat(5-Math.floor(r));}
 function pct(de,por){return Math.round((1-por/de)*100);}
@@ -901,28 +1158,29 @@ function rO(l){
 }
 function rV(l){
   document.getElementById('vc').innerHTML=l.map(function(v){
-    return '<div class="vcard" onclick="abrirVaga('+v.id+')"><div class="vic" style="background:'+AV[v.id%AV.length].bg+'">'+v.e+'</div><div class="vif"><div class="vtit">'+v.t+'</div><div class="vemp">'+v.emp+'</div><div class="vtgs">'+(v.nv?'<span class="vtag nv">Nova</span>':'')+'<span class="vtag">'+v.tp+'</span><span class="vtag">'+v.tu+'</span></div></div><div class="vright"><div class="vsal">'+v.sal+'</div><div class="varr">Ver ›</div></div></div>';
+    return '<div class="vcard" data-vaga-id="'+v.id+'"><div class="vic" style="background:'+AV[v.id%AV.length].bg+'">'+v.e+'</div><div class="vif"><div class="vtit">'+v.t+'</div><div class="vemp">'+v.emp+'</div><div class="vtgs">'+(v.nv?'<span class="vtag nv">Nova</span>':'')+'<span class="vtag">'+v.tp+'</span><span class="vtag">'+v.tu+'</span></div></div><div class="vright"><div class="vsal">'+v.sal+'</div><div class="varr">Ver ›</div></div></div>';
   }).join('');
 }
 function rE(){
   var l=empresas.filter(function(d){
     var tags=getTags(d);var cat=getCat(d);
     var b=!busca||d.nome.toLowerCase().indexOf(busca)>-1||cat.toLowerCase().indexOf(busca)>-1||tags.some(function(t){return t.toLowerCase().indexOf(busca)>-1;});
-    var c=!catAtual||cat===catAtual;return b&&c;
+    var c=!catAtual||cat===catAtual||(catAtual==='__favoritos__'&&ehFavorita(d.id));return b&&c;
   });
   var p=l.filter(function(d){return d.premium;});
   var n=l.filter(function(d){return !d.premium;});
   document.getElementById('cd').innerHTML=p.map(function(d){
-    var tags=getTags(d);var ini=getIni(d);var av=d.av_index||0;
-    return '<div class="dcard" onclick="abrirEmpresa('+d.id+')"><div class="dacc"></div><div class="dbod"><div class="dbdg">⭐ Destaque</div><div class="dh"><div class="dav" style="'+avStyle(av,32)+'">'+ini+'</div><div><div class="dn">'+d.nome+'</div><div class="dct">'+getCat(d)+'</div></div></div><div class="ddesc">'+d.descricao+'</div><div class="dtgs">'+tags.map(function(t){return '<span class="dtag">'+t+'</span>';}).join('')+'</div><div class="df"><div class="drat">'+stars(d.rating)+' '+d.rating+'</div><button class="dbtn" onclick="event.stopPropagation();abrirEmpresa('+d.id+')">Ver perfil</button></div></div></div>';
+    var tags=getTags(d);var ini=getIni(d);var av=d.av_index||0;var rating=getRatingEmpresa(d);var fav=ehFavorita(d.id);
+    return '<div class="dcard" onclick="abrirEmpresa('+d.id+')"><div class="dacc"></div><div class="dbod"><div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px"><div><div class="dbdg">⭐ Destaque</div></div><button class="favb'+(fav?' on':'')+'" onclick="event.stopPropagation();toggleFavorito('+d.id+')">'+(fav?'❤':'♡')+'</button></div><div class="dh"><div class="dav" style="'+avStyle(av,32)+'">'+ini+'</div><div><div class="dn">'+d.nome+'</div><div class="dct">'+getCat(d)+'</div></div></div><div class="ddesc">'+d.descricao+'</div><div class="dtgs">'+tags.map(function(t){return '<span class="dtag">'+t+'</span>';}).join('')+'</div><div class="df"><div class="drat">'+stars(rating)+' '+rating.toFixed(1)+'</div><button class="dbtn" onclick="event.stopPropagation();abrirEmpresa('+d.id+')">Ver perfil</button></div></div></div>';
   }).join('');
   document.getElementById('cn').innerHTML=n.map(function(d){
-    var tags=getTags(d);var ini=getIni(d);var av=d.av_index||0;
-    return '<div class="ncard" onclick="abrirEmpresa('+d.id+')"><div class="nh"><div class="nav" style="'+avStyle(av,30)+'">'+ini+'</div><div><div class="nn">'+d.nome+'</div><div class="nct">'+getCat(d)+'</div></div></div><div class="nrat">'+stars(d.rating)+' '+d.rating+'</div><div class="nds">'+d.descricao+'</div><div class="ntgs">'+tags.map(function(t){return '<span class="ntag">'+t+'</span>';}).join('')+'</div><div class="nft"><button class="nbtn" onclick="event.stopPropagation();abrirEmpresa('+d.id+')">Ver perfil</button></div></div>';
+    var tags=getTags(d);var ini=getIni(d);var av=d.av_index||0;var rating=getRatingEmpresa(d);var fav=ehFavorita(d.id);
+    return '<div class="ncard" onclick="abrirEmpresa('+d.id+')"><div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px"><div class="nh" style="margin-bottom:0"><div class="nav" style="'+avStyle(av,30)+'">'+ini+'</div><div><div class="nn">'+d.nome+'</div><div class="nct">'+getCat(d)+'</div></div></div><button class="favb-lite'+(fav?' on':'')+'" onclick="event.stopPropagation();toggleFavorito('+d.id+')">'+(fav?'❤':'♡')+'</button></div><div class="nrat">'+stars(rating)+' '+rating.toFixed(1)+'</div><div class="nds">'+d.descricao+'</div><div class="ntgs">'+tags.map(function(t){return '<span class="ntag">'+t+'</span>';}).join('')+'</div><div class="nft"><button class="nbtn" onclick="event.stopPropagation();abrirEmpresa('+d.id+')">Ver perfil</button></div></div>';
   }).join('');
   document.getElementById('sd').style.display=p.length?'':'none';
   document.getElementById('sn').style.display=n.length?'':'none';
   document.getElementById('emp-empty').style.display=l.length?'none':'block';
+  document.getElementById('emp-empty').innerHTML=catAtual==='__favoritos__' ? '<div>❤</div>Você ainda não favoritou nenhuma empresa.' : '<div>🔍</div>Nenhuma empresa encontrada.';
   document.getElementById('dcnt').textContent=p.length+' empresa'+(p.length!==1?'s':'');
   document.getElementById('ncnt').textContent=n.length+' empresa'+(n.length!==1?'s':'');
   document.getElementById('total-emp').textContent=empresas.length;
@@ -931,12 +1189,12 @@ function rE(){
 // ===== ABRIR MODAIS DE CONTEÚDO =====
 function abrirEmpresa(id){
   var d=empresas.find(function(x){return x.id===id;});if(!d)return;
-  var av=d.av_index||0;var c=AV[av%AV.length];var ini=getIni(d);var tags=getTags(d);
+  var av=d.av_index||0;var c=AV[av%AV.length];var ini=getIni(d);var tags=getTags(d);var rating=getRatingEmpresa(d);var fav=ehFavorita(d.id);
   var tel=d.whatsapp||'';var msg='Olá, '+d.nome+'! Vi seu perfil no Guia Codoense e gostaria de mais informações.';
   var contato = '<div class="crow"><div class="cico">📍</div>'+d.endereco+'</div>'+(d.horario?'<div class="crow"><div class="cico">⏰</div>'+d.horario+'</div>':'')+(d.instagram?'<div class="crow"><div class="cico">📷</div>'+d.instagram+'</div>':'');
   var secTags = tags.length ? '<div class="dsec" style="border-bottom:none"><h4>Especialidades</h4><div>'+tags.map(function(t){return '<span class="ntd">'+t+'</span>';}).join('')+'</div></div>' : '<div class="dsec" style="border-bottom:none"><h4>Categoria</h4><div><span class="ntd">'+getCat(d)+'</span></div></div>';
   document.getElementById('m-din').innerHTML=
-    '<div class="dth"><div class="dtav" style="background:'+c.bg+';color:'+c.c+'">'+ini+'</div>'+(d.premium?'<div style="display:inline-flex;align-items:center;background:var(--go);color:#fff;font-size:9px;font-weight:600;padding:2px 9px;border-radius:20px;margin-bottom:6px;text-transform:uppercase">⭐ Destaque</div><br>':'')+'<div class="dtnm">'+d.nome+'</div><div class="dtct">'+getCat(d)+' · <span style="color:var(--gol)">'+stars(d.rating)+' '+d.rating+'</span></div></div>'+
+    '<div class="dth"><div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px"><div><div class="dtav" style="background:'+c.bg+';color:'+c.c+'">'+ini+'</div>'+(d.premium?'<div style="display:inline-flex;align-items:center;background:var(--go);color:#fff;font-size:9px;font-weight:600;padding:2px 9px;border-radius:20px;margin-bottom:6px;text-transform:uppercase">⭐ Destaque</div><br>':'')+'<div class="dtnm">'+d.nome+'</div><div class="dtct">'+getCat(d)+' · <span style="color:var(--gol)">'+stars(rating)+' '+rating.toFixed(1)+'</span></div></div><button class="favb'+(fav?' on':'')+'" onclick="toggleFavorito('+d.id+')">'+(fav?'❤':'♡')+'</button></div><div style="margin-top:8px">'+estrelasInterativas(d.id)+'</div></div>'+
     '<div class="dsec"><h4>Sobre</h4><p>'+d.descricao+'</p></div>'+
     '<div class="dsec"><h4>Contato &amp; Localização</h4>'+contato+'</div>'+
     secTags+
@@ -956,6 +1214,8 @@ function abrirVaga(id){
   var v=vagas.find(function(x){return x.id===id;});
   vagaAtual=v;
   var c=AV[v.id%AV.length];
+  var usuario = getUsuarioLocal();
+  var aviso = document.getElementById('vaga-usuario-logado');
   // resetar formulário
   ['v-nome','v-wpp','v-idade','v-esc','v-exp'].forEach(function(fid){
     var el=document.getElementById(fid);if(el){el.value='';el.classList.remove('erro');}
@@ -964,6 +1224,15 @@ function abrirVaga(id){
   document.getElementById('err-vaga').classList.remove('on');
   esconderSucesso('vaga');
   btnReset('btn-vaga','Enviar candidatura ✓');
+  if (usuario.nome || usuario.whatsapp) {
+    document.getElementById('v-nome').value = usuario.nome || '';
+    document.getElementById('v-wpp').value = usuario.whatsapp ? usuario.whatsapp.replace(/(\d{2})(\d{5})(\d{4})/,'($1) $2-$3') : '';
+    aviso.textContent = 'Preenchemos nome e WhatsApp com os dados da sua conta para agilizar sua candidatura.';
+    aviso.classList.add('on');
+  } else {
+    aviso.classList.remove('on');
+    aviso.textContent = '';
+  }
 
   document.getElementById('m-vin').innerHTML=
     '<div style="background:var(--dk);padding:14px 18px"><div style="width:44px;height:44px;border-radius:9px;background:'+c.bg+';display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:8px">'+v.e+'</div>'+(v.nv?'<div style="display:inline-block;background:#fef3c7;color:#92400e;font-size:9px;font-weight:700;padding:2px 9px;border-radius:20px;margin-bottom:6px">Nova vaga</div><br>':'')+'<div style="font-family:var(--fd);font-size:17px;font-weight:700;color:#fff;margin-bottom:3px">'+v.t+'</div><div style="font-size:12px;color:rgba(255,255,255,.45)">'+v.emp+'</div></div>'+
@@ -1004,7 +1273,7 @@ iFD();fTmr=setInterval(function(){fi=(fi+1)%fT;gF(fi);},3800);
 
 // ===== NAVEGAÇÃO =====
 function filtrar(){busca=document.getElementById('si').value.toLowerCase();rView();}
-function irP(v,el){view=v;document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('on');});if(el)el.classList.add('on');catAtual='';document.querySelectorAll('.cp').forEach(function(c){c.classList.remove('on');});document.querySelector('.cp').classList.add('on');rView();window.scrollTo({top:0,behavior:'smooth'});}
+function irP(v,el){view=v;document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('on');});if(el)el.classList.add('on');catAtual='';document.querySelectorAll('.cp').forEach(function(c){c.classList.remove('on');});document.getElementById('cat-todas').classList.add('on');rView();window.scrollTo({top:0,behavior:'smooth'});}
 function sC(el,cat,v){document.querySelectorAll('.cp').forEach(function(c){c.classList.remove('on');});if(el)el.classList.add('on');view=v;catAtual=cat;rView();window.scrollTo({top:0,behavior:'smooth'});}
 function rView(){
   var so=document.getElementById('so'),sv=document.getElementById('sv'),sd=document.getElementById('sd'),sn=document.getElementById('sn');
@@ -1016,19 +1285,26 @@ function rView(){
 
 // ===== MODAIS =====
 function oM(id){
-  if(id==='login'){document.querySelectorAll('.ltb').forEach(function(t,i){t.classList.toggle('on',i===0);});document.querySelectorAll('.lpanel').forEach(function(p){p.classList.remove('on');});document.getElementById('lp-e').classList.add('on');document.getElementById('fs-usuario').classList.remove('on');var lpc=document.getElementById('lp-c');lpc.classList.remove('hide');lpc.classList.remove('on');selT('p');}
+  if(id==='login'){document.querySelectorAll('.ltb').forEach(function(t,i){t.classList.toggle('on',i===0);});document.querySelectorAll('.lpanel').forEach(function(p){p.classList.remove('on');});document.getElementById('lp-e').classList.add('on');document.getElementById('fs-usuario').classList.remove('on');document.getElementById('fs-login-usuario').classList.remove('on');var lpc=document.getElementById('lp-c');lpc.classList.remove('hide');lpc.classList.remove('on');selT('p');resetCadastroUsuario();resetLoginUsuario();}
   if(id==='cadastro'){esconderSucesso('cadastro');['c-nome','c-cat','c-desc','c-wpp','c-email','c-senha','c-senha2','c-end','c-tel','c-insta'].forEach(function(fid){var el=document.getElementById(fid);if(el){el.value='';el.classList.remove('erro');}});document.querySelectorAll('#fb-cadastro .err-msg').forEach(function(e){e.classList.remove('on');});document.getElementById('err-cadastro').classList.remove('on');document.getElementById('err-cadastro').textContent='Verifique os campos em vermelho antes de continuar.';document.getElementById('c-plano').value='Básico (Grátis)';btnReset('btn-cadastro','Enviar cadastro grátis ✓');}
   if(id==='planos'){selPlano('Destaque R$49/mês','Destaque – R$ 49/mês','pl-dest');btnReset('btn-planos','Quero me destacar ✓');}
   document.getElementById('m-'+id).classList.add('on');
   document.body.style.overflow='hidden';
 }
-function cM(id){document.getElementById('m-'+id).classList.remove('on');document.body.style.overflow='';}
+function cM(id){document.getElementById('m-'+id).classList.remove('on');document.body.style.overflow='';if(id==='login'){resetLoginUsuario();resetCadastroUsuario();document.getElementById('fs-usuario').classList.remove('on');document.getElementById('fs-login-usuario').classList.remove('on');}}
 document.querySelectorAll('.mbg').forEach(function(m){m.addEventListener('click',function(e){if(e.target===this){cM(this.id.replace('m-',''));}});});
+document.getElementById('vc').addEventListener('click', function(e){
+  var card = e.target.closest('.vcard');
+  if (!card) return;
+  var id = parseInt(card.getAttribute('data-vaga-id'), 10);
+  if (id) abrirVaga(id);
+});
 
 // ===== INICIAR =====
 carregarEmpresas();
 rO(ofertas);
 rV(vagas.slice(0,3));
+sincronizarUsuarioLogado();
 </script>
 </body>
 </html>

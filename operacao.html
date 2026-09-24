@@ -149,6 +149,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--cr);color:var(--tx);min-h
 <script>
 let gestorAtual = null;
 let empresasOperacao = [];
+let operacaoSalvando = false;
 const emailGestorPadrao = (window.GUIA_ADMIN_EMAILS && window.GUIA_ADMIN_EMAILS[0]) || '';
 
 window.addEventListener('DOMContentLoaded', function() {
@@ -166,8 +167,11 @@ window.addEventListener('DOMContentLoaded', function() {
     }
   }
 
-  if (!window.guiaFirebase || !window.guiaFirebase.isConfigured()) {
-    showError('login-err', 'Configure primeiro o Firebase no arquivo firebase-config.js.');
+  if (!window.guiaFirebase || !window.guiaFirebase.isConfigured() || !window.guiaFirebase.observarGestorLogado) {
+    const mensagem = window.guiaFirebase && window.guiaFirebase.getConfigError
+      ? window.guiaFirebase.getConfigError()
+      : 'Configure primeiro o Firebase no arquivo firebase-config.js.';
+    showError('login-err', mensagem);
     return;
   }
 
@@ -186,7 +190,7 @@ window.addEventListener('DOMContentLoaded', function() {
 
 function showError(id, text) {
   const el = document.getElementById(id);
-  el.innerHTML = text;
+  el.textContent = text;
   el.classList.add('show');
 }
 
@@ -268,9 +272,36 @@ function fmtContato(item) {
   return tel ? tel.replace(/(\d{2})(\d{4,5})(\d{4})/, '($1) $2-$3') : 'Não informado';
 }
 
-function carregarEmpresasOperacao() {
+function texto(valor, fallback) {
+  const limpo = String(valor || '').trim();
+  return limpo || fallback;
+}
+
+function criarEl(tag, classe, conteudo) {
+  const el = document.createElement(tag);
+  if (classe) {
+    el.className = classe;
+  }
+  if (conteudo !== undefined) {
+    el.textContent = conteudo;
+  }
+  return el;
+}
+
+function criarBotao(rotulo, classe, id, dados) {
+  const botao = criarEl('button', 'btn ' + classe, rotulo);
+  botao.type = 'button';
+  botao.disabled = operacaoSalvando;
+  botao.addEventListener('click', function() {
+    atualizarEmpresaOperacao(id, dados);
+  });
+  return botao;
+}
+
+function carregarEmpresasOperacao(opcoes) {
+  opcoes = opcoes || {};
   hideError('msg-err');
-  window.guiaFirebase.listarEmpresasGestor()
+  return window.guiaFirebase.listarEmpresasGestor()
     .then(function(lista) {
       empresasOperacao = lista;
       renderMetricas();
@@ -278,7 +309,12 @@ function carregarEmpresasOperacao() {
     })
     .catch(function(error) {
       console.error(error);
-      showError('msg-err', 'Não foi possível carregar as empresas. Você provavelmente precisa ajustar as regras do Firestore para acesso do gestor.');
+      if (opcoes.mostrarErro !== false) {
+        showError('msg-err', opcoes.mensagemErro || 'Não foi possível carregar as empresas. Você provavelmente precisa ajustar as regras do Firestore para acesso do gestor.');
+      }
+      if (opcoes.repassarErro) {
+        throw error;
+      }
     });
 }
 
@@ -309,46 +345,84 @@ function renderEmpresasOperacao() {
   });
 
   document.getElementById('lista-vazia').style.display = filtradas.length ? 'none' : 'block';
-  host.innerHTML = filtradas.map(function(item) {
-    return '<div class="empresa">' +
-      '<div class="empresa-top">' +
-        '<div>' +
-          '<div class="empresa-name">' + (item.nome || 'Empresa sem nome') + '</div>' +
-          '<div class="empresa-meta">' + (item.categoria || 'Sem categoria') + ' • ' + fmtPlano(item) + '<br>' + (item.email || 'Sem e-mail') + '</div>' +
-        '</div>' +
-        '<div class="badges">' +
-          '<span class="badge ' + (item.aprovado ? 'approved' : 'pending') + '">' + (item.aprovado ? 'Aprovada' : 'Pendente') + '</span>' +
-          '<span class="badge ' + (item.premium ? 'featured' : 'basic') + '">' + (item.premium ? 'Destaque' : 'Básico') + '</span>' +
-        '</div>' +
-      '</div>' +
-      '<div class="empresa-grid">' +
-        '<div class="empresa-desc">' + (item.descricao || 'Sem descrição cadastrada.') + '</div>' +
-        '<div class="empresa-side">' +
-          '<div><strong>WhatsApp:</strong> ' + fmtContato(item) + '</div>' +
-          '<div><strong>Endereço:</strong> ' + (item.endereco || 'Não informado') + '</div>' +
-          '<div><strong>Instagram:</strong> ' + (item.instagram || 'Não informado') + '</div>' +
-        '</div>' +
-      '</div>' +
-      '<div class="btn-row" style="margin-top:14px">' +
-        '<button class="btn btn-primary" onclick="atualizarEmpresaOperacao(\'' + item.id + '\',{aprovado:true})">Aprovar</button>' +
-        '<button class="btn btn-danger" onclick="atualizarEmpresaOperacao(\'' + item.id + '\',{aprovado:false,premium:false})">Voltar para pendente</button>' +
-        '<button class="btn btn-go" onclick="atualizarEmpresaOperacao(\'' + item.id + '\',{premium:true,aprovado:true})">Marcar destaque</button>' +
-        '<button class="btn btn-ghost" onclick="atualizarEmpresaOperacao(\'' + item.id + '\',{premium:false})">Plano básico</button>' +
-      '</div>' +
-    '</div>';
-  }).join('');
+  host.textContent = '';
+
+  filtradas.forEach(function(item) {
+    const card = criarEl('div', 'empresa');
+    const top = criarEl('div', 'empresa-top');
+    const info = criarEl('div');
+    const nome = criarEl('div', 'empresa-name', texto(item.nome, 'Empresa sem nome'));
+    const meta = criarEl('div', 'empresa-meta');
+    meta.appendChild(document.createTextNode(texto(item.categoria, 'Sem categoria') + ' - ' + fmtPlano(item)));
+    meta.appendChild(document.createElement('br'));
+    meta.appendChild(document.createTextNode(texto(item.email, 'Sem e-mail')));
+
+    const badges = criarEl('div', 'badges');
+    badges.appendChild(criarEl('span', 'badge ' + (item.aprovado ? 'approved' : 'pending'), item.aprovado ? 'Aprovada' : 'Pendente'));
+    badges.appendChild(criarEl('span', 'badge ' + (item.premium ? 'featured' : 'basic'), item.premium ? 'Destaque' : 'Básico'));
+
+    info.appendChild(nome);
+    info.appendChild(meta);
+    top.appendChild(info);
+    top.appendChild(badges);
+
+    const grid = criarEl('div', 'empresa-grid');
+    grid.appendChild(criarEl('div', 'empresa-desc', texto(item.descricao, 'Sem descrição cadastrada.')));
+
+    const side = criarEl('div', 'empresa-side');
+    [
+      ['WhatsApp', fmtContato(item)],
+      ['Endereço', texto(item.endereco, 'Não informado')],
+      ['Instagram', texto(item.instagram, 'Não informado')]
+    ].forEach(function(linha) {
+      const div = criarEl('div');
+      const strong = criarEl('strong', '', linha[0] + ': ');
+      div.appendChild(strong);
+      div.appendChild(document.createTextNode(linha[1]));
+      side.appendChild(div);
+    });
+    grid.appendChild(side);
+
+    const botoes = criarEl('div', 'btn-row');
+    botoes.style.marginTop = '14px';
+    botoes.appendChild(criarBotao('Aprovar', 'btn-primary', item.id, { aprovado: true }));
+    botoes.appendChild(criarBotao('Voltar para pendente', 'btn-danger', item.id, { aprovado: false, premium: false }));
+    botoes.appendChild(criarBotao('Marcar destaque', 'btn-go', item.id, { premium: true, aprovado: true }));
+    botoes.appendChild(criarBotao('Plano básico', 'btn-ghost', item.id, { premium: false }));
+
+    card.appendChild(top);
+    card.appendChild(grid);
+    card.appendChild(botoes);
+    host.appendChild(card);
+  });
 }
 
 function atualizarEmpresaOperacao(id, dados) {
+  if (operacaoSalvando) {
+    return;
+  }
+
+  operacaoSalvando = true;
+  renderEmpresasOperacao();
   hideError('msg-err');
   window.guiaFirebase.atualizarEmpresaGestor(id, dados)
     .then(function() {
       showOk('Empresa atualizada com sucesso.');
-      return carregarEmpresasOperacao();
+      return carregarEmpresasOperacao({
+        mostrarErro: false,
+        repassarErro: true
+      }).catch(function(error) {
+        console.error(error);
+        showError('msg-err', 'A alteração foi salva, mas não foi possível atualizar a lista agora. Clique em Atualizar para tentar novamente.');
+      });
     })
     .catch(function(error) {
       console.error(error);
       showError('msg-err', 'Não foi possível salvar essa alteração.');
+    })
+    .then(function() {
+      operacaoSalvando = false;
+      renderEmpresasOperacao();
     });
 }
 </script>

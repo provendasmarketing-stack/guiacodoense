@@ -408,7 +408,7 @@ body::before{
     </form>
 
     <div class="links">
-      <a href="#" onclick="alert('Em breve: recuperação de senha via e-mail');return false">Esqueci minha senha</a>
+      <a href="#" onclick="recuperarSenha();return false">Esqueci minha senha</a>
     </div>
 
     <div class="divider">ou</div>
@@ -438,9 +438,22 @@ window.addEventListener('DOMContentLoaded', function() {
     return;
   }
 
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('status') === 'analise') {
+    mostrarAlert('Sua empresa ainda está em análise. O painel será liberado após aprovação.', 'erro');
+  } else if (params.get('status') === 'sessao') {
+    mostrarAlert('Sua sessão expirou. Entre novamente para acessar o painel.', 'erro');
+  }
+
   window.guiaFirebase.observarEmpresaLogada(function(empresa) {
-    if (empresa) {
+    if (empresa && empresa.aprovado) {
       window.location.href = 'painel.html';
+    } else if (empresa && !empresa.aprovado) {
+      window.guiaFirebase.signOutEmpresa().then(function() {
+        mostrarAlert('Sua empresa ainda está em análise. O painel será liberado após aprovação.', 'erro');
+      }).catch(function() {
+        mostrarAlert('Sua empresa ainda está em análise. O painel será liberado após aprovação.', 'erro');
+      });
     }
   });
 });
@@ -504,6 +517,30 @@ async function fazerLogin(event) {
   }
 }
 
+async function recuperarSenha() {
+  esconderAlert();
+
+  const email = document.getElementById('email').value.trim();
+  if (!validarEmail(email)) {
+    mostrarErro('email');
+    mostrarAlert('Digite seu e-mail de acesso para receber a recuperação de senha.', 'erro');
+    return;
+  }
+
+  if (!window.guiaFirebase || !window.guiaFirebase.isConfigured() || !window.firebase) {
+    mostrarAlert('Configure o Firebase no arquivo firebase-config.js antes de recuperar a senha.', 'erro');
+    return;
+  }
+
+  try {
+    await firebase.auth().sendPasswordResetEmail(email);
+    mostrarAlert('Enviamos um link de recuperação para o e-mail informado.', 'sucesso');
+  } catch (error) {
+    console.error('Erro ao recuperar senha:', error);
+    mostrarAlert('Não foi possível enviar o e-mail agora. Confira o endereço e tente novamente.', 'erro');
+  }
+}
+
 function validarEmail(email) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
@@ -538,7 +575,10 @@ function setBtnLoading(loading) {
 
   if (loading) {
     btn.disabled = true;
-    texto.innerHTML = '<span class="spinner"></span> Entrando...';
+    texto.textContent = 'Entrando...';
+    const spinner = document.createElement('span');
+    spinner.className = 'spinner';
+    texto.prepend(spinner);
   } else {
     btn.disabled = false;
     texto.textContent = 'Entrar no painel';

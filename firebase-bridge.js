@@ -6,17 +6,24 @@
     var value = config[key];
     return value && String(value).indexOf("COLE_AQUI") === -1;
   });
+  var sdkAvailable = !!window.firebase;
 
   var bridge = {
     isConfigured: function() {
-      return configured;
+      return configured && sdkAvailable;
     },
     getConfigError: function() {
+      if (!configured) {
+        return "Firebase ainda nao foi configurado. Preencha o arquivo firebase-config.js.";
+      }
+      if (!sdkAvailable) {
+        return "Firebase nao carregou. Verifique a conexao com a internet e tente atualizar a pagina.";
+      }
       return "Firebase ainda nao foi configurado. Preencha o arquivo firebase-config.js.";
     }
   };
 
-  if (!configured || !window.firebase) {
+  if (!configured || !sdkAvailable) {
     window.guiaFirebase = bridge;
     return;
   }
@@ -39,13 +46,31 @@
   }
 
   function ensureConfigured() {
-    if (!configured) {
+    if (!configured || !sdkAvailable) {
       throw new Error(bridge.getConfigError());
     }
   }
 
   function isAdminEmail(email) {
     return !!email && adminEmails.indexOf(String(email).trim().toLowerCase()) > -1;
+  }
+
+  function normalizeEmail(email) {
+    return String(email || "").trim().toLowerCase();
+  }
+
+  function limparCadastroAuthCriado(user, originalError) {
+    var devolverErroOriginal = function() {
+      return auth.signOut().catch(function() {}).then(function() {
+        throw originalError;
+      });
+    };
+
+    if (user && typeof user.delete === "function") {
+      return user.delete().catch(function() {}).then(devolverErroOriginal);
+    }
+
+    return devolverErroOriginal();
   }
 
   function mapEmpresa(doc, fallbackEmail) {
@@ -72,6 +97,28 @@
           }
 
           return mapEmpresa(snapshot.docs[0], emailFallback);
+        });
+    });
+  }
+
+  function buscarEmpresaDocRefPorUid(uid, emailFallback) {
+    var docRef = db.collection(collections.empresas).doc(uid);
+
+    return docRef.get().then(function(doc) {
+      if (doc.exists) {
+        return docRef;
+      }
+
+      return db.collection(collections.empresas)
+        .where("email", "==", emailFallback || "")
+        .limit(1)
+        .get()
+        .then(function(snapshot) {
+          if (snapshot.empty) {
+            return null;
+          }
+
+          return snapshot.docs[0].ref;
         });
     });
   }
@@ -132,42 +179,59 @@
   bridge.registrarEmpresa = function(dados, senha) {
     ensureConfigured();
 
-    return auth.createUserWithEmailAndPassword(dados.email, senha)
+    var email = normalizeEmail(dados.email);
+
+    return auth.createUserWithEmailAndPassword(email, senha)
       .then(function(cred) {
         var payload = Object.assign({}, dados, {
+          email: email,
           authUid: cred.user.uid,
+          aprovado: false,
+          premium: false,
           createdAt: nowServer(),
           atualizadoEm: nowServer()
         });
 
         delete payload.senha;
 
-        return db.collection(collections.empresas).doc(cred.user.uid).set(payload).then(function() {
-          return auth.signOut().then(function() {
-            return { id: cred.user.uid };
+        return db.collection(collections.empresas).doc(cred.user.uid).set(payload)
+          .then(function() {
+            return auth.signOut().then(function() {
+              return { id: cred.user.uid };
+            });
+          })
+          .catch(function(error) {
+            return limparCadastroAuthCriado(cred.user, error);
           });
-        });
       });
   };
 
   bridge.registrarUsuario = function(dados) {
     ensureConfigured();
 
-    return auth.createUserWithEmailAndPassword(dados.email, dados.senha)
+    var email = normalizeEmail(dados.email);
+
+    return auth.createUserWithEmailAndPassword(email, dados.senha)
       .then(function(cred) {
         var payload = Object.assign({}, dados, {
+          email: email,
           authUid: cred.user.uid,
           createdAt: nowServer(),
           atualizadoEm: nowServer()
         });
 
         delete payload.senha;
+        delete payload.aprovado;
 
-        return db.collection(collections.usuarios).doc(cred.user.uid).set(payload).then(function() {
-          return auth.signOut().then(function() {
-            return { id: cred.user.uid };
+        return db.collection(collections.usuarios).doc(cred.user.uid).set(payload)
+          .then(function() {
+            return auth.signOut().then(function() {
+              return { id: cred.user.uid };
+            });
+          })
+          .catch(function(error) {
+            return limparCadastroAuthCriado(cred.user, error);
           });
-        });
       });
   };
 
@@ -235,6 +299,39 @@
     }
 
     return buscarEmpresaPorUid(auth.currentUser.uid, auth.currentUser.email);
+  };
+
+  bridge.atualizarEmpresaAtual = function(dados) {
+    ensureConfigured();
+
+    if (!auth.currentUser) {
+      return Promise.reject(new Error("Empresa nao autenticada."));
+    }
+
+    return buscarEmpresaDocRefPorUid(auth.currentUser.uid, auth.currentUser.email)
+      .then(function(docRef) {
+        if (!docRef) {
+          var error = new Error("Empresa nao encontrada.");
+          error.code = "empresa/not-found";
+          throw error;
+        }
+
+        var payload = Object.assign({}, dados, {
+          atualizadoEm: nowServer()
+        });
+
+        delete payload.senha;
+        delete payload.email;
+        delete payload.authUid;
+        delete payload.aprovado;
+        delete payload.premium;
+        delete payload.plano;
+
+        return docRef.set(payload, { merge: true });
+      })
+      .then(function() {
+        return buscarEmpresaPorUid(auth.currentUser.uid, auth.currentUser.email);
+      });
   };
 
   bridge.signInUsuario = function(email, senha, lembrar) {
@@ -363,8 +460,15 @@
   bridge.atualizarEmpresaGestor = function(empresaId, dados) {
     ensureConfigured();
 
-    var payload = Object.assign({}, dados, {
+    var camposPermitidos = ["aprovado", "premium", "plano"];
+    var payload = {
       atualizadoEm: nowServer()
+    };
+
+    camposPermitidos.forEach(function(campo) {
+      if (Object.prototype.hasOwnProperty.call(dados || {}, campo)) {
+        payload[campo] = dados[campo];
+      }
     });
 
     return db.collection(collections.empresas).doc(empresaId).set(payload, { merge: true });

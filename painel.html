@@ -104,6 +104,20 @@ body{font-family:'DM Sans',sans-serif;background:var(--cr);color:var(--tx);overf
 
 /* Ações Rápidas */
 .quick-actions{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.status-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-bottom:32px}
+.status-card{background:#fff;border:1px solid var(--bo);border-radius:12px;padding:18px}
+.status-card strong{display:block;font-size:14px;margin-bottom:6px}
+.status-card p{font-size:13px;color:var(--mu);line-height:1.5}
+.status-ok{border-left:4px solid var(--gl)}
+.status-warn{border-left:4px solid var(--go)}
+.painel-alert{display:none;border-radius:10px;padding:12px 14px;margin-bottom:18px;font-size:13px;font-weight:600}
+.painel-alert.show{display:block}
+.painel-alert.sucesso{background:#f0f9f4;color:var(--g);border:1px solid rgba(26,107,60,.25)}
+.painel-alert.erro{background:#fff1f2;color:var(--err);border:1px solid rgba(225,29,72,.25)}
+.form-card{background:#fff;border:1px solid var(--bo);border-radius:12px;padding:32px;max-width:760px}
+.form-actions{display:flex;gap:12px;margin-top:24px;flex-wrap:wrap}
+.helper-text{font-size:12px;color:var(--mu);line-height:1.5;margin-top:-8px;margin-bottom:20px}
+.readonly-note{background:#faf7f2;border:1px solid var(--bo);border-radius:10px;padding:12px 14px;font-size:12px;color:var(--mu);margin-bottom:20px;line-height:1.5}
 
 /* Empty State */
 .empty-state{text-align:center;padding:60px 20px;color:var(--mu)}
@@ -147,7 +161,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--cr);color:var(--tx);overf
     <h1>Guia <span>Codoense</span></h1>
   </div>
   <div class="header-right">
-    <div class="empresa-badge">🏪 Farmácia São João</div>
+    <div class="empresa-badge">🏪 Carregando...</div>
     <button class="btn-sair" onclick="fazerLogout()">🚪 Sair</button>
   </div>
 </div>
@@ -195,7 +209,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--cr);color:var(--tx);overf
     
     <div class="menu-divider"></div>
     
-    <a href="#ajuda" class="menu-item">
+    <a href="mailto:contato@guiacodoense.com.br?subject=Ajuda%20no%20painel%20empresarial" class="menu-item">
       <span class="icon">❓</span>
       <span>Ajuda</span>
     </a>
@@ -211,71 +225,54 @@ body{font-family:'DM Sans',sans-serif;background:var(--cr);color:var(--tx);overf
     <!-- Dashboard Page -->
     <div id="page-dashboard" class="page">
       <div class="welcome">
-        <h2>Olá, Farmácia São João! 👋</h2>
+        <h2>Olá! 👋</h2>
         <p>Aqui está o resumo do seu perfil no Guia Codoense</p>
+      </div>
+
+      <div id="painel-alert" class="painel-alert"></div>
+
+      <div class="status-grid">
+        <div class="status-card status-ok">
+          <strong id="status-publicacao">Perfil aprovado</strong>
+          <p id="status-publicacao-texto">Sua empresa pode aparecer na listagem pública do Guia Codoense.</p>
+        </div>
+        <div class="status-card status-warn">
+          <strong>Próximo passo comercial</strong>
+          <p id="status-proximo-passo">Revise seus dados e mantenha WhatsApp, endereço e descrição sempre atualizados.</p>
+        </div>
       </div>
 
       <!-- Métricas -->
       <div class="metrics">
         <div class="metric-card">
           <div class="metric-label">Visualizações</div>
-          <div class="metric-value">2.847</div>
-          <div class="metric-change">↑ 12% este mês</div>
-          <div class="metric-subtitle">Últimos 30 dias</div>
+          <div class="metric-value" id="metric-views">0</div>
+          <div class="metric-change">MVP</div>
+          <div class="metric-subtitle">A medição real entra na próxima etapa</div>
         </div>
 
         <div class="metric-card">
           <div class="metric-label">Cliques WhatsApp</div>
-          <div class="metric-value">342</div>
-          <div class="metric-change">↑ 8% este mês</div>
-          <div class="metric-subtitle">Últimos 30 dias</div>
+          <div class="metric-value" id="metric-whatsapp">0</div>
+          <div class="metric-change">MVP</div>
+          <div class="metric-subtitle">Cliques serão contados na versão pública</div>
         </div>
 
         <div class="metric-card">
           <div class="metric-label">Avaliação média</div>
-          <div class="metric-value" style="color:#c8922a">4.8</div>
+          <div class="metric-value" id="metric-rating" style="color:#c8922a">5.0</div>
           <div style="color:#c8922a;font-size:14px;margin-bottom:4px">★★★★★</div>
-          <div class="metric-subtitle">27 avaliações</div>
+          <div class="metric-subtitle">Avaliação inicial do cadastro</div>
         </div>
       </div>
 
       <!-- Vagas Ativas -->
       <div class="section">
         <div class="section-header">
-          <h3 class="section-title">Vagas ativas (2)</h3>
+          <h3 class="section-title" id="vagas-title">Vagas ativas (0)</h3>
         </div>
 
-        <div class="vaga-card">
-          <div class="vaga-icon" style="background:#0f1a3d22">💊</div>
-          <div class="vaga-info">
-            <div class="vaga-title">
-              Atendente de Farmácia
-              <span class="badge badge-new">Nova</span>
-            </div>
-            <div class="vaga-meta">CLT • R$ 1.400 • 12 candidatos</div>
-            <div class="vaga-badges">
-              <span class="badge badge-count">📍 Codó</span>
-              <span class="badge badge-count">⏰ Tarde</span>
-            </div>
-          </div>
-          <div class="vaga-actions">
-            <button class="btn btn-outline" onclick="alert('Ver candidatos')">Ver candidatos</button>
-          </div>
-        </div>
-
-        <div class="vaga-card">
-          <div class="vaga-icon" style="background:#2e1a3d22">💅</div>
-          <div class="vaga-info">
-            <div class="vaga-title">Manicure (freelancer)</div>
-            <div class="vaga-meta">Autônomo • Comissão 50% • 5 candidatos</div>
-            <div class="vaga-badges">
-              <span class="badge badge-count">💼 Flexível</span>
-            </div>
-          </div>
-          <div class="vaga-actions">
-            <button class="btn btn-outline" onclick="alert('Ver candidatos')">Ver candidatos</button>
-          </div>
-        </div>
+        <div id="vagas-lista" class="vagas-lista"></div>
 
         <button class="btn btn-primary" style="width:100%;margin-top:12px" onclick="openModal('modal-vaga')">+ Publicar nova vaga</button>
       </div>
@@ -283,24 +280,10 @@ body{font-family:'DM Sans',sans-serif;background:var(--cr);color:var(--tx);overf
       <!-- Ofertas -->
       <div class="section">
         <div class="section-header">
-          <h3 class="section-title">Ofertas ativas (1)</h3>
+          <h3 class="section-title" id="ofertas-title">Ofertas ativas (0)</h3>
         </div>
 
-        <div class="oferta-card">
-          <div class="oferta-thumb">💊</div>
-          <div class="oferta-info">
-            <div class="oferta-title">Kit Vitaminas C+D</div>
-            <div class="oferta-preco">
-              <span class="preco-de">R$ 45</span>
-              <span class="preco-por">R$ 32</span>
-              <span class="oferta-desconto">-29%</span>
-            </div>
-            <div class="oferta-meta">Válido até amanhã • 87 visualizações hoje</div>
-          </div>
-          <div class="vaga-actions">
-            <button class="btn btn-ghost" onclick="alert('Editar oferta')">✏️ Editar</button>
-          </div>
-        </div>
+        <div id="ofertas-lista" class="ofertas-lista"></div>
 
         <button class="btn btn-secondary" style="width:100%;margin-top:12px" onclick="openModal('modal-oferta')">🔥 Criar nova oferta</button>
       </div>
@@ -309,15 +292,15 @@ body{font-family:'DM Sans',sans-serif;background:var(--cr);color:var(--tx);overf
       <div class="plano-status">
         <div class="plano-status-header">
           <div>
-            <div class="plano-badge-big">PLANO DESTAQUE ATIVO</div>
-            <div class="plano-desc">Seu perfil aparece no topo da lista e tem selo dourado</div>
+            <div class="plano-badge-big" id="plano-nome">PLANO BÁSICO</div>
+            <div class="plano-desc" id="plano-desc">Seu perfil está cadastrado no Guia Codoense.</div>
           </div>
-          <button class="btn btn-secondary" style="flex-shrink:0" onclick="alert('Upgrade para Premium')">Upgrade ⭐</button>
+          <button class="btn btn-secondary" style="flex-shrink:0" onclick="mostrarInteressePlano()">Upgrade ⭐</button>
         </div>
         <div class="progress-bar">
-          <div class="progress-fill" style="width:75%"></div>
+          <div class="progress-fill" id="plano-progress" style="width:40%"></div>
         </div>
-        <div class="progress-label">21 dias restantes até renovação (27/05/2026)</div>
+        <div class="progress-label" id="plano-label">Cadastro ativo para uso comercial do MVP</div>
       </div>
 
       <!-- Ações Rápidas -->
@@ -327,8 +310,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--cr);color:var(--tx);overf
         </div>
         <div class="quick-actions">
           <button class="btn btn-outline" onclick="showPage('perfil')">✏️ Editar perfil</button>
-          <button class="btn btn-outline" onclick="alert('Ver estatísticas')">📊 Estatísticas</button>
-          <button class="btn btn-outline" onclick="alert('Compartilhar')">🔗 Compartilhar</button>
+          <button class="btn btn-outline" onclick="openModal('modal-oferta')">🔥 Nova oferta</button>
+          <button class="btn btn-outline" onclick="compartilharPerfil()">🔗 Compartilhar</button>
         </div>
       </div>
     </div>
@@ -340,56 +323,60 @@ body{font-family:'DM Sans',sans-serif;background:var(--cr);color:var(--tx);overf
         <p>Atualize as informações da sua empresa</p>
       </div>
 
-      <div style="background:#fff;border:1px solid var(--bo);border-radius:12px;padding:32px;max-width:700px">
+      <div class="form-card">
+        <div class="readonly-note">O e-mail de acesso vem do cadastro oficial e não é alterado aqui. Para trocar senha, use "Esqueci minha senha" na tela de login.</div>
         <div class="form-group">
           <label>Nome da Empresa</label>
-          <input type="text" value="Farmácia São João" placeholder="Nome da empresa">
+          <input type="text" id="perfil-nome" placeholder="Nome da empresa">
         </div>
 
         <div class="form-group">
           <label>Categoria</label>
-          <select>
-            <option selected>Saúde</option>
+          <select id="perfil-categoria">
+            <option value="">Selecione...</option>
             <option>Alimentação</option>
+            <option>Saúde</option>
             <option>Beleza</option>
             <option>Educação</option>
             <option>Serviços</option>
             <option>Comércio</option>
+            <option>Profissionais</option>
+            <option>Outro</option>
           </select>
         </div>
 
         <div class="form-group">
           <label>Descrição</label>
-          <textarea placeholder="Descreva seu negócio...">Medicamentos, perfumaria e atendimento farmacêutico personalizado para toda a família.</textarea>
+          <textarea id="perfil-descricao" placeholder="Descreva seu negócio..."></textarea>
         </div>
 
         <div class="form-group">
           <label>WhatsApp</label>
-          <input type="tel" value="(99) 98765-4321" placeholder="(99) 99999-9999">
+          <input type="tel" id="perfil-whatsapp" placeholder="(99) 99999-9999">
         </div>
 
         <div class="form-group">
           <label>Endereço</label>
-          <input type="text" value="Rua Coronel Tito, 120 – Centro, Codó/MA" placeholder="Endereço completo">
+          <input type="text" id="perfil-endereco" placeholder="Rua, número, bairro - Codó/MA">
         </div>
 
         <div class="form-group">
           <label>Horário de Funcionamento</label>
-          <input type="text" value="Seg–Sáb 7h–22h" placeholder="Ex: Seg–Sex 8h–18h">
+          <input type="text" id="perfil-horario" placeholder="Ex: Seg-Sex 8h-18h">
         </div>
 
         <div class="form-group">
           <label>Instagram (opcional)</label>
-          <input type="text" value="@farmaciasaojoao" placeholder="@suaempresa">
+          <input type="text" id="perfil-instagram" placeholder="@suaempresa">
         </div>
 
         <div class="form-group">
           <label>Especialidades (separadas por vírgula)</label>
-          <input type="text" value="Delivery, Manipulação, Convênios" placeholder="Ex: Delivery, Convênios">
+          <input type="text" id="perfil-tags" placeholder="Ex: Delivery, Convênios">
         </div>
 
-        <div style="display:flex;gap:12px;margin-top:24px">
-          <button class="btn btn-primary" onclick="alert('Perfil atualizado com sucesso!');showPage('dashboard')">💾 Salvar alterações</button>
+        <div class="form-actions">
+          <button class="btn btn-primary" id="btn-salvar-perfil" onclick="salvarPerfil()">💾 Salvar alterações</button>
           <button class="btn btn-ghost" onclick="showPage('dashboard')">Cancelar</button>
         </div>
       </div>
@@ -399,23 +386,27 @@ body{font-family:'DM Sans',sans-serif;background:var(--cr);color:var(--tx);overf
     <div id="page-vagas" class="page" style="display:none">
       <div class="welcome">
         <h2>💼 Gestão de Vagas</h2>
-        <p>Gerencie suas vagas de emprego</p>
+        <p>Publique oportunidades e acompanhe os candidatos pelo painel</p>
       </div>
       <div class="empty-state">
         <div class="icon">💼</div>
-        <p>Página em desenvolvimento</p>
+        <p>Use o botão abaixo para criar uma vaga. Ela também aparecerá no resumo do dashboard.</p>
+        <button class="btn btn-primary" onclick="openModal('modal-vaga')">+ Publicar nova vaga</button>
       </div>
+      <div id="vagas-lista-page" class="vagas-lista"></div>
     </div>
 
     <div id="page-ofertas" class="page" style="display:none">
       <div class="welcome">
         <h2>🔥 Gestão de Ofertas</h2>
-        <p>Crie e gerencie ofertas especiais</p>
+        <p>Cadastre promoções para movimentar o contato pelo WhatsApp</p>
       </div>
       <div class="empty-state">
         <div class="icon">🔥</div>
-        <p>Página em desenvolvimento</p>
+        <p>Crie uma oferta simples com preço, validade e descrição.</p>
+        <button class="btn btn-secondary" onclick="openModal('modal-oferta')">🔥 Criar nova oferta</button>
       </div>
+      <div id="ofertas-lista-page" class="ofertas-lista"></div>
     </div>
 
     <div id="page-candidatos" class="page" style="display:none">
@@ -425,7 +416,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--cr);color:var(--tx);overf
       </div>
       <div class="empty-state">
         <div class="icon">👥</div>
-        <p>Página em desenvolvimento</p>
+        <p>Os candidatos das vagas aparecerão aqui quando o fluxo público estiver conectado.</p>
       </div>
     </div>
 
@@ -436,7 +427,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--cr);color:var(--tx);overf
       </div>
       <div class="empty-state">
         <div class="icon">⭐</div>
-        <p>Página em desenvolvimento</p>
+        <p>As avaliações dos clientes aparecerão aqui quando a medição pública estiver conectada.</p>
       </div>
     </div>
 
@@ -447,7 +438,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--cr);color:var(--tx);overf
       </div>
       <div class="empty-state">
         <div class="icon">💎</div>
-        <p>Página em desenvolvimento</p>
+        <p>Seu plano atual aparece no dashboard. Para destaque comercial, use o botão de upgrade.</p>
+        <button class="btn btn-secondary" onclick="showPage('dashboard');mostrarInteressePlano()">Upgrade ⭐</button>
       </div>
     </div>
   </main>
@@ -463,11 +455,11 @@ body{font-family:'DM Sans',sans-serif;background:var(--cr);color:var(--tx);overf
     <div class="modal-body">
       <div class="form-group">
         <label>Título da Vaga</label>
-        <input type="text" placeholder="Ex: Vendedor(a)">
+        <input type="text" id="vaga-titulo" placeholder="Ex: Vendedor(a)">
       </div>
       <div class="form-group">
         <label>Tipo de Contrato</label>
-        <select>
+        <select id="vaga-contrato">
           <option>CLT</option>
           <option>PJ</option>
           <option>Autônomo</option>
@@ -476,11 +468,11 @@ body{font-family:'DM Sans',sans-serif;background:var(--cr);color:var(--tx);overf
       </div>
       <div class="form-group">
         <label>Salário / Remuneração</label>
-        <input type="text" placeholder="Ex: R$ 1.500 ou Comissão 50%">
+        <input type="text" id="vaga-salario" placeholder="Ex: R$ 1.500 ou Comissão 50%">
       </div>
       <div class="form-group">
         <label>Turno</label>
-        <select>
+        <select id="vaga-turno">
           <option>Comercial</option>
           <option>Manhã</option>
           <option>Tarde</option>
@@ -490,12 +482,12 @@ body{font-family:'DM Sans',sans-serif;background:var(--cr);color:var(--tx);overf
       </div>
       <div class="form-group">
         <label>Descrição da Vaga</label>
-        <textarea placeholder="Descreva as responsabilidades e requisitos..."></textarea>
+        <textarea id="vaga-descricao" placeholder="Descreva as responsabilidades e requisitos..."></textarea>
       </div>
     </div>
     <div class="modal-footer">
       <button class="btn btn-ghost" onclick="closeModal('modal-vaga')">Cancelar</button>
-      <button class="btn btn-primary" onclick="alert('Vaga publicada!');closeModal('modal-vaga')">Publicar vaga</button>
+      <button class="btn btn-primary" onclick="salvarVaga()">Publicar vaga</button>
     </div>
   </div>
 </div>
@@ -510,32 +502,32 @@ body{font-family:'DM Sans',sans-serif;background:var(--cr);color:var(--tx);overf
     <div class="modal-body">
       <div class="form-group">
         <label>Nome do Produto/Serviço</label>
-        <input type="text" placeholder="Ex: Shampoo Anticaspa">
+        <input type="text" id="oferta-titulo" placeholder="Ex: Shampoo Anticaspa">
       </div>
       <div class="form-group">
         <label>Emoji/Ícone</label>
-        <input type="text" placeholder="Ex: 💊 ou 💇" maxlength="2">
+        <input type="text" id="oferta-icone" placeholder="Ex: 💊 ou 💇" maxlength="2">
       </div>
       <div class="form-group">
         <label>Preço Original (De)</label>
-        <input type="number" placeholder="45.00" step="0.01">
+        <input type="number" id="oferta-de" placeholder="45.00" step="0.01">
       </div>
       <div class="form-group">
         <label>Preço Promocional (Por)</label>
-        <input type="number" placeholder="32.00" step="0.01">
+        <input type="number" id="oferta-por" placeholder="32.00" step="0.01">
       </div>
       <div class="form-group">
         <label>Descrição da Oferta</label>
-        <textarea placeholder="Descreva a oferta..."></textarea>
+        <textarea id="oferta-descricao" placeholder="Descreva a oferta..."></textarea>
       </div>
       <div class="form-group">
         <label>Válido até</label>
-        <input type="date">
+        <input type="date" id="oferta-validade">
       </div>
     </div>
     <div class="modal-footer">
       <button class="btn btn-ghost" onclick="closeModal('modal-oferta')">Cancelar</button>
-      <button class="btn btn-secondary" onclick="alert('Oferta criada!');closeModal('modal-oferta')">Criar oferta</button>
+      <button class="btn btn-secondary" onclick="salvarOferta()">Criar oferta</button>
     </div>
   </div>
 </div>
@@ -548,6 +540,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--cr);color:var(--tx);overf
 <script>
 let empresaLogada = null;
 let authInicializada = false;
+let vagasEmpresa = [];
+let ofertasEmpresa = [];
 
 window.addEventListener('DOMContentLoaded', function() {
   verificarAutenticacao();
@@ -563,13 +557,31 @@ function verificarAutenticacao() {
   window.guiaFirebase.observarEmpresaLogada(function(empresa, user, error) {
     if (error) {
       console.error('Erro ao carregar sessão:', error);
+      authInicializada = true;
+      alert('Não foi possível carregar os dados da empresa. Entre novamente.');
+      window.guiaFirebase.signOutEmpresa().then(function() {
+        window.location.href = 'login.html?status=sessao';
+      }).catch(function() {
+        window.location.href = 'login.html?status=sessao';
+      });
+      return;
     }
 
     if (!empresa || !user) {
       if (authInicializada) {
-        window.location.href = 'login.html';
+        window.location.href = 'login.html?status=sessao';
       }
       authInicializada = true;
+      return;
+    }
+
+    if (!empresa.aprovado) {
+      authInicializada = true;
+      window.guiaFirebase.signOutEmpresa().then(function() {
+        window.location.href = 'login.html?status=analise';
+      }).catch(function() {
+        window.location.href = 'login.html?status=analise';
+      });
       return;
     }
 
@@ -582,6 +594,8 @@ function verificarAutenticacao() {
 function carregarDadosEmpresa() {
   if (!empresaLogada) return;
 
+  carregarDadosLocais();
+
   const badge = document.querySelector('.empresa-badge');
   if (badge) {
     badge.textContent = '🏪 ' + (empresaLogada.nome || 'Minha empresa');
@@ -592,10 +606,287 @@ function carregarDadosEmpresa() {
     welcome.textContent = 'Olá, ' + (empresaLogada.nome || 'Minha empresa') + '! 👋';
   }
 
+  document.getElementById('metric-rating').textContent = Number(empresaLogada.rating || 5).toFixed(1);
+  atualizarStatusPublicacao();
+  atualizarPlano();
+  preencherFormularioPerfil();
+  renderVagas();
+  renderOfertas();
+
   const perfilTitulo = document.querySelector('#page-perfil .welcome p');
   if (perfilTitulo && empresaLogada.email) {
     perfilTitulo.textContent = 'Atualize as informações da sua empresa. Login vinculado a ' + empresaLogada.email;
   }
+}
+
+function atualizarStatusPublicacao() {
+  const campos = [
+    empresaLogada.nome,
+    empresaLogada.categoria,
+    empresaLogada.descricao,
+    empresaLogada.whatsapp,
+    empresaLogada.endereco
+  ];
+  const completos = campos.filter(Boolean).length;
+  const pendentes = campos.length - completos;
+
+  document.getElementById('status-publicacao').textContent = empresaLogada.aprovado ? 'Perfil aprovado' : 'Perfil em análise';
+  document.getElementById('status-publicacao-texto').textContent = empresaLogada.aprovado
+    ? 'Sua empresa já pode aparecer na listagem pública do Guia Codoense.'
+    : 'Seu cadastro ainda precisa de aprovação para aparecer ao público.';
+
+  document.getElementById('status-proximo-passo').textContent = pendentes === 0
+    ? 'Tudo básico está preenchido. Use ofertas e vagas para movimentar sua presença comercial.'
+    : 'Complete ' + pendentes + ' informação(ões) do perfil para deixar sua página mais confiável.';
+}
+
+function atualizarPlano() {
+  const plano = empresaLogada.plano || (empresaLogada.premium ? 'Destaque R$49/mês' : 'Básico (Grátis)');
+  const premium = !!empresaLogada.premium || plano.toLowerCase().indexOf('destaque') > -1 || plano.toLowerCase().indexOf('premium') > -1;
+
+  document.querySelector('.plano-box .badge').textContent = premium ? 'PLANO DESTAQUE' : 'PLANO BÁSICO';
+  document.querySelector('.plano-box .valor').textContent = premium ? 'Perfil em destaque' : 'Listagem grátis';
+  document.getElementById('plano-nome').textContent = premium ? 'PLANO DESTAQUE ATIVO' : 'PLANO BÁSICO ATIVO';
+  document.getElementById('plano-desc').textContent = premium
+    ? 'Seu perfil está marcado como destaque no Guia Codoense.'
+    : 'Seu perfil está cadastrado. O destaque comercial pode ser ativado pela equipe.';
+  document.getElementById('plano-progress').style.width = premium ? '75%' : '40%';
+  document.getElementById('plano-label').textContent = plano;
+}
+
+function preencherFormularioPerfil() {
+  setValor('perfil-nome', empresaLogada.nome);
+  setValor('perfil-categoria', empresaLogada.categoria);
+  setValor('perfil-descricao', empresaLogada.descricao);
+  setValor('perfil-whatsapp', formatarTelefone(empresaLogada.whatsapp));
+  setValor('perfil-endereco', empresaLogada.endereco);
+  setValor('perfil-horario', empresaLogada.horario);
+  setValor('perfil-instagram', empresaLogada.instagram);
+  setValor('perfil-tags', Array.isArray(empresaLogada.tags) ? empresaLogada.tags.join(', ') : empresaLogada.tags);
+}
+
+function setValor(id, valor) {
+  const el = document.getElementById(id);
+  if (el) el.value = valor || '';
+}
+
+function montarPayloadPerfil() {
+  return {
+    nome: document.getElementById('perfil-nome').value.trim(),
+    categoria: document.getElementById('perfil-categoria').value,
+    descricao: document.getElementById('perfil-descricao').value.trim(),
+    whatsapp: document.getElementById('perfil-whatsapp').value.replace(/\D/g, ''),
+    endereco: document.getElementById('perfil-endereco').value.trim(),
+    horario: document.getElementById('perfil-horario').value.trim(),
+    instagram: document.getElementById('perfil-instagram').value.trim(),
+    tags: document.getElementById('perfil-tags').value.trim(),
+    iniciais: gerarIniciais(document.getElementById('perfil-nome').value.trim())
+  };
+}
+
+async function salvarPerfil() {
+  const dados = montarPayloadPerfil();
+
+  if (!dados.nome || !dados.categoria || dados.descricao.length < 20 || dados.whatsapp.length < 10 || !dados.endereco) {
+    mostrarPainelAlert('Preencha nome, categoria, descrição, WhatsApp e endereço antes de salvar.', 'erro');
+    return;
+  }
+
+  const btn = document.getElementById('btn-salvar-perfil');
+  btn.disabled = true;
+  btn.textContent = 'Salvando...';
+
+  try {
+    empresaLogada = await window.guiaFirebase.atualizarEmpresaAtual(dados);
+    carregarDadosEmpresa();
+    showPage('dashboard');
+    mostrarPainelAlert('Perfil atualizado com sucesso.', 'sucesso');
+  } catch (error) {
+    console.error('Erro ao salvar perfil:', error);
+    mostrarPainelAlert('Não foi possível salvar agora. Tente novamente.', 'erro');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '💾 Salvar alterações';
+  }
+}
+
+function carregarDadosLocais() {
+  const chaveBase = getChaveEmpresa();
+  vagasEmpresa = lerJson(chaveBase + '_vagas');
+  ofertasEmpresa = lerJson(chaveBase + '_ofertas');
+}
+
+function salvarDadosLocais() {
+  const chaveBase = getChaveEmpresa();
+  try {
+    localStorage.setItem(chaveBase + '_vagas', JSON.stringify(vagasEmpresa));
+    localStorage.setItem(chaveBase + '_ofertas', JSON.stringify(ofertasEmpresa));
+    return true;
+  } catch (error) {
+    console.error('Erro ao salvar dados locais:', error);
+    mostrarPainelAlert('Não foi possível salvar neste navegador. Verifique permissões de armazenamento.', 'erro');
+    return false;
+  }
+}
+
+function getChaveEmpresa() {
+  return 'guia_empresa_' + (empresaLogada && (empresaLogada.id || empresaLogada.authUid || empresaLogada.email) || 'local');
+}
+
+function lerJson(chave) {
+  try {
+    const valor = JSON.parse(localStorage.getItem(chave) || '[]');
+    return Array.isArray(valor) ? valor : [];
+  } catch (error) {
+    return [];
+  }
+}
+
+function salvarVaga() {
+  const titulo = document.getElementById('vaga-titulo').value.trim();
+  const descricao = document.getElementById('vaga-descricao').value.trim();
+
+  if (!titulo || descricao.length < 10) {
+    alert('Informe o título e uma breve descrição da vaga.');
+    return;
+  }
+
+  vagasEmpresa.unshift({
+    id: Date.now(),
+    titulo: titulo,
+    contrato: document.getElementById('vaga-contrato').value,
+    salario: document.getElementById('vaga-salario').value.trim(),
+    turno: document.getElementById('vaga-turno').value,
+    descricao: descricao
+  });
+
+  if (!salvarDadosLocais()) return;
+  limparModalVaga();
+  closeModal('modal-vaga');
+  renderVagas();
+  mostrarPainelAlert('Vaga salva no painel da empresa.', 'sucesso');
+}
+
+function salvarOferta() {
+  const titulo = document.getElementById('oferta-titulo').value.trim();
+  const de = Number(document.getElementById('oferta-de').value);
+  const por = Number(document.getElementById('oferta-por').value);
+
+  if (!titulo || !por) {
+    alert('Informe o nome da oferta e o preço promocional.');
+    return;
+  }
+
+  if (de && por >= de) {
+    alert('O preço promocional precisa ser menor que o preço original.');
+    return;
+  }
+
+  ofertasEmpresa.unshift({
+    id: Date.now(),
+    titulo: titulo,
+    icone: document.getElementById('oferta-icone').value.trim() || '🔥',
+    de: de,
+    por: por,
+    descricao: document.getElementById('oferta-descricao').value.trim(),
+    validade: document.getElementById('oferta-validade').value
+  });
+
+  if (!salvarDadosLocais()) return;
+  limparModalOferta();
+  closeModal('modal-oferta');
+  renderOfertas();
+  mostrarPainelAlert('Oferta salva no painel da empresa.', 'sucesso');
+}
+
+function renderVagas() {
+  document.getElementById('vagas-title').textContent = 'Vagas ativas (' + vagasEmpresa.length + ')';
+
+  if (!vagasEmpresa.length) {
+    renderizarListas('.vagas-lista', '<div class="empty-state" style="padding:28px 20px"><div class="icon">💼</div><p>Nenhuma vaga publicada ainda.</p></div>');
+    alternarEmptyPage('page-vagas', true);
+    atualizarBadgeCandidatos();
+    return;
+  }
+
+  const html = vagasEmpresa.map(function(vaga) {
+    return '<div class="vaga-card">' +
+      '<div class="vaga-icon" style="background:#0f1a3d22">💼</div>' +
+      '<div class="vaga-info">' +
+      '<div class="vaga-title">' + escapeHtml(vaga.titulo) + '<span class="badge badge-new">MVP</span></div>' +
+      '<div class="vaga-meta">' + escapeHtml(vaga.contrato || 'Contrato') + ' • ' + escapeHtml(vaga.salario || 'A combinar') + ' • 0 candidatos</div>' +
+      '<div class="vaga-badges"><span class="badge badge-count">📍 Codó</span><span class="badge badge-count">⏰ ' + escapeHtml(vaga.turno || 'A combinar') + '</span></div>' +
+      '</div>' +
+      '<div class="vaga-actions"><button class="btn btn-ghost" onclick="removerVaga(' + vaga.id + ')">Remover</button></div>' +
+      '</div>';
+  }).join('');
+
+  renderizarListas('.vagas-lista', html);
+  alternarEmptyPage('page-vagas', false);
+  atualizarBadgeCandidatos();
+}
+
+function renderOfertas() {
+  document.getElementById('ofertas-title').textContent = 'Ofertas ativas (' + ofertasEmpresa.length + ')';
+
+  if (!ofertasEmpresa.length) {
+    renderizarListas('.ofertas-lista', '<div class="empty-state" style="padding:28px 20px"><div class="icon">🔥</div><p>Nenhuma oferta criada ainda.</p></div>');
+    alternarEmptyPage('page-ofertas', true);
+    return;
+  }
+
+  const html = ofertasEmpresa.map(function(oferta) {
+    const desconto = oferta.de && oferta.por ? Math.round((1 - oferta.por / oferta.de) * 100) : 0;
+    return '<div class="oferta-card">' +
+      '<div class="oferta-thumb">' + escapeHtml(oferta.icone || '🔥') + '</div>' +
+      '<div class="oferta-info">' +
+      '<div class="oferta-title">' + escapeHtml(oferta.titulo) + '</div>' +
+      '<div class="oferta-preco">' +
+      (oferta.de ? '<span class="preco-de">R$ ' + formatarMoeda(oferta.de) + '</span>' : '') +
+      '<span class="preco-por">R$ ' + formatarMoeda(oferta.por) + '</span>' +
+      (desconto > 0 ? '<span class="oferta-desconto">-' + desconto + '%</span>' : '') +
+      '</div>' +
+      '<div class="oferta-meta">' + (oferta.validade ? 'Válido até ' + escapeHtml(formatarData(oferta.validade)) : 'Validade não informada') + '</div>' +
+      '</div>' +
+      '<div class="vaga-actions"><button class="btn btn-ghost" onclick="removerOferta(' + oferta.id + ')">Remover</button></div>' +
+      '</div>';
+  }).join('');
+
+  renderizarListas('.ofertas-lista', html);
+  alternarEmptyPage('page-ofertas', false);
+}
+
+function renderizarListas(selector, html) {
+  document.querySelectorAll(selector).forEach(function(lista) {
+    lista.innerHTML = html;
+  });
+}
+
+function alternarEmptyPage(pageId, vazio) {
+  const page = document.getElementById(pageId);
+  if (!page) return;
+
+  const empty = page.querySelector('.empty-state');
+  if (empty) {
+    empty.style.display = vazio ? 'block' : 'none';
+  }
+}
+
+function removerVaga(id) {
+  vagasEmpresa = vagasEmpresa.filter(function(vaga) { return vaga.id !== id; });
+  if (!salvarDadosLocais()) return;
+  renderVagas();
+}
+
+function removerOferta(id) {
+  ofertasEmpresa = ofertasEmpresa.filter(function(oferta) { return oferta.id !== id; });
+  if (!salvarDadosLocais()) return;
+  renderOfertas();
+}
+
+function atualizarBadgeCandidatos() {
+  const badge = document.querySelector('a[href="#candidatos"] .badge');
+  if (badge) badge.textContent = '0';
 }
 
 function fazerLogout() {
@@ -616,18 +907,13 @@ function showPage(pageId) {
     p.style.display = 'none';
   });
 
-  document.getElementById('page-' + pageId).style.display = 'block';
+  const page = document.getElementById('page-' + pageId);
+  if (!page) return;
+  page.style.display = 'block';
 
   document.querySelectorAll('.menu-item').forEach(function(m) {
-    m.classList.remove('active');
+    m.classList.toggle('active', m.getAttribute('href') === '#' + pageId);
   });
-
-  if (window.event && window.event.target) {
-    const item = window.event.target.closest('.menu-item');
-    if (item) {
-      item.classList.add('active');
-    }
-  }
 
   window.scrollTo({top: 0, behavior: 'smooth'});
 }
@@ -652,6 +938,108 @@ document.querySelectorAll('.modal').forEach(function(modal) {
 
 function toggleSidebar() {
   document.querySelector('.sidebar').classList.toggle('open');
+}
+
+function mostrarPainelAlert(mensagem, tipo) {
+  const alertBox = document.getElementById('painel-alert');
+  alertBox.textContent = mensagem;
+  alertBox.className = 'painel-alert show ' + tipo;
+}
+
+function mostrarInteressePlano() {
+  if (!empresaLogada) {
+    mostrarPainelAlert('Não foi possível identificar a empresa logada agora.', 'erro');
+    return;
+  }
+
+  if (!window.guiaFirebase || !window.guiaFirebase.isConfigured() || !window.guiaFirebase.registrarInteressePlano) {
+    mostrarPainelAlert('Firebase indisponível. Tente registrar o interesse novamente em instantes.', 'erro');
+    return;
+  }
+
+  const dados = {
+    empresaId: empresaLogada.id || empresaLogada.authUid || '',
+    empresaNome: empresaLogada.nome || '',
+    email: empresaLogada.email || '',
+    whatsapp: empresaLogada.whatsapp || '',
+    plano: empresaLogada.plano || 'Upgrade de plano',
+    origem: 'painel_empresa'
+  };
+
+  window.guiaFirebase.registrarInteressePlano(dados)
+    .then(function() {
+      mostrarPainelAlert('Interesse registrado. A equipe comercial pode entrar em contato pelo WhatsApp cadastrado.', 'sucesso');
+    })
+    .catch(function(error) {
+      console.error('Erro ao registrar interesse em plano:', error);
+      mostrarPainelAlert('Não foi possível registrar o interesse agora. Tente novamente.', 'erro');
+    });
+}
+
+function compartilharPerfil() {
+  const texto = 'Conheça ' + (empresaLogada.nome || 'minha empresa') + ' no Guia Codoense.';
+
+  if (navigator.share) {
+    navigator.share({ title: 'Guia Codoense', text: texto, url: window.location.origin + '/index.html' }).catch(function() {});
+    return;
+  }
+
+  navigator.clipboard.writeText(texto + ' ' + window.location.origin + '/index.html')
+    .then(function() {
+      mostrarPainelAlert('Texto de compartilhamento copiado.', 'sucesso');
+    })
+    .catch(function() {
+      mostrarPainelAlert(texto, 'sucesso');
+    });
+}
+
+function limparModalVaga() {
+  ['vaga-titulo', 'vaga-salario', 'vaga-descricao'].forEach(function(id) { setValor(id, ''); });
+  setValor('vaga-contrato', 'CLT');
+  setValor('vaga-turno', 'Comercial');
+}
+
+function limparModalOferta() {
+  ['oferta-titulo', 'oferta-icone', 'oferta-de', 'oferta-por', 'oferta-descricao', 'oferta-validade'].forEach(function(id) { setValor(id, ''); });
+}
+
+function gerarIniciais(nome) {
+  return (nome || 'ME').split(' ').filter(Boolean).slice(0, 2).map(function(parte) {
+    return parte.charAt(0).toUpperCase();
+  }).join('');
+}
+
+function formatarTelefone(valor) {
+  const digitos = String(valor || '').replace(/\D/g, '');
+  if (digitos.length === 11) {
+    return digitos.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
+  }
+  if (digitos.length === 10) {
+    return digitos.replace(/(\d{2})(\d{4})(\d{4})/, '($1) $2-$3');
+  }
+  return valor || '';
+}
+
+function formatarMoeda(valor) {
+  return Number(valor || 0).toFixed(2).replace('.', ',');
+}
+
+function formatarData(valor) {
+  const partes = String(valor).split('-');
+  if (partes.length !== 3) return valor;
+  return partes[2] + '/' + partes[1] + '/' + partes[0];
+}
+
+function escapeHtml(valor) {
+  return String(valor || '').replace(/[&<>"']/g, function(char) {
+    return {
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#039;'
+    }[char];
+  });
 }
 </script>
 </body>

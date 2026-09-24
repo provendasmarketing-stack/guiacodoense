@@ -201,6 +201,7 @@ body{font-family:'DM Sans',sans-serif;background:#faf7f2;color:#1c2b22;overflow-
 .pwt:hover{color:var(--g)}
 
 /* === ESTADO FORMULÁRIO === */
+.hide{display:none!important}
 .form-body.hide{display:none}
 .form-success{display:none;text-align:center;padding:36px 20px}
 .form-success.on{display:block}
@@ -307,8 +308,8 @@ body{font-family:'DM Sans',sans-serif;background:#faf7f2;color:#1c2b22;overflow-
     <div class="bm" id="bmain">
       <div class="bt" id="btrack">
         <div class="bs" style="background:linear-gradient(135deg,#0f2d1a,#1a5c35)"><div class="bsbg" style="background:radial-gradient(circle at 80% 50%,#2d9e5f,transparent 60%)"></div><div class="bsc"><div class="bsey" style="color:#5dd98a">Oportunidade</div><div class="bst" style="color:#fff">Destaque sua<br>empresa em Codó</div><div class="bss" style="color:rgba(255,255,255,.6)">Apareça primeiro para milhares de clientes</div><button class="bsb" style="background:var(--go);color:#fff" onclick="oM('planos')">Ver planos</button></div><div class="bsl">🏆</div></div>
-        <div class="bs" style="background:linear-gradient(135deg,#1a1a0f,#3d3000)"><div class="bsbg" style="background:radial-gradient(circle at 80% 50%,#c8922a,transparent 60%)"></div><div class="bsc"><div class="bsey" style="color:#fbbf24">Destaque</div><div class="bst" style="color:#fff">Restaurante<br>Sabor da Terra</div><div class="bss" style="color:rgba(255,255,255,.6)">Culinária regional · Almoço executivo</div><button class="bsb" style="background:#fff;color:#1a1a0f" onclick="abrirEmpresa(2)">Ver perfil</button></div><div class="bsl">🍽️</div></div>
-        <div class="bs" style="background:linear-gradient(135deg,#0f1a3d,#1a2b5c)"><div class="bsbg" style="background:radial-gradient(circle at 80% 50%,#60a5fa,transparent 60%)"></div><div class="bsc"><div class="bsey" style="color:#93c5fd">Saúde em Codó</div><div class="bst" style="color:#fff">Farmácia<br>São João</div><div class="bss" style="color:rgba(255,255,255,.6)">Delivery · Manipulação · Convênios</div><button class="bsb" style="background:#60a5fa;color:#0f1a3d" onclick="abrirEmpresa(1)">Ver perfil</button></div><div class="bsl">💊</div></div>
+        <div class="bs" style="background:linear-gradient(135deg,#1a1a0f,#3d3000)"><div class="bsbg" style="background:radial-gradient(circle at 80% 50%,#c8922a,transparent 60%)"></div><div class="bsc"><div class="bsey" style="color:#fbbf24">Destaque</div><div class="bst" style="color:#fff">Restaurante<br>Sabor da Terra</div><div class="bss" style="color:rgba(255,255,255,.6)">Culinária regional · Almoço executivo</div><button class="bsb" style="background:#fff;color:#1a1a0f" onclick="abrirEmpresaPorNome('Restaurante Sabor da Terra',2)">Ver perfil</button></div><div class="bsl">🍽️</div></div>
+        <div class="bs" style="background:linear-gradient(135deg,#0f1a3d,#1a2b5c)"><div class="bsbg" style="background:radial-gradient(circle at 80% 50%,#60a5fa,transparent 60%)"></div><div class="bsc"><div class="bsey" style="color:#93c5fd">Saúde em Codó</div><div class="bst" style="color:#fff">Farmácia<br>São João</div><div class="bss" style="color:rgba(255,255,255,.6)">Delivery · Manipulação · Convênios</div><button class="bsb" style="background:#60a5fa;color:#0f1a3d" onclick="abrirEmpresaPorNome('Farmácia São João',1)">Ver perfil</button></div><div class="bsl">💊</div></div>
         <div class="bs" style="background:linear-gradient(135deg,#2e0f2e,#5c1a5c)"><div class="bsbg" style="background:radial-gradient(circle at 80% 50%,#c084fc,transparent 60%)"></div><div class="bsc"><div class="bsey" style="color:#d8b4fe">Vagas abertas</div><div class="bst" style="color:#fff">Encontre seu<br>próximo emprego</div><div class="bss" style="color:rgba(255,255,255,.6)">Vagas disponíveis em Codó agora</div><button class="bsb" style="background:#c084fc;color:#1a0f1a" onclick="irP('vagas',null)">Ver vagas</button></div><div class="bsl">💼</div></div>
       </div>
       <button class="ba" style="left:8px" onclick="mvB(-1)">‹</button>
@@ -719,7 +720,7 @@ function carregarEmpresas() {
   window.guiaFirebase.carregarEmpresasAprovadas()
     .then(function(data) {
       document.getElementById('loading').style.display = 'none';
-      empresas = (Array.isArray(data) && data.length > 0) ? data : dadosExemplo;
+      empresas = Array.isArray(data) ? data : dadosExemplo;
       document.getElementById('total-emp').textContent = empresas.length;
       rE();
     })
@@ -1031,17 +1032,24 @@ function resetCadastroUsuario(){
   document.getElementById('err-usuario').textContent = 'Verifique os campos em vermelho antes de continuar.';
   btnReset('btn-usuario', 'Criar conta grátis');
 }
+function esc(v){
+  return String(v == null ? '' : v).replace(/[&<>"']/g, function(ch){
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch];
+  });
+}
+function jsStr(v){
+  return String(v == null ? '' : v).replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/\r?\n/g,' ');
+}
 function atualizarEstadoUsuario(){
   var nome = localStorage.getItem('guia_usuario_nome') || '';
   var rotulo = nome ? nome.split(' ')[0] : 'Entrar';
-  document.querySelectorAll('.tab').forEach(function(tab){
-    var label = tab.querySelector('.tab-l');
-    var icon = tab.querySelector('.tab-i');
-    if (label && label.textContent.trim().toUpperCase() === 'ENTRAR') {
-      label.textContent = rotulo;
-      if (icon) icon.textContent = nome ? '✅' : '👤';
-    }
-  });
+  var tabs = document.querySelectorAll('.tab');
+  var tab = tabs[tabs.length - 1];
+  if (!tab) return;
+  var label = tab.querySelector('.tab-l');
+  var icon = tab.querySelector('.tab-i');
+  if (label) label.textContent = rotulo;
+  if (icon) icon.textContent = nome ? '✅' : '👤';
 }
 function chaveUsuario(base){
   var email = localStorage.getItem('guia_usuario_email') || 'visitante';
@@ -1069,10 +1077,11 @@ function salvarFavoritos(lista){
   localStorage.setItem(chaveUsuario('guia_favoritos_empresas'), JSON.stringify(lista));
 }
 function ehFavorita(id){
-  return getFavoritos().indexOf(id) > -1;
+  return getFavoritos().indexOf(String(id)) > -1;
 }
 function toggleFavorito(id){
   var favs = getFavoritos();
+  id = String(id);
   var idx = favs.indexOf(id);
   if (idx > -1) favs.splice(idx, 1);
   else favs.push(id);
@@ -1090,13 +1099,17 @@ function getAvaliacoes(){
   }
 }
 function getAvaliacaoUsuario(id){
-  return getAvaliacoes()[id] || 0;
+  return getAvaliacoes()[String(id)] || 0;
 }
 function getRatingEmpresa(d){
-  return getAvaliacaoUsuario(d.id) || d.rating || 0;
+  var rating = getAvaliacaoUsuario(d.id) || d.rating || 0;
+  rating = parseFloat(rating);
+  if (!isFinite(rating)) rating = 0;
+  return Math.max(0, Math.min(5, rating));
 }
 function salvarAvaliacao(id, nota){
   var mapa = getAvaliacoes();
+  id = String(id);
   mapa[id] = nota;
   localStorage.setItem(chaveUsuario('guia_avaliacoes_empresas'), JSON.stringify(mapa));
   rE();
@@ -1106,7 +1119,7 @@ function estrelasInterativas(id){
   var atual = getAvaliacaoUsuario(id);
   var html = '<div class="rate">';
   for (var i = 1; i <= 5; i++) {
-    html += '<button type="button" class="'+(i <= atual ? 'on' : '')+'" onclick="salvarAvaliacao('+id+','+i+')">★</button>';
+    html += '<button type="button" class="'+(i <= atual ? 'on' : '')+'" onclick="salvarAvaliacao(\''+jsStr(id)+'\','+i+')">★</button>';
   }
   html += '</div>';
   html += '<div class="rate-note">' + (atual ? 'Sua avaliação: ' + atual + ' estrela' + (atual > 1 ? 's' : '') : 'Toque nas estrelas para avaliar') + '</div>';
@@ -1143,39 +1156,60 @@ function sincronizarUsuarioLogado(){
     });
 }
 function avStyle(i,s){var c=AV[i%AV.length];return 'background:'+c.bg+';color:'+c.c+';width:'+s+'px;height:'+s+'px';}
-function stars(r){return '★'.repeat(Math.floor(r))+'☆'.repeat(5-Math.floor(r));}
+function stars(r){var n=Math.max(0,Math.min(5,Math.floor(parseFloat(r)||0)));return '★'.repeat(n)+'☆'.repeat(5-n);}
 function pct(de,por){return Math.round((1-por/de)*100);}
 function wppLink(tel,msg){return 'https://wa.me/55'+tel+'?text='+encodeURIComponent(msg);}
+function abrirWhatsApp(tel,msg){window.open(wppLink(String(tel || '').replace(/\D/g,''), msg || ''),'_blank','noopener');}
 function getTags(d){if(!d.tags)return[];if(Array.isArray(d.tags))return d.tags;return d.tags.split(',').map(function(t){return t.trim();});}
-function getIni(d){return d.iniciais||d.ini||'??';}
+function getIni(d){if(d.iniciais||d.ini)return d.iniciais||d.ini;return String(d.nome||'??').split(' ').filter(Boolean).slice(0,2).map(function(w){return w[0];}).join('').toUpperCase()||'??';}
 function getCat(d){return d.categoria||d.cat||'';}
+function abrirEmpresaPorNome(nome, fallbackId){
+  var alvo = String(nome || '').toLowerCase();
+  var achada = empresas.find(function(d){return String(d.nome || '').toLowerCase() === alvo;});
+  if (abrirEmpresa(achada ? achada.id : fallbackId)) return;
+  document.getElementById('si').value = nome || '';
+  busca = String(nome || '').toLowerCase();
+  irP('emp', null);
+}
+function abrirRotaInicial(){
+  var hash = (window.location.hash || '').replace('#','').toLowerCase();
+  if (!hash) return;
+  if (hash === 'cadastro') oM('cadastro');
+  else if (hash === 'planos') oM('planos');
+  else if (hash === 'login' || hash === 'entrar') oM('login');
+  else if (hash === 'vagas') irP('vagas', null);
+  else if (hash === 'ofertas') irP('ofertas', null);
+  else if (hash === 'empresas') irP('emp', null);
+}
 
 // ===== RENDERS =====
 function rO(l){
   document.getElementById('oc').innerHTML=l.map(function(o){
-    return '<div class="ocard" onclick="abrirOferta('+o.id+')"><div class="oimg" style="background:'+o.bg+'22"><span style="font-size:32px">'+o.e+'</span><div class="obdg">-'+pct(o.de,o.por)+'%</div><div class="otmr">⏱ '+(Math.floor(Math.random()*5)+1)+'h</div></div><div class="obody"><div class="oemp">'+o.emp+'</div><div class="onome">'+o.n+'</div><div class="oprc"><span class="ode">R$ '+o.de+'</span><span class="opor">R$ '+o.por+'</span></div></div></div>';
+    return '<div class="ocard" onclick="abrirOferta('+o.id+')"><div class="oimg" style="background:'+esc(o.bg)+'22"><span style="font-size:32px">'+esc(o.e)+'</span><div class="obdg">-'+pct(o.de,o.por)+'%</div><div class="otmr">⏱ '+(Math.floor(Math.random()*5)+1)+'h</div></div><div class="obody"><div class="oemp">'+esc(o.emp)+'</div><div class="onome">'+esc(o.n)+'</div><div class="oprc"><span class="ode">R$ '+esc(o.de)+'</span><span class="opor">R$ '+esc(o.por)+'</span></div></div></div>';
   }).join('');
 }
 function rV(l){
   document.getElementById('vc').innerHTML=l.map(function(v){
-    return '<div class="vcard" data-vaga-id="'+v.id+'"><div class="vic" style="background:'+AV[v.id%AV.length].bg+'">'+v.e+'</div><div class="vif"><div class="vtit">'+v.t+'</div><div class="vemp">'+v.emp+'</div><div class="vtgs">'+(v.nv?'<span class="vtag nv">Nova</span>':'')+'<span class="vtag">'+v.tp+'</span><span class="vtag">'+v.tu+'</span></div></div><div class="vright"><div class="vsal">'+v.sal+'</div><div class="varr">Ver ›</div></div></div>';
+    return '<div class="vcard" data-vaga-id="'+esc(v.id)+'"><div class="vic" style="background:'+AV[v.id%AV.length].bg+'">'+esc(v.e)+'</div><div class="vif"><div class="vtit">'+esc(v.t)+'</div><div class="vemp">'+esc(v.emp)+'</div><div class="vtgs">'+(v.nv?'<span class="vtag nv">Nova</span>':'')+'<span class="vtag">'+esc(v.tp)+'</span><span class="vtag">'+esc(v.tu)+'</span></div></div><div class="vright"><div class="vsal">'+esc(v.sal)+'</div><div class="varr">Ver ›</div></div></div>';
   }).join('');
 }
 function rE(){
   var l=empresas.filter(function(d){
     var tags=getTags(d);var cat=getCat(d);
-    var b=!busca||d.nome.toLowerCase().indexOf(busca)>-1||cat.toLowerCase().indexOf(busca)>-1||tags.some(function(t){return t.toLowerCase().indexOf(busca)>-1;});
+    var nomeBusca = String(d.nome || '').toLowerCase();
+    var catBusca = String(cat || '').toLowerCase();
+    var b=!busca||nomeBusca.indexOf(busca)>-1||catBusca.indexOf(busca)>-1||tags.some(function(t){return String(t || '').toLowerCase().indexOf(busca)>-1;});
     var c=!catAtual||cat===catAtual||(catAtual==='__favoritos__'&&ehFavorita(d.id));return b&&c;
   });
   var p=l.filter(function(d){return d.premium;});
   var n=l.filter(function(d){return !d.premium;});
   document.getElementById('cd').innerHTML=p.map(function(d){
     var tags=getTags(d);var ini=getIni(d);var av=d.av_index||0;var rating=getRatingEmpresa(d);var fav=ehFavorita(d.id);
-    return '<div class="dcard" onclick="abrirEmpresa('+d.id+')"><div class="dacc"></div><div class="dbod"><div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px"><div><div class="dbdg">⭐ Destaque</div></div><button class="favb'+(fav?' on':'')+'" onclick="event.stopPropagation();toggleFavorito('+d.id+')">'+(fav?'❤':'♡')+'</button></div><div class="dh"><div class="dav" style="'+avStyle(av,32)+'">'+ini+'</div><div><div class="dn">'+d.nome+'</div><div class="dct">'+getCat(d)+'</div></div></div><div class="ddesc">'+d.descricao+'</div><div class="dtgs">'+tags.map(function(t){return '<span class="dtag">'+t+'</span>';}).join('')+'</div><div class="df"><div class="drat">'+stars(rating)+' '+rating.toFixed(1)+'</div><button class="dbtn" onclick="event.stopPropagation();abrirEmpresa('+d.id+')">Ver perfil</button></div></div></div>';
+    return '<div class="dcard" onclick="abrirEmpresa(\''+jsStr(d.id)+'\')"><div class="dacc"></div><div class="dbod"><div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px"><div><div class="dbdg">⭐ Destaque</div></div><button class="favb'+(fav?' on':'')+'" onclick="event.stopPropagation();toggleFavorito(\''+jsStr(d.id)+'\')">'+(fav?'❤':'♡')+'</button></div><div class="dh"><div class="dav" style="'+avStyle(av,32)+'">'+esc(ini)+'</div><div><div class="dn">'+esc(d.nome)+'</div><div class="dct">'+esc(getCat(d))+'</div></div></div><div class="ddesc">'+esc(d.descricao)+'</div><div class="dtgs">'+tags.map(function(t){return '<span class="dtag">'+esc(t)+'</span>';}).join('')+'</div><div class="df"><div class="drat">'+stars(rating)+' '+rating.toFixed(1)+'</div><button class="dbtn" onclick="event.stopPropagation();abrirEmpresa(\''+jsStr(d.id)+'\')">Ver perfil</button></div></div></div>';
   }).join('');
   document.getElementById('cn').innerHTML=n.map(function(d){
     var tags=getTags(d);var ini=getIni(d);var av=d.av_index||0;var rating=getRatingEmpresa(d);var fav=ehFavorita(d.id);
-    return '<div class="ncard" onclick="abrirEmpresa('+d.id+')"><div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px"><div class="nh" style="margin-bottom:0"><div class="nav" style="'+avStyle(av,30)+'">'+ini+'</div><div><div class="nn">'+d.nome+'</div><div class="nct">'+getCat(d)+'</div></div></div><button class="favb-lite'+(fav?' on':'')+'" onclick="event.stopPropagation();toggleFavorito('+d.id+')">'+(fav?'❤':'♡')+'</button></div><div class="nrat">'+stars(rating)+' '+rating.toFixed(1)+'</div><div class="nds">'+d.descricao+'</div><div class="ntgs">'+tags.map(function(t){return '<span class="ntag">'+t+'</span>';}).join('')+'</div><div class="nft"><button class="nbtn" onclick="event.stopPropagation();abrirEmpresa('+d.id+')">Ver perfil</button></div></div>';
+    return '<div class="ncard" onclick="abrirEmpresa(\''+jsStr(d.id)+'\')"><div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px"><div class="nh" style="margin-bottom:0"><div class="nav" style="'+avStyle(av,30)+'">'+esc(ini)+'</div><div><div class="nn">'+esc(d.nome)+'</div><div class="nct">'+esc(getCat(d))+'</div></div></div><button class="favb-lite'+(fav?' on':'')+'" onclick="event.stopPropagation();toggleFavorito(\''+jsStr(d.id)+'\')">'+(fav?'❤':'♡')+'</button></div><div class="nrat">'+stars(rating)+' '+rating.toFixed(1)+'</div><div class="nds">'+esc(d.descricao)+'</div><div class="ntgs">'+tags.map(function(t){return '<span class="ntag">'+esc(t)+'</span>';}).join('')+'</div><div class="nft"><button class="nbtn" onclick="event.stopPropagation();abrirEmpresa(\''+jsStr(d.id)+'\')">Ver perfil</button></div></div>';
   }).join('');
   document.getElementById('sd').style.display=p.length?'':'none';
   document.getElementById('sn').style.display=n.length?'':'none';
@@ -1188,30 +1222,33 @@ function rE(){
 
 // ===== ABRIR MODAIS DE CONTEÚDO =====
 function abrirEmpresa(id){
-  var d=empresas.find(function(x){return x.id===id;});if(!d)return;
+  var d=empresas.find(function(x){return String(x.id)===String(id);});if(!d)return false;
   var av=d.av_index||0;var c=AV[av%AV.length];var ini=getIni(d);var tags=getTags(d);var rating=getRatingEmpresa(d);var fav=ehFavorita(d.id);
   var tel=d.whatsapp||'';var msg='Olá, '+d.nome+'! Vi seu perfil no Guia Codoense e gostaria de mais informações.';
-  var contato = '<div class="crow"><div class="cico">📍</div>'+d.endereco+'</div>'+(d.horario?'<div class="crow"><div class="cico">⏰</div>'+d.horario+'</div>':'')+(d.instagram?'<div class="crow"><div class="cico">📷</div>'+d.instagram+'</div>':'');
-  var secTags = tags.length ? '<div class="dsec" style="border-bottom:none"><h4>Especialidades</h4><div>'+tags.map(function(t){return '<span class="ntd">'+t+'</span>';}).join('')+'</div></div>' : '<div class="dsec" style="border-bottom:none"><h4>Categoria</h4><div><span class="ntd">'+getCat(d)+'</span></div></div>';
+  var contato = '<div class="crow"><div class="cico">📍</div>'+esc(d.endereco)+'</div>'+(d.horario?'<div class="crow"><div class="cico">⏰</div>'+esc(d.horario)+'</div>':'')+(d.instagram?'<div class="crow"><div class="cico">📷</div>'+esc(d.instagram)+'</div>':'');
+  var secTags = tags.length ? '<div class="dsec" style="border-bottom:none"><h4>Especialidades</h4><div>'+tags.map(function(t){return '<span class="ntd">'+esc(t)+'</span>';}).join('')+'</div></div>' : '<div class="dsec" style="border-bottom:none"><h4>Categoria</h4><div><span class="ntd">'+esc(getCat(d))+'</span></div></div>';
   document.getElementById('m-din').innerHTML=
-    '<div class="dth"><div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px"><div><div class="dtav" style="background:'+c.bg+';color:'+c.c+'">'+ini+'</div>'+(d.premium?'<div style="display:inline-flex;align-items:center;background:var(--go);color:#fff;font-size:9px;font-weight:600;padding:2px 9px;border-radius:20px;margin-bottom:6px;text-transform:uppercase">⭐ Destaque</div><br>':'')+'<div class="dtnm">'+d.nome+'</div><div class="dtct">'+getCat(d)+' · <span style="color:var(--gol)">'+stars(rating)+' '+rating.toFixed(1)+'</span></div></div><button class="favb'+(fav?' on':'')+'" onclick="toggleFavorito('+d.id+')">'+(fav?'❤':'♡')+'</button></div><div style="margin-top:8px">'+estrelasInterativas(d.id)+'</div></div>'+
-    '<div class="dsec"><h4>Sobre</h4><p>'+d.descricao+'</p></div>'+
+    '<div class="dth"><div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px"><div><div class="dtav" style="background:'+c.bg+';color:'+c.c+'">'+esc(ini)+'</div>'+(d.premium?'<div style="display:inline-flex;align-items:center;background:var(--go);color:#fff;font-size:9px;font-weight:600;padding:2px 9px;border-radius:20px;margin-bottom:6px;text-transform:uppercase">⭐ Destaque</div><br>':'')+'<div class="dtnm">'+esc(d.nome)+'</div><div class="dtct">'+esc(getCat(d))+' · <span style="color:var(--gol)">'+stars(rating)+' '+rating.toFixed(1)+'</span></div></div><button class="favb'+(fav?' on':'')+'" onclick="toggleFavorito(\''+jsStr(d.id)+'\')">'+(fav?'❤':'♡')+'</button></div><div style="margin-top:8px">'+estrelasInterativas(d.id)+'</div></div>'+
+    '<div class="dsec"><h4>Sobre</h4><p>'+esc(d.descricao)+'</p></div>'+
     '<div class="dsec"><h4>Contato &amp; Localização</h4>'+contato+'</div>'+
     secTags+
-    '<div style="padding:12px 18px"><button class="wbtn" onclick="window.open(\''+wppLink(tel,msg)+'\',\'_blank\')">💬 Entrar em contato pelo WhatsApp</button></div>';
+    '<div style="padding:12px 18px"><button class="wbtn" onclick="abrirWhatsApp(\''+jsStr(tel)+'\',\''+jsStr(msg)+'\')">💬 Entrar em contato pelo WhatsApp</button></div>';
   oM('detail');
+  return true;
 }
 function abrirOferta(id){
-  var o=ofertas.find(function(x){return x.id===id;});
+  var o=ofertas.find(function(x){return String(x.id)===String(id);});
+  if(!o)return;
   var msg='Olá! Vi a oferta "'+o.n+'" no Guia Codoense e tenho interesse.';
   document.getElementById('m-oin').innerHTML=
-    '<div style="background:'+o.bg+'22;padding:22px 18px;text-align:center;border-bottom:1px solid var(--bo)"><div style="font-size:50px;margin-bottom:8px">'+o.e+'</div><div style="display:inline-block;background:#e11d48;color:#fff;font-size:9px;font-weight:700;padding:3px 12px;border-radius:20px;margin-bottom:8px">OFERTA DO DIA</div><div style="font-family:var(--fd);font-size:18px;font-weight:700;color:var(--tx);margin-bottom:3px">'+o.n+'</div><div style="font-size:12px;color:var(--mu)">'+o.emp+'</div></div>'+
-    '<div style="padding:14px 18px"><div style="display:flex;align-items:baseline;gap:10px;margin-bottom:8px"><span style="font-size:13px;color:var(--mu);text-decoration:line-through">De R$ '+o.de+'</span><span style="font-family:var(--fd);font-size:28px;font-weight:700;color:#e11d48">Por R$ '+o.por+'</span></div><p style="font-size:13px;color:var(--tx);line-height:1.6;margin-bottom:10px">'+o.desc+'</p><div style="font-size:11px;color:var(--mu)">⏱ Válido: <strong style="color:var(--tx)">'+o.val+'</strong></div></div>';
-  document.getElementById('btn-oferta-w').onclick=function(){window.open(wppLink(o.tel,msg),'_blank');};
+    '<div style="background:'+esc(o.bg)+'22;padding:22px 18px;text-align:center;border-bottom:1px solid var(--bo)"><div style="font-size:50px;margin-bottom:8px">'+esc(o.e)+'</div><div style="display:inline-block;background:#e11d48;color:#fff;font-size:9px;font-weight:700;padding:3px 12px;border-radius:20px;margin-bottom:8px">OFERTA DO DIA</div><div style="font-family:var(--fd);font-size:18px;font-weight:700;color:var(--tx);margin-bottom:3px">'+esc(o.n)+'</div><div style="font-size:12px;color:var(--mu)">'+esc(o.emp)+'</div></div>'+
+    '<div style="padding:14px 18px"><div style="display:flex;align-items:baseline;gap:10px;margin-bottom:8px"><span style="font-size:13px;color:var(--mu);text-decoration:line-through">De R$ '+esc(o.de)+'</span><span style="font-family:var(--fd);font-size:28px;font-weight:700;color:#e11d48">Por R$ '+esc(o.por)+'</span></div><p style="font-size:13px;color:var(--tx);line-height:1.6;margin-bottom:10px">'+esc(o.desc)+'</p><div style="font-size:11px;color:var(--mu)">⏱ Válido: <strong style="color:var(--tx)">'+esc(o.val)+'</strong></div></div>';
+  document.getElementById('btn-oferta-w').onclick=function(){abrirWhatsApp(o.tel,msg);};
   oM('oferta');
 }
 function abrirVaga(id){
-  var v=vagas.find(function(x){return x.id===id;});
+  var v=vagas.find(function(x){return String(x.id)===String(id);});
+  if(!v)return;
   vagaAtual=v;
   var c=AV[v.id%AV.length];
   var usuario = getUsuarioLocal();
@@ -1235,10 +1272,10 @@ function abrirVaga(id){
   }
 
   document.getElementById('m-vin').innerHTML=
-    '<div style="background:var(--dk);padding:14px 18px"><div style="width:44px;height:44px;border-radius:9px;background:'+c.bg+';display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:8px">'+v.e+'</div>'+(v.nv?'<div style="display:inline-block;background:#fef3c7;color:#92400e;font-size:9px;font-weight:700;padding:2px 9px;border-radius:20px;margin-bottom:6px">Nova vaga</div><br>':'')+'<div style="font-family:var(--fd);font-size:17px;font-weight:700;color:#fff;margin-bottom:3px">'+v.t+'</div><div style="font-size:12px;color:rgba(255,255,255,.45)">'+v.emp+'</div></div>'+
-    '<div style="padding:10px 18px;border-bottom:1px solid var(--bo);display:flex;gap:7px;flex-wrap:wrap"><span class="vti" style="background:#f0f9f4;color:var(--g);border:1px solid rgba(26,107,60,.2)">💰 '+v.sal+'</span><span class="vti" style="background:#f0f7ff;color:#1e40af;border:1px solid rgba(30,64,175,.2)">📋 '+v.tp+'</span><span class="vti" style="background:#fff7ed;color:#9a3412;border:1px solid rgba(154,52,18,.2)">🕐 '+v.tu+'</span></div>'+
-    '<div style="padding:12px 18px;border-bottom:1px solid var(--bo)"><div style="font-size:10px;font-weight:600;color:var(--mu);text-transform:uppercase;letter-spacing:.8px;margin-bottom:7px">Sobre a vaga</div><p style="font-size:13px;color:var(--tx);line-height:1.6">'+v.desc+'</p></div>'+
-    '<div style="padding:12px 18px;border-bottom:1px solid var(--bo)"><div style="font-size:10px;font-weight:600;color:var(--mu);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px">Requisitos</div>'+v.req.map(function(r){return '<div style="display:flex;align-items:center;gap:7px;font-size:13px;color:var(--tx);margin-bottom:6px"><span style="color:var(--g);font-size:14px">✓</span>'+r+'</div>';}).join('')+'</div>';
+    '<div style="background:var(--dk);padding:14px 18px"><div style="width:44px;height:44px;border-radius:9px;background:'+c.bg+';display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:8px">'+esc(v.e)+'</div>'+(v.nv?'<div style="display:inline-block;background:#fef3c7;color:#92400e;font-size:9px;font-weight:700;padding:2px 9px;border-radius:20px;margin-bottom:6px">Nova vaga</div><br>':'')+'<div style="font-family:var(--fd);font-size:17px;font-weight:700;color:#fff;margin-bottom:3px">'+esc(v.t)+'</div><div style="font-size:12px;color:rgba(255,255,255,.45)">'+esc(v.emp)+'</div></div>'+
+    '<div style="padding:10px 18px;border-bottom:1px solid var(--bo);display:flex;gap:7px;flex-wrap:wrap"><span class="vti" style="background:#f0f9f4;color:var(--g);border:1px solid rgba(26,107,60,.2)">💰 '+esc(v.sal)+'</span><span class="vti" style="background:#f0f7ff;color:#1e40af;border:1px solid rgba(30,64,175,.2)">📋 '+esc(v.tp)+'</span><span class="vti" style="background:#fff7ed;color:#9a3412;border:1px solid rgba(154,52,18,.2)">🕐 '+esc(v.tu)+'</span></div>'+
+    '<div style="padding:12px 18px;border-bottom:1px solid var(--bo)"><div style="font-size:10px;font-weight:600;color:var(--mu);text-transform:uppercase;letter-spacing:.8px;margin-bottom:7px">Sobre a vaga</div><p style="font-size:13px;color:var(--tx);line-height:1.6">'+esc(v.desc)+'</p></div>'+
+    '<div style="padding:12px 18px;border-bottom:1px solid var(--bo)"><div style="font-size:10px;font-weight:600;color:var(--mu);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px">Requisitos</div>'+v.req.map(function(r){return '<div style="display:flex;align-items:center;gap:7px;font-size:13px;color:var(--tx);margin-bottom:6px"><span style="color:var(--g);font-size:14px">✓</span>'+esc(r)+'</div>';}).join('')+'</div>';
   oM('vaga');
 }
 
@@ -1246,8 +1283,10 @@ function abrirVaga(id){
 function ltab(id,el){
   document.querySelectorAll('.ltb').forEach(function(t){t.classList.remove('on');});
   if(el){el.classList.add('on');}else{document.querySelectorAll('.ltb').forEach(function(t,i){if((i===0&&id==='e')||(i===1&&id==='c'))t.classList.add('on');});}
-  document.querySelectorAll('.lpanel').forEach(function(p){p.classList.remove('on');});
+  document.querySelectorAll('.lpanel').forEach(function(p){p.classList.remove('on');p.classList.remove('hide');});
   document.getElementById('lp-'+id).classList.add('on');
+  document.getElementById('fs-usuario').classList.remove('on');
+  document.getElementById('fs-login-usuario').classList.remove('on');
 }
 function selT(t){
   document.getElementById('tp-p').classList.toggle('on',t==='p');
@@ -1273,8 +1312,19 @@ iFD();fTmr=setInterval(function(){fi=(fi+1)%fT;gF(fi);},3800);
 
 // ===== NAVEGAÇÃO =====
 function filtrar(){busca=document.getElementById('si').value.toLowerCase();rView();}
-function irP(v,el){view=v;document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('on');});if(el)el.classList.add('on');catAtual='';document.querySelectorAll('.cp').forEach(function(c){c.classList.remove('on');});document.getElementById('cat-todas').classList.add('on');rView();window.scrollTo({top:0,behavior:'smooth'});}
-function sC(el,cat,v){document.querySelectorAll('.cp').forEach(function(c){c.classList.remove('on');});if(el)el.classList.add('on');view=v;catAtual=cat;rView();window.scrollTo({top:0,behavior:'smooth'});}
+function ativarTab(viewAtual, el){
+  document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('on');});
+  if (el) {
+    el.classList.add('on');
+    return;
+  }
+  var mapa = {inicio:0, ofertas:1, vagas:2, emp:3};
+  var tabs = document.querySelectorAll('.tab');
+  var idx = mapa[viewAtual];
+  if (tabs[idx]) tabs[idx].classList.add('on');
+}
+function irP(v,el){view=v;ativarTab(v,el);catAtual='';document.querySelectorAll('.cp').forEach(function(c){c.classList.remove('on');});document.getElementById('cat-todas').classList.add('on');rView();window.scrollTo({top:0,behavior:'smooth'});}
+function sC(el,cat,v){document.querySelectorAll('.cp').forEach(function(c){c.classList.remove('on');});if(el)el.classList.add('on');view=v;catAtual=cat;ativarTab(v,null);rView();window.scrollTo({top:0,behavior:'smooth'});}
 function rView(){
   var so=document.getElementById('so'),sv=document.getElementById('sv'),sd=document.getElementById('sd'),sn=document.getElementById('sn');
   if(view==='inicio'){so.style.display='';sv.style.display='';sd.style.display='';sn.style.display='';rO(ofertas);rV(vagas.slice(0,3));rE();}
@@ -1285,7 +1335,7 @@ function rView(){
 
 // ===== MODAIS =====
 function oM(id){
-  if(id==='login'){document.querySelectorAll('.ltb').forEach(function(t,i){t.classList.toggle('on',i===0);});document.querySelectorAll('.lpanel').forEach(function(p){p.classList.remove('on');});document.getElementById('lp-e').classList.add('on');document.getElementById('fs-usuario').classList.remove('on');document.getElementById('fs-login-usuario').classList.remove('on');var lpc=document.getElementById('lp-c');lpc.classList.remove('hide');lpc.classList.remove('on');selT('p');resetCadastroUsuario();resetLoginUsuario();}
+  if(id==='login'){document.querySelectorAll('.ltb').forEach(function(t,i){t.classList.toggle('on',i===0);});document.querySelectorAll('.lpanel').forEach(function(p){p.classList.remove('on');p.classList.remove('hide');});document.getElementById('lp-e').classList.add('on');document.getElementById('fs-usuario').classList.remove('on');document.getElementById('fs-login-usuario').classList.remove('on');var lpc=document.getElementById('lp-c');lpc.classList.remove('on');selT('p');resetCadastroUsuario();resetLoginUsuario();}
   if(id==='cadastro'){esconderSucesso('cadastro');['c-nome','c-cat','c-desc','c-wpp','c-email','c-senha','c-senha2','c-end','c-tel','c-insta'].forEach(function(fid){var el=document.getElementById(fid);if(el){el.value='';el.classList.remove('erro');}});document.querySelectorAll('#fb-cadastro .err-msg').forEach(function(e){e.classList.remove('on');});document.getElementById('err-cadastro').classList.remove('on');document.getElementById('err-cadastro').textContent='Verifique os campos em vermelho antes de continuar.';document.getElementById('c-plano').value='Básico (Grátis)';btnReset('btn-cadastro','Enviar cadastro grátis ✓');}
   if(id==='planos'){selPlano('Destaque R$49/mês','Destaque – R$ 49/mês','pl-dest');btnReset('btn-planos','Quero me destacar ✓');}
   document.getElementById('m-'+id).classList.add('on');
@@ -1305,6 +1355,8 @@ carregarEmpresas();
 rO(ofertas);
 rV(vagas.slice(0,3));
 sincronizarUsuarioLogado();
+abrirRotaInicial();
+window.addEventListener('hashchange', abrirRotaInicial);
 </script>
 </body>
 </html>

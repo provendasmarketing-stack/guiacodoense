@@ -10,39 +10,199 @@ service cloud.firestore {
     function isAdmin() {
       return isSignedIn() &&
         request.auth.token.email in [
-          "seu-email@exemplo.com"
+          "provendasmarketing@gmail.com"
         ];
     }
 
+    function authEmail() {
+      return isSignedIn() ? request.auth.token.email : null;
+    }
+
+    function emailDoAuthConfere(dados) {
+      return authEmail() != null
+        && dados.email is string
+        && dados.email == authEmail();
+    }
+
     function isEmpresaOwner(docId) {
+      return isSignedIn() && (
+        request.auth.uid == docId ||
+        resource.data.authUid == request.auth.uid ||
+        emailDoAuthConfere(resource.data)
+      );
+    }
+
+    function isEmpresaCriandoDono(docId) {
       return isSignedIn() && request.auth.uid == docId;
+    }
+
+    function empresaPodeCriar(docId) {
+      return isEmpresaCriandoDono(docId)
+        && request.resource.data.keys().hasOnly([
+          "nome",
+          "categoria",
+          "descricao",
+          "whatsapp",
+          "telefone",
+          "email",
+          "endereco",
+          "instagram",
+          "horario",
+          "tags",
+          "plano",
+          "iniciais",
+          "aprovado",
+          "premium",
+          "rating",
+          "av_index",
+          "authUid",
+          "createdAt",
+          "atualizadoEm"
+        ])
+        && request.resource.data.keys().hasAll([
+          "nome",
+          "categoria",
+          "descricao",
+          "whatsapp",
+          "email",
+          "endereco",
+          "plano",
+          "aprovado",
+          "premium",
+          "authUid",
+          "createdAt",
+          "atualizadoEm"
+        ])
+        && request.resource.data.authUid == request.auth.uid
+        && request.resource.data.aprovado == false
+        && request.resource.data.premium == false;
+    }
+
+    function empresaPodeEditar(docId) {
+      return isEmpresaOwner(docId)
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly([
+          "nome",
+          "categoria",
+          "descricao",
+          "whatsapp",
+          "telefone",
+          "endereco",
+          "instagram",
+          "horario",
+          "tags",
+          "iniciais",
+          "atualizadoEm"
+        ]);
+    }
+
+    function gestorPodeEditarEmpresa() {
+      return isAdmin()
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly([
+          "aprovado",
+          "premium",
+          "plano",
+          "atualizadoEm"
+        ]);
+    }
+
+    function isUsuarioOwner(userId) {
+      return isSignedIn() && (
+        request.auth.uid == userId ||
+        resource.data.authUid == request.auth.uid ||
+        emailDoAuthConfere(resource.data)
+      );
     }
 
     match /empresas/{empresaId} {
       allow read: if isAdmin() || resource.data.aprovado == true || isEmpresaOwner(empresaId);
 
-      allow create: if isEmpresaOwner(empresaId)
-        && request.resource.data.authUid == request.auth.uid
-        && request.resource.data.aprovado == false;
+      allow create: if empresaPodeCriar(empresaId);
 
-      allow update: if isAdmin() || isEmpresaOwner(empresaId);
+      allow update: if gestorPodeEditarEmpresa() || empresaPodeEditar(empresaId);
       allow delete: if false;
     }
 
     match /usuarios/{userId} {
-      allow create: if isSignedIn() && request.auth.uid == userId;
-      allow read, update: if isAdmin() || (isSignedIn() && request.auth.uid == userId);
+      allow create: if isSignedIn()
+        && request.auth.uid == userId
+        && request.resource.data.keys().hasOnly([
+          "nome",
+          "email",
+          "whatsapp",
+          "tipo",
+          "authUid",
+          "createdAt",
+          "atualizadoEm"
+        ])
+        && request.resource.data.keys().hasAll([
+          "nome",
+          "email",
+          "whatsapp",
+          "tipo",
+          "authUid",
+          "createdAt",
+          "atualizadoEm"
+        ])
+        && request.resource.data.authUid == request.auth.uid;
+
+      allow read: if isAdmin() || isUsuarioOwner(userId);
+      allow update: if isAdmin() || (
+        isUsuarioOwner(userId)
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly([
+          "nome",
+          "whatsapp",
+          "tipo",
+          "atualizadoEm"
+        ])
+      );
       allow delete: if false;
     }
 
     match /candidaturas/{candidaturaId} {
-      allow create: if true;
+      allow create: if request.resource.data.keys().hasOnly([
+        "nome",
+        "email",
+        "whatsapp",
+        "idade",
+        "escolaridade",
+        "experiencia",
+        "vaga",
+        "empresa",
+        "usuarioNome",
+        "usuarioEmail",
+        "createdAt",
+        "atualizadoEm"
+      ])
+      && request.resource.data.keys().hasAll([
+        "nome",
+        "whatsapp",
+        "escolaridade",
+        "createdAt",
+        "atualizadoEm"
+      ]);
       allow read: if isAdmin();
       allow update, delete: if false;
     }
 
     match /interesses_planos/{interesseId} {
-      allow create: if true;
+      allow create: if request.resource.data.keys().hasOnly([
+        "nome",
+        "email",
+        "whatsapp",
+        "telefone",
+        "empresaId",
+        "empresaNome",
+        "plano",
+        "mensagem",
+        "origem",
+        "createdAt",
+        "atualizadoEm"
+      ])
+      && request.resource.data.keys().hasAll([
+        "plano",
+        "createdAt",
+        "atualizadoEm"
+      ]);
       allow read: if isAdmin();
       allow update, delete: if false;
     }

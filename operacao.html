@@ -34,8 +34,9 @@ body{font-family:'DM Sans',sans-serif;background:var(--cr);color:var(--tx);min-h
 .login-card{max-width:480px;margin:34px auto 0}
 .form-group{margin-bottom:16px}
 .form-group label{display:block;font-size:11px;color:var(--mu);text-transform:uppercase;letter-spacing:.6px;font-weight:600;margin-bottom:6px}
-.form-group input,.form-group select{width:100%;padding:12px;border:1px solid var(--bo);border-radius:10px;font:14px 'DM Sans',sans-serif}
-.form-group input:focus,.form-group select:focus{outline:none;border-color:var(--gl);box-shadow:0 0 0 3px rgba(45,158,95,.1)}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:12px;border:1px solid var(--bo);border-radius:10px;font:14px 'DM Sans',sans-serif}
+.form-group textarea{min-height:96px;resize:vertical}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{outline:none;border-color:var(--gl);box-shadow:0 0 0 3px rgba(45,158,95,.1)}
 .hint{font-size:12px;color:var(--mu);line-height:1.6}
 .alert{display:none;padding:12px 14px;border-radius:10px;font-size:13px;line-height:1.5;margin-bottom:14px}
 .alert.show{display:block}
@@ -63,13 +64,17 @@ body{font-family:'DM Sans',sans-serif;background:var(--cr);color:var(--tx);min-h
 .empresa-desc{font-size:13px;color:var(--tx);line-height:1.7}
 .empresa-side{font-size:12px;color:var(--mu);line-height:1.8}
 .empresa-side strong{color:var(--tx)}
+.edit-box{margin-top:16px;padding-top:16px;border-top:1px solid var(--bo)}
+.edit-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.edit-grid .full{grid-column:1/-1}
 .empty{padding:34px 20px;text-align:center;font-size:14px;color:var(--mu)}
 .muted{font-size:12px;color:var(--mu)}
 @media(max-width:760px){
-  .topbar,.empresa-top,.empresa-grid{display:block}
+  .topbar,.empresa-top,.empresa-grid,.edit-grid{display:block}
   .empresa-grid{display:block}
   .badges{margin-top:10px}
   .btn-row{margin-top:12px}
+  .edit-grid .form-group{margin-bottom:12px}
 }
 </style>
 </head>
@@ -150,6 +155,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--cr);color:var(--tx);min-h
 let gestorAtual = null;
 let empresasOperacao = [];
 let operacaoSalvando = false;
+let empresaEditandoId = null;
 const emailGestorPadrao = (window.GUIA_ADMIN_EMAILS && window.GUIA_ADMIN_EMAILS[0]) || '';
 
 window.addEventListener('DOMContentLoaded', function() {
@@ -298,6 +304,121 @@ function criarBotao(rotulo, classe, id, dados) {
   return botao;
 }
 
+function criarCampoEdicao(label, id, valor, tipo, full) {
+  const grupo = criarEl('div', 'form-group' + (full ? ' full' : ''));
+  grupo.appendChild(criarEl('label', '', label));
+
+  const campo = tipo === 'textarea'
+    ? document.createElement('textarea')
+    : document.createElement('input');
+
+  if (tipo && tipo !== 'textarea') {
+    campo.type = tipo;
+  }
+
+  campo.id = id;
+  campo.value = valor || '';
+  grupo.appendChild(campo);
+  return grupo;
+}
+
+function gerarIniciaisOperacao(nome) {
+  return String(nome || 'ME')
+    .split(' ')
+    .filter(Boolean)
+    .slice(0, 2)
+    .map(function(parte) { return parte.charAt(0); })
+    .join('')
+    .toUpperCase() || 'ME';
+}
+
+function abrirEdicaoEmpresa(id) {
+  empresaEditandoId = id;
+  hideError('msg-err');
+  renderEmpresasOperacao();
+}
+
+function cancelarEdicaoEmpresa() {
+  empresaEditandoId = null;
+  hideError('msg-err');
+  renderEmpresasOperacao();
+}
+
+function valorEdicao(campo) {
+  const el = document.getElementById('edit-' + campo);
+  return el ? el.value.trim() : '';
+}
+
+function salvarEdicaoEmpresa(id) {
+  const nome = valorEdicao('nome');
+  const categoria = valorEdicao('categoria');
+  const descricao = valorEdicao('descricao');
+  const whatsapp = valorEdicao('whatsapp').replace(/\D/g, '');
+  const telefone = valorEdicao('telefone');
+  const endereco = valorEdicao('endereco');
+
+  if (!nome || !categoria || descricao.length < 20 || whatsapp.length < 10 || !endereco) {
+    showError('msg-err', 'Preencha nome, categoria, descrição com pelo menos 20 caracteres, WhatsApp e endereço.');
+    return;
+  }
+
+  atualizarEmpresaOperacao(id, {
+    nome: nome,
+    categoria: categoria,
+    descricao: descricao,
+    whatsapp: whatsapp,
+    telefone: telefone,
+    endereco: endereco,
+    instagram: valorEdicao('instagram'),
+    horario: valorEdicao('horario'),
+    tags: valorEdicao('tags'),
+    iniciais: gerarIniciaisOperacao(nome)
+  }, {
+    mensagemSucesso: 'Dados da empresa atualizados com sucesso.',
+    depoisDeSalvar: function() {
+      empresaEditandoId = null;
+    }
+  });
+}
+
+function criarFormularioEdicao(item) {
+  const box = criarEl('div', 'edit-box');
+  box.appendChild(criarEl('div', 'muted', 'Edição de suporte: ajuste apenas informações solicitadas pela empresa. O e-mail de acesso não é alterado aqui.'));
+
+  const grid = criarEl('div', 'edit-grid');
+  grid.style.marginTop = '12px';
+  grid.appendChild(criarCampoEdicao('Nome da empresa', 'edit-nome', item.nome, 'text'));
+  grid.appendChild(criarCampoEdicao('Categoria', 'edit-categoria', item.categoria, 'text'));
+  grid.appendChild(criarCampoEdicao('Descrição', 'edit-descricao', item.descricao, 'textarea', true));
+  grid.appendChild(criarCampoEdicao('WhatsApp', 'edit-whatsapp', item.whatsapp || item.telefone, 'tel'));
+  grid.appendChild(criarCampoEdicao('Telefone', 'edit-telefone', item.telefone, 'tel'));
+  grid.appendChild(criarCampoEdicao('Endereço', 'edit-endereco', item.endereco, 'text', true));
+  grid.appendChild(criarCampoEdicao('Instagram', 'edit-instagram', item.instagram, 'text'));
+  grid.appendChild(criarCampoEdicao('Horário', 'edit-horario', item.horario, 'text'));
+  grid.appendChild(criarCampoEdicao('Tags separadas por vírgula', 'edit-tags', item.tags, 'text', true));
+  box.appendChild(grid);
+
+  const botoes = criarEl('div', 'btn-row');
+  botoes.style.marginTop = '4px';
+
+  const salvar = criarEl('button', 'btn btn-primary', 'Salvar dados');
+  salvar.type = 'button';
+  salvar.disabled = operacaoSalvando;
+  salvar.addEventListener('click', function() {
+    salvarEdicaoEmpresa(item.id);
+  });
+
+  const cancelar = criarEl('button', 'btn btn-ghost', 'Cancelar');
+  cancelar.type = 'button';
+  cancelar.disabled = operacaoSalvando;
+  cancelar.addEventListener('click', cancelarEdicaoEmpresa);
+
+  botoes.appendChild(salvar);
+  botoes.appendChild(cancelar);
+  box.appendChild(botoes);
+  return box;
+}
+
 function carregarEmpresasOperacao(opcoes) {
   opcoes = opcoes || {};
   hideError('msg-err');
@@ -390,14 +511,26 @@ function renderEmpresasOperacao() {
     botoes.appendChild(criarBotao('Marcar destaque', 'btn-go', item.id, { premium: true, aprovado: true }));
     botoes.appendChild(criarBotao('Plano básico', 'btn-ghost', item.id, { premium: false }));
 
+    const editar = criarEl('button', 'btn btn-ghost', empresaEditandoId === item.id ? 'Editando dados' : 'Editar dados');
+    editar.type = 'button';
+    editar.disabled = operacaoSalvando;
+    editar.addEventListener('click', function() {
+      abrirEdicaoEmpresa(item.id);
+    });
+    botoes.appendChild(editar);
+
     card.appendChild(top);
     card.appendChild(grid);
     card.appendChild(botoes);
+    if (empresaEditandoId === item.id) {
+      card.appendChild(criarFormularioEdicao(item));
+    }
     host.appendChild(card);
   });
 }
 
-function atualizarEmpresaOperacao(id, dados) {
+function atualizarEmpresaOperacao(id, dados, opcoes) {
+  opcoes = opcoes || {};
   if (operacaoSalvando) {
     return;
   }
@@ -407,7 +540,10 @@ function atualizarEmpresaOperacao(id, dados) {
   hideError('msg-err');
   window.guiaFirebase.atualizarEmpresaGestor(id, dados)
     .then(function() {
-      showOk('Empresa atualizada com sucesso.');
+      if (typeof opcoes.depoisDeSalvar === 'function') {
+        opcoes.depoisDeSalvar();
+      }
+      showOk(opcoes.mensagemSucesso || 'Empresa atualizada com sucesso.');
       return carregarEmpresasOperacao({
         mostrarErro: false,
         repassarErro: true

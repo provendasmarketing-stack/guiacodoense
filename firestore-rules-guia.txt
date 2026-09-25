@@ -101,8 +101,43 @@ service cloud.firestore {
           "aprovado",
           "premium",
           "plano",
+          "nome",
+          "categoria",
+          "descricao",
+          "whatsapp",
+          "telefone",
+          "endereco",
+          "instagram",
+          "horario",
+          "tags",
+          "iniciais",
           "atualizadoEm"
         ]);
+    }
+
+    function empresaAprovadaPorId(empresaId) {
+      return exists(/databases/$(database)/documents/empresas/$(empresaId))
+        && get(/databases/$(database)/documents/empresas/$(empresaId)).data.aprovado == true;
+    }
+
+    function isDonoConteudo() {
+      return isSignedIn() && resource.data.empresaAuthUid == request.auth.uid;
+    }
+
+    function estaPublicavel() {
+      return resource.data.ativa == true
+        && resource.data.aprovado == true
+        && resource.data.empresaAprovada == true;
+    }
+
+    function criarConteudoDaEmpresa() {
+      return isSignedIn()
+        && request.resource.data.empresaAuthUid == request.auth.uid
+        && request.resource.data.empresaId is string
+        && empresaAprovadaPorId(request.resource.data.empresaId)
+        && request.resource.data.empresaAprovada == true
+        && request.resource.data.ativa == true
+        && request.resource.data.aprovado == true;
     }
 
     function isUsuarioOwner(userId) {
@@ -205,6 +240,114 @@ service cloud.firestore {
       ]);
       allow read: if isAdmin();
       allow update, delete: if false;
+    }
+
+    match /vagas/{vagaId} {
+      allow read: if isAdmin() || estaPublicavel() || isDonoConteudo();
+
+      allow create: if criarConteudoDaEmpresa()
+        && request.resource.data.keys().hasOnly([
+          "titulo",
+          "contrato",
+          "salario",
+          "turno",
+          "descricao",
+          "icone",
+          "ativa",
+          "aprovado",
+          "empresaId",
+          "empresaAuthUid",
+          "empresaNome",
+          "empresaEmail",
+          "empresaWhatsapp",
+          "empresaCategoria",
+          "empresaAprovada",
+          "createdAt",
+          "atualizadoEm"
+        ])
+        && request.resource.data.keys().hasAll([
+          "titulo",
+          "contrato",
+          "salario",
+          "turno",
+          "descricao",
+          "ativa",
+          "aprovado",
+          "empresaId",
+          "empresaAuthUid",
+          "empresaNome",
+          "empresaAprovada",
+          "createdAt",
+          "atualizadoEm"
+        ]);
+
+      allow update: if isDonoConteudo()
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly([
+          "titulo",
+          "contrato",
+          "salario",
+          "turno",
+          "descricao",
+          "icone",
+          "ativa",
+          "aprovado",
+          "atualizadoEm"
+        ]);
+
+      allow delete: if false;
+    }
+
+    match /ofertas/{ofertaId} {
+      allow read: if isAdmin() || estaPublicavel() || isDonoConteudo();
+
+      allow create: if criarConteudoDaEmpresa()
+        && request.resource.data.keys().hasOnly([
+          "titulo",
+          "icone",
+          "precoOriginal",
+          "precoPromocional",
+          "descricao",
+          "validade",
+          "ativa",
+          "aprovado",
+          "empresaId",
+          "empresaAuthUid",
+          "empresaNome",
+          "empresaEmail",
+          "empresaWhatsapp",
+          "empresaCategoria",
+          "empresaAprovada",
+          "createdAt",
+          "atualizadoEm"
+        ])
+        && request.resource.data.keys().hasAll([
+          "titulo",
+          "precoPromocional",
+          "descricao",
+          "ativa",
+          "aprovado",
+          "empresaId",
+          "empresaAuthUid",
+          "empresaNome",
+          "empresaAprovada",
+          "createdAt",
+          "atualizadoEm"
+        ]);
+
+      allow update: if isDonoConteudo()
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly([
+          "titulo",
+          "icone",
+          "precoOriginal",
+          "precoPromocional",
+          "descricao",
+          "validade",
+          "ativa",
+          "aprovado",
+          "atualizadoEm"
+        ]);
+
+      allow delete: if false;
     }
 
     match /{document=**} {

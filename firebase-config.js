@@ -12,7 +12,9 @@ window.GUIA_FIREBASE_COLLECTIONS = {
   empresas: "empresas",
   usuarios: "usuarios",
   candidaturas: "candidaturas",
-  interessesPlanos: "interesses_planos"
+  interessesPlanos: "interesses_planos",
+  vagas: "vagas",
+  ofertas: "ofertas"
 };
 
 window.GUIA_ADMIN_EMAILS = [

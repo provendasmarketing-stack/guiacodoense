@@ -31,6 +31,8 @@
   var app = firebase.apps && firebase.apps.length ? firebase.app() : firebase.initializeApp(config);
   var auth = app.auth();
   var db = app.firestore();
+  collections.vagas = collections.vagas || "vagas";
+  collections.ofertas = collections.ofertas || "ofertas";
   var adminEmails = (window.GUIA_ADMIN_EMAILS || []).map(function(email) {
     return String(email || "").trim().toLowerCase();
   }).filter(Boolean);
@@ -151,6 +153,113 @@
     });
   }
 
+  function stamp(item) {
+    var value = item && (item.createdAt || item.atualizadoEm);
+    if (value && typeof value.toMillis === "function") {
+      return value.toMillis();
+    }
+    if (value && typeof value.seconds === "number") {
+      return value.seconds * 1000;
+    }
+    return 0;
+  }
+
+  function ordenarRecentes(lista) {
+    return lista.sort(function(a, b) {
+      return stamp(b) - stamp(a);
+    });
+  }
+
+  function erroEmpresaNaoAutenticada() {
+    var error = new Error("Empresa nao autenticada.");
+    error.code = "empresa/not-authenticated";
+    return error;
+  }
+
+  function getEmpresaLogadaObrigatoria() {
+    if (!auth.currentUser) {
+      return Promise.reject(erroEmpresaNaoAutenticada());
+    }
+
+    return buscarEmpresaPorUid(auth.currentUser.uid, auth.currentUser.email)
+      .then(function(empresa) {
+        if (!empresa) {
+          var error = new Error("Empresa nao encontrada.");
+          error.code = "empresa/not-found";
+          throw error;
+        }
+
+        if (!empresa.aprovado) {
+          var notApproved = new Error("Empresa ainda nao aprovada.");
+          notApproved.code = "empresa/not-approved";
+          throw notApproved;
+        }
+
+        return empresa;
+      });
+  }
+
+  function dadosEmpresaResumo(empresa) {
+    return {
+      empresaId: empresa.id || auth.currentUser.uid,
+      empresaAuthUid: auth.currentUser.uid,
+      empresaNome: empresa.nome || "Minha empresa",
+      empresaEmail: empresa.email || auth.currentUser.email || "",
+      empresaWhatsapp: empresa.whatsapp || "",
+      empresaCategoria: empresa.categoria || "",
+      empresaAprovada: !!empresa.aprovado
+    };
+  }
+
+  function limparPayloadVaga(dados) {
+    return {
+      titulo: String(dados && dados.titulo || "").trim(),
+      contrato: String(dados && dados.contrato || "").trim(),
+      salario: String(dados && dados.salario || "").trim(),
+      turno: String(dados && dados.turno || "").trim(),
+      descricao: String(dados && dados.descricao || "").trim(),
+      ativa: dados && dados.ativa === false ? false : true,
+      aprovado: dados && dados.aprovado === false ? false : true,
+      icone: String(dados && dados.icone || "💼").trim()
+    };
+  }
+
+  function limparPayloadOferta(dados) {
+    return {
+      titulo: String(dados && dados.titulo || "").trim(),
+      icone: String(dados && dados.icone || "🔥").trim(),
+      precoOriginal: Number(dados && dados.precoOriginal) || 0,
+      precoPromocional: Number(dados && dados.precoPromocional) || 0,
+      descricao: String(dados && dados.descricao || "").trim(),
+      validade: String(dados && dados.validade || "").trim(),
+      ativa: dados && dados.ativa === false ? false : true,
+      aprovado: dados && dados.aprovado === false ? false : true
+    };
+  }
+
+  function garantirDonoDocumento(collectionName, docId) {
+    if (!auth.currentUser) {
+      return Promise.reject(erroEmpresaNaoAutenticada());
+    }
+
+    return db.collection(collectionName).doc(docId).get().then(function(doc) {
+      if (!doc.exists) {
+        var notFound = new Error("Documento nao encontrado.");
+        notFound.code = "doc/not-found";
+        throw notFound;
+      }
+
+      var data = doc.data() || {};
+      if (data.empresaAuthUid !== auth.currentUser.uid) {
+        var denied = new Error("Acesso negado.");
+        denied.code = "permission/denied";
+        throw denied;
+      }
+
+      return doc.ref;
+    });
+  }
+
   bridge.carregarEmpresasAprovadas = function() {
     ensureConfigured();
 
@@ -255,6 +364,168 @@
     });
 
     return db.collection(collections.candidaturas).add(payload);
+  };
+
+  bridge.listarVagasEmpresa = function() {
+    ensureConfigured();
+
+    if (!auth.currentUser) {
+      return Promise.reject(erroEmpresaNaoAutenticada());
+    }
+
+    return db.collection(collections.vagas)
+      .where("empresaAuthUid", "==", auth.currentUser.uid)
+      .get()
+      .then(function(snapshot) {
+        return ordenarRecentes(snapshot.docs.map(normalizeSnapshot));
+      });
+  };
+
+  bridge.criarVagaEmpresa = function(dados) {
+    ensureConfigured();
+
+    return getEmpresaLogadaObrigatoria().then(function(empresa) {
+      var payload = Object.assign(
+        {},
+        dadosEmpresaResumo(empresa),
+        limparPayloadVaga(dados),
+        {
+          createdAt: nowServer(),
+          atualizadoEm: nowServer()
+        }
+      );
+
+      return db.collection(collections.vagas).add(payload).then(function(docRef) {
+        return docRef.get().then(normalizeSnapshot);
+      });
+    });
+  };
+
+  bridge.atualizarVagaEmpresa = function(vagaId, dados) {
+    ensureConfigured();
+
+    return garantirDonoDocumento(collections.vagas, vagaId).then(function(docRef) {
+      var payload = Object.assign({}, limparPayloadVaga(dados), {
+        atualizadoEm: nowServer()
+      });
+
+      delete payload.empresaId;
+      delete payload.empresaAuthUid;
+      delete payload.empresaNome;
+      delete payload.empresaEmail;
+      delete payload.empresaWhatsapp;
+      delete payload.empresaCategoria;
+      delete payload.empresaAprovada;
+
+      return docRef.set(payload, { merge: true }).then(function() {
+        return docRef.get().then(normalizeSnapshot);
+      });
+    });
+  };
+
+  bridge.removerVagaEmpresa = function(vagaId) {
+    ensureConfigured();
+
+    return garantirDonoDocumento(collections.vagas, vagaId).then(function(docRef) {
+      return docRef.set({
+        ativa: false,
+        atualizadoEm: nowServer()
+      }, { merge: true });
+    });
+  };
+
+  bridge.listarOfertasEmpresa = function() {
+    ensureConfigured();
+
+    if (!auth.currentUser) {
+      return Promise.reject(erroEmpresaNaoAutenticada());
+    }
+
+    return db.collection(collections.ofertas)
+      .where("empresaAuthUid", "==", auth.currentUser.uid)
+      .get()
+      .then(function(snapshot) {
+        return ordenarRecentes(snapshot.docs.map(normalizeSnapshot));
+      });
+  };
+
+  bridge.criarOfertaEmpresa = function(dados) {
+    ensureConfigured();
+
+    return getEmpresaLogadaObrigatoria().then(function(empresa) {
+      var payload = Object.assign(
+        {},
+        dadosEmpresaResumo(empresa),
+        limparPayloadOferta(dados),
+        {
+          createdAt: nowServer(),
+          atualizadoEm: nowServer()
+        }
+      );
+
+      return db.collection(collections.ofertas).add(payload).then(function(docRef) {
+        return docRef.get().then(normalizeSnapshot);
+      });
+    });
+  };
+
+  bridge.atualizarOfertaEmpresa = function(ofertaId, dados) {
+    ensureConfigured();
+
+    return garantirDonoDocumento(collections.ofertas, ofertaId).then(function(docRef) {
+      var payload = Object.assign({}, limparPayloadOferta(dados), {
+        atualizadoEm: nowServer()
+      });
+
+      delete payload.empresaId;
+      delete payload.empresaAuthUid;
+      delete payload.empresaNome;
+      delete payload.empresaEmail;
+      delete payload.empresaWhatsapp;
+      delete payload.empresaCategoria;
+      delete payload.empresaAprovada;
+
+      return docRef.set(payload, { merge: true }).then(function() {
+        return docRef.get().then(normalizeSnapshot);
+      });
+    });
+  };
+
+  bridge.removerOfertaEmpresa = function(ofertaId) {
+    ensureConfigured();
+
+    return garantirDonoDocumento(collections.ofertas, ofertaId).then(function(docRef) {
+      return docRef.set({
+        ativa: false,
+        atualizadoEm: nowServer()
+      }, { merge: true });
+    });
+  };
+
+  bridge.carregarVagasPublicas = function() {
+    ensureConfigured();
+
+    return db.collection(collections.vagas)
+      .where("ativa", "==", true)
+      .where("aprovado", "==", true)
+      .where("empresaAprovada", "==", true)
+      .get()
+      .then(function(snapshot) {
+        return ordenarRecentes(snapshot.docs.map(normalizeSnapshot));
+      });
+  };
+
+  bridge.carregarOfertasPublicas = function() {
+    ensureConfigured();
+
+    return db.collection(collections.ofertas)
+      .where("ativa", "==", true)
+      .where("aprovado", "==", true)
+      .where("empresaAprovada", "==", true)
+      .get()
+      .then(function(snapshot) {
+        return ordenarRecentes(snapshot.docs.map(normalizeSnapshot));
+      });
   };
 
   bridge.signInEmpresa = function(email, senha, lembrar) {
@@ -370,6 +641,25 @@
     return buscarUsuarioPorUid(auth.currentUser.uid, auth.currentUser.email);
   };
 
+  bridge.observarUsuarioLogado = function(callback) {
+    ensureConfigured();
+
+    return auth.onAuthStateChanged(function(user) {
+      if (!user) {
+        callback(null, null);
+        return;
+      }
+
+      buscarUsuarioPorUid(user.uid, user.email)
+        .then(function(usuario) {
+          callback(usuario, user);
+        })
+        .catch(function(error) {
+          callback(null, user, error);
+        });
+    });
+  };
+
   bridge.signInGestor = function(email, senha, lembrar) {
     ensureConfigured();
 
@@ -460,7 +750,21 @@
   bridge.atualizarEmpresaGestor = function(empresaId, dados) {
     ensureConfigured();
 
-    var camposPermitidos = ["aprovado", "premium", "plano"];
+    var camposPermitidos = [
+      "aprovado",
+      "premium",
+      "plano",
+      "nome",
+      "categoria",
+      "descricao",
+      "whatsapp",
+      "telefone",
+      "endereco",
+      "instagram",
+      "horario",
+      "tags",
+      "iniciais"
+    ];
     var payload = {
       atualizadoEm: nowServer()
     };

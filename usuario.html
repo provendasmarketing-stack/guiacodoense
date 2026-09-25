@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Painel do Usuário - Guia Codoense</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--g:#1a6b3c;--gl:#2d9e5f;--go:#c8922a;--gol:#e8b04a;--cr:#faf7f2;--dk:#0f1f16;--tx:#1c2b22;--mu:#6b7f72;--bo:rgba(26,107,60,.15);--err:#e11d48;--fd:'Playfair Display',serif}
+body{font-family:'DM Sans',sans-serif;background:var(--cr);color:var(--tx);min-height:100vh}
+.header{background:linear-gradient(135deg,var(--dk),#1a5c35);color:#fff;padding:20px}
+.header-inner{max-width:960px;margin:0 auto;display:flex;justify-content:space-between;gap:14px;align-items:center}
+.eyebrow{font-size:10px;color:var(--gol);letter-spacing:2px;text-transform:uppercase;margin-bottom:4px}
+.brand{font-family:var(--fd);font-size:26px;font-weight:900}.brand span{color:var(--gol)}
+.actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.btn{border:none;border-radius:9px;padding:10px 14px;font:600 13px 'DM Sans',sans-serif;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:6px}
+.btn-primary{background:var(--g);color:#fff}.btn-ghost{background:rgba(255,255,255,.08);color:#fff;border:1px solid rgba(255,255,255,.25)}
+.wrap{max-width:960px;margin:0 auto;padding:22px 16px 80px}
+.alert{display:none;margin-bottom:16px;border-radius:10px;padding:12px 14px;font-size:13px;font-weight:600}.alert.show{display:block}.alert.err{background:#fff1f2;color:var(--err);border:1px solid rgba(225,29,72,.2)}
+.welcome{margin-bottom:22px}.welcome h1{font-size:24px;margin-bottom:6px}.welcome p{font-size:14px;color:var(--mu);line-height:1.5}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-bottom:24px}
+.card{background:#fff;border:1px solid var(--bo);border-radius:12px;padding:18px}
+.card h2{font-size:15px;margin-bottom:8px}.card p,.line{font-size:13px;color:var(--mu);line-height:1.5}
+.metric{font-size:30px;color:var(--g);font-weight:700;line-height:1;margin-bottom:6px}
+.quick{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px}
+.quick a{background:#fff;border:1px solid var(--bo);border-radius:10px;padding:14px;text-decoration:none;color:var(--tx);font-size:13px;font-weight:600}
+.quick span{display:block;font-size:22px;margin-bottom:8px}
+.empty{color:var(--mu);font-size:13px;line-height:1.5}
+@media(max-width:620px){.header-inner{align-items:flex-start}.brand{font-size:21px}.actions{width:100%;justify-content:flex-start}.btn{padding:9px 12px}.welcome h1{font-size:21px}}
+</style>
+</head>
+<body>
+<header class="header">
+  <div class="header-inner">
+    <div>
+      <div class="eyebrow">Painel da pessoa física</div>
+      <div class="brand">Guia <span>Codoense</span></div>
+    </div>
+    <div class="actions">
+      <a class="btn btn-ghost" href="index.html">← Home</a>
+      <button class="btn btn-ghost" onclick="sairUsuario()">Sair</button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <div id="msg" class="alert err"></div>
+  <section class="welcome">
+    <h1 id="titulo">Carregando sua conta...</h1>
+    <p>Use este painel para acompanhar seu acesso, voltar para vagas e empresas, e consultar seus favoritos salvos neste aparelho.</p>
+  </section>
+
+  <section class="grid">
+    <div class="card">
+      <h2>Dados da conta</h2>
+      <div class="line" id="nome">Nome: carregando...</div>
+      <div class="line" id="email">E-mail: carregando...</div>
+      <div class="line" id="whatsapp">WhatsApp: carregando...</div>
+    </div>
+    <div class="card">
+      <h2>Favoritos</h2>
+      <div class="metric" id="favoritos">0</div>
+      <p>Empresas marcadas como favoritas na home deste aparelho.</p>
+    </div>
+    <div class="card">
+      <h2>Próximas ações</h2>
+      <p>Volte para a home para buscar empresas, avaliar perfis e enviar candidaturas para vagas disponíveis.</p>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Atalhos</h2>
+    <div class="quick">
+      <a href="index.html#empresas"><span>🏪</span>Ver empresas</a>
+      <a href="index.html#vagas"><span>💼</span>Ver vagas</a>
+      <a href="index.html#ofertas"><span>🔥</span>Ver ofertas</a>
+      <a href="login.html"><span>🏢</span>Painel empresarial</a>
+    </div>
+  </section>
+</main>
+
+<script src="https://www.gstatic.com/firebasejs/12.7.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/12.7.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/12.7.0/firebase-firestore-compat.js"></script>
+<script src="./firebase-config.js"></script>
+<script src="./firebase-bridge.js"></script>
+<script>
+function mostrarErro(texto) {
+  var msg = document.getElementById('msg');
+  msg.textContent = texto;
+  msg.classList.add('show');
+}
+
+function chaveUsuario(base, email) {
+  return base + '::' + String(email || 'visitante').toLowerCase();
+}
+
+function contarFavoritos(email) {
+  try {
+    return JSON.parse(localStorage.getItem(chaveUsuario('guia_favoritos_empresas', email)) || '[]').length;
+  } catch (e) {
+    return 0;
+  }
+}
+
+function preencherUsuario(usuario, authUser) {
+  var nome = usuario && usuario.nome ? usuario.nome : 'Usuário';
+  var email = usuario && usuario.email ? usuario.email : (authUser && authUser.email ? authUser.email : '');
+  var whatsapp = usuario && usuario.whatsapp ? usuario.whatsapp : '';
+
+  document.getElementById('titulo').textContent = 'Olá, ' + nome.split(' ')[0] + '!';
+  document.getElementById('nome').textContent = 'Nome: ' + nome;
+  document.getElementById('email').textContent = 'E-mail: ' + (email || 'não informado');
+  document.getElementById('whatsapp').textContent = 'WhatsApp: ' + (whatsapp || 'não informado');
+  document.getElementById('favoritos').textContent = contarFavoritos(email);
+
+  localStorage.setItem('guia_usuario_nome', nome);
+  localStorage.setItem('guia_usuario_email', email);
+  localStorage.setItem('guia_usuario_whatsapp', whatsapp);
+}
+
+function sairUsuario() {
+  localStorage.removeItem('guia_usuario_nome');
+  localStorage.removeItem('guia_usuario_email');
+  localStorage.removeItem('guia_usuario_whatsapp');
+
+  if (window.guiaFirebase && window.guiaFirebase.isConfigured()) {
+    window.guiaFirebase.signOutUsuario().finally(function() {
+      window.location.href = 'index.html';
+    });
+    return;
+  }
+
+  window.location.href = 'index.html';
+}
+
+window.addEventListener('DOMContentLoaded', function() {
+  if (!window.guiaFirebase || !window.guiaFirebase.isConfigured() || !window.guiaFirebase.observarUsuarioLogado) {
+    mostrarErro(window.guiaFirebase && window.guiaFirebase.getConfigError ? window.guiaFirebase.getConfigError() : 'Firebase não carregou corretamente.');
+    return;
+  }
+
+  window.guiaFirebase.observarUsuarioLogado(function(usuario, authUser, error) {
+    if (error) {
+      console.error(error);
+      mostrarErro('Não foi possível carregar sua conta agora.');
+      return;
+    }
+
+    if (!authUser || !usuario) {
+      window.location.href = 'index.html#login';
+      return;
+    }
+
+    preencherUsuario(usuario, authUser);
+  });
+});
+</script>
+</body>
+</html>

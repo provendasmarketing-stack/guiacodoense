@@ -164,9 +164,9 @@ body{font-family:'DM Sans',sans-serif;background:#faf7f2;color:#1c2b22;overflow-
 .tab.on .tab-d{display:block}
 
 /* === MODAIS === */
-.mbg{display:none;position:fixed;inset:0;background:rgba(10,20,14,.65);z-index:200;align-items:flex-start;justify-content:center;padding:20px;backdrop-filter:blur(4px);overflow-y:auto}
+.mbg{display:none;position:fixed;inset:0;background:rgba(10,20,14,.65);z-index:200;align-items:flex-start;justify-content:center;padding:20px;backdrop-filter:blur(4px);overflow-y:auto;-webkit-overflow-scrolling:touch}
 .mbg.on{display:flex}
-.modal{background:#fff;border-radius:16px;width:100%;max-width:480px;max-height:calc(100vh - 40px);overflow-y:auto;-webkit-overflow-scrolling:touch;animation:popin .22s ease;margin:auto}
+.modal{background:#fff;border-radius:16px;width:100%;max-width:480px;max-height:calc(100dvh - 40px);overflow-y:auto;-webkit-overflow-scrolling:touch;animation:popin .22s ease;margin:auto}
 @keyframes popin{from{transform:scale(.94);opacity:0}to{transform:scale(1);opacity:1}}
 .mhd{padding:14px 18px 12px;border-bottom:1px solid var(--bo);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:#fff;z-index:10;border-radius:16px 16px 0 0}
 .mtt{font-family:var(--fd);font-size:16px;font-weight:700;color:var(--tx)}
@@ -281,6 +281,10 @@ body{font-family:'DM Sans',sans-serif;background:#faf7f2;color:#1c2b22;overflow-
   .bh{padding:7px 10px;font-size:10px}
   .lm{font-size:18px}
   .ls{font-size:8px;letter-spacing:2px}
+  .mbg{padding:10px;align-items:flex-start}
+  .modal{max-height:calc(100dvh - 20px);margin:0 auto 16px;border-radius:14px}
+  .mhd{border-radius:14px 14px 0 0}
+  .fi-row{grid-template-columns:1fr}
 }
 @media(min-width:768px){.hi{padding:20px 24px 0}.cw{padding:0 24px 16px}.main{padding:20px 24px 110px}}
 </style>
@@ -351,7 +355,7 @@ body{font-family:'DM Sans',sans-serif;background:#faf7f2;color:#1c2b22;overflow-
 <div class="bfw">
   <div class="bftr" id="bftr">
     <div class="bfs" style="background:linear-gradient(90deg,#0f2d1a,#1a5c35)" onclick="oM('planos')"><div class="bfbg" style="background:linear-gradient(90deg,transparent,#2d9e5f)"></div><div class="bfic">⭐</div><div class="bftx"><div class="bftt">Destaque seu negócio!</div><div class="bfsb">A partir de R$ 49/mês</div></div><button class="bfct" style="background:var(--go);color:#fff">Ver</button></div>
-    <div class="bfs" style="background:linear-gradient(90deg,#3d0a0a,#7f1d1d)" onclick="abrirVaga(1)"><div class="bfbg" style="background:linear-gradient(90deg,transparent,#dc2626)"></div><div class="bfic">💼</div><div class="bftx"><div class="bftt">Vaga: Atendente de Farmácia</div><div class="bfsb">Farmácia São João · Candidate-se já</div></div><button class="bfct" style="background:#f87171;color:#3d0a0a">Ver</button></div>
+    <div class="bfs" style="background:linear-gradient(90deg,#3d0a0a,#7f1d1d)" onclick="abrirPrimeiraVaga()"><div class="bfbg" style="background:linear-gradient(90deg,transparent,#dc2626)"></div><div class="bfic">💼</div><div class="bftx"><div class="bftt">Vagas abertas em Codó</div><div class="bfsb">Veja oportunidades e candidate-se</div></div><button class="bfct" style="background:#f87171;color:#3d0a0a">Ver</button></div>
     <div class="bfs" style="background:linear-gradient(90deg,#1a1a0f,#2e2200)" onclick="oM('cadastro')"><div class="bfbg" style="background:linear-gradient(90deg,transparent,#c8922a)"></div><div class="bfic">🏪</div><div class="bftx"><div class="bftt">Cadastre sua empresa grátis</div><div class="bfsb">Apareça para toda Codó agora mesmo</div></div><button class="bfct" style="background:#fbbf24;color:#1a1a0f">Cadastrar</button></div>
     <div class="bfs" style="background:linear-gradient(90deg,#0f1a3d,#0f2a5c)" onclick="irP('vagas',null)"><div class="bfbg" style="background:linear-gradient(90deg,transparent,#1d4ed8)"></div><div class="bfic">💼</div><div class="bftx"><div class="bftt">Vagas abertas em Codó</div><div class="bfsb">Confira e candidate-se gratuitamente</div></div><button class="bfct" style="background:#60a5fa;color:#0f1a3d">Ver vagas</button></div>
   </div>
@@ -364,7 +368,7 @@ body{font-family:'DM Sans',sans-serif;background:#faf7f2;color:#1c2b22;overflow-
   <button class="tab" onclick="irP('ofertas',this)"><div class="tab-i">🔥</div><div class="tab-l">Ofertas</div><div class="tab-d"></div></button>
   <button class="tab" onclick="irP('vagas',this)"><div class="tab-i">💼</div><div class="tab-l">Vagas</div><div class="tab-d"></div></button>
   <button class="tab" onclick="irP('emp',this)"><div class="tab-i">🏪</div><div class="tab-l">Empresas</div><div class="tab-d"></div></button>
-  <button class="tab" onclick="oM('login')"><div class="tab-i">👤</div><div class="tab-l">Entrar</div><div class="tab-d"></div></button>
+  <button class="tab" onclick="abrirAcessoUsuario()"><div class="tab-i">👤</div><div class="tab-l">Entrar</div><div class="tab-d"></div></button>
 </div>
 
 <!-- MODAL LOGIN -->
@@ -396,7 +400,7 @@ body{font-family:'DM Sans',sans-serif;background:#faf7f2;color:#1c2b22;overflow-
           <input type="checkbox" id="l-lembrar">
           <label for="l-lembrar">Lembrar meu acesso neste aparelho</label>
         </div>
-        <div style="text-align:right;margin-bottom:14px"><span style="font-size:11px;color:var(--g);cursor:pointer;font-weight:600">Recuperação de senha em breve</span></div>
+        <div style="text-align:right;margin-bottom:14px"><span style="font-size:11px;color:var(--mu);font-weight:600">Recuperação de senha em breve</span></div>
         <button class="bm2 bcf" id="btn-login-usuario" style="width:100%;margin-bottom:10px" onclick="entrarUsuario()">Entrar</button>
         <div style="text-align:center;font-size:12px;color:var(--mu)">Não tem conta? <span style="color:var(--g);cursor:pointer;font-weight:600" onclick="ltab('c',null)">Criar grátis</span></div>
         <div style="border-top:1px solid var(--bo);margin-top:16px;padding-top:12px;text-align:center"><span style="font-size:11px;color:var(--mu)">É empresa? </span><span style="font-size:11px;color:var(--g);cursor:pointer;font-weight:600" onclick="simL()">Entrar no painel empresarial</span></div>
@@ -409,8 +413,6 @@ body{font-family:'DM Sans',sans-serif;background:#faf7f2;color:#1c2b22;overflow-
           <div class="tpb" id="tp-e" onclick="selT('e')"><div class="tpi">🏪</div><div class="tpl">Empresa</div><div class="tps">Divulgar meu negócio</div></div>
         </div>
         <div id="cad-pessoa">
-          <button class="bsoc">🌐 Cadastrar com Google</button>
-          <div class="ldiv">ou preencha os dados</div>
           <div class="form-erro-geral" id="err-usuario">Verifique os campos em vermelho antes de continuar.</div>
           <div class="fi">
             <label>Nome completo <span class="err-msg" id="e-u-nome">⚠ Campo obrigatório</span></label>
@@ -456,15 +458,15 @@ body{font-family:'DM Sans',sans-serif;background:#faf7f2;color:#1c2b22;overflow-
         <div class="fs-icon">🎉</div>
         <div class="fs-title">Conta criada!</div>
         <div class="fs-msg">Sua conta de pessoa física foi criada com sucesso.<br>Agora você já pode usar este e-mail e senha nas próximas etapas da plataforma.</div>
-        <div class="fs-detalhe">Seu acesso foi salvo com segurança no Firebase.</div>
-        <button class="bm2 bcf" style="width:100%;margin-top:20px" onclick="cM('login')">Fechar</button>
+        <div class="fs-detalhe">Seu cadastro foi criado com sucesso. Agora você pode entrar e acompanhar sua conta no painel.</div>
+        <button class="bm2 bcf" style="width:100%;margin-top:20px" onclick="ltab('e',null)">Entrar agora</button>
       </div>
       <div class="form-success" id="fs-login-usuario">
         <div class="fs-icon">✅</div>
         <div class="fs-title">Login realizado!</div>
         <div class="fs-msg">Você entrou com sucesso como pessoa física.<br>Agora já pode continuar navegando pela plataforma.</div>
         <div class="fs-detalhe" id="fs-login-usuario-det">Seu acesso foi confirmado com segurança.</div>
-        <button class="bm2 bcf" style="width:100%;margin-top:20px" onclick="cM('login')">Continuar</button>
+        <button class="bm2 bcf" style="width:100%;margin-top:20px" onclick="window.location.href='usuario.html'">Ir para meu painel</button>
       </div>
     </div>
   </div>
@@ -554,7 +556,7 @@ body{font-family:'DM Sans',sans-serif;background:#faf7f2;color:#1c2b22;overflow-
 <!-- MODAL PLANOS -->
 <div class="mbg" id="m-planos">
   <div class="modal">
-    <div class="mhd"><div class="mtt">⭐ Planos de destaque</div><button class="mcl" onclick="cM('planos')">×</button></div>
+    <div class="mhd"><div class="mtt">⭐ Apareça mais em Codó</div><button class="mcl" onclick="cM('planos')">×</button></div>
     <div class="form-body" id="fb-planos">
       <div class="mbod">
         <p style="font-size:12px;color:var(--mu);margin-bottom:16px;line-height:1.6">Escolha o plano ideal e apareça primeiro para quem busca em Codó.</p>
@@ -566,7 +568,7 @@ body{font-family:'DM Sans',sans-serif;background:#faf7f2;color:#1c2b22;overflow-
           <input type="text" id="plano-disp" value="Destaque – R$ 49/mês" readonly style="width:100%;padding:10px 12px;border:1px solid var(--bo);border-radius:8px;background:var(--cr);color:var(--g);font-weight:600;font-family:'DM Sans',sans-serif;font-size:13px">
           <input type="hidden" id="plano-val" value="Destaque R$49/mês">
           <button id="btn-planos" class="bm2 bcf" style="width:100%;padding:12px;font-size:14px;margin-top:12px" onclick="abrirCadastroEmpresa(document.getElementById('plano-val').value, document.getElementById('plano-disp').value)">
-            Quero me destacar ✓
+            Continuar cadastro ✓
           </button>
         </div>
       </div>
@@ -576,7 +578,7 @@ body{font-family:'DM Sans',sans-serif;background:#faf7f2;color:#1c2b22;overflow-
 
 <!-- MODAL DETALHE EMPRESA -->
 <div class="mbg" id="m-detail">
-  <div class="modal" style="overflow:hidden">
+  <div class="modal">
     <div id="m-din"></div>
     <div class="mft"><button class="bm2 bcn" style="width:100%" onclick="cM('detail')">Fechar</button></div>
   </div>
@@ -584,7 +586,7 @@ body{font-family:'DM Sans',sans-serif;background:#faf7f2;color:#1c2b22;overflow-
 
 <!-- MODAL VAGA + CANDIDATURA -->
 <div class="mbg" id="m-vaga">
-  <div class="modal" style="overflow:hidden">
+  <div class="modal">
     <div id="m-vin"></div>
     <div class="form-body" id="fb-vaga">
       <div style="padding:14px 18px;border-top:1px solid var(--bo);background:#f9fafb">
@@ -641,7 +643,7 @@ body{font-family:'DM Sans',sans-serif;background:#faf7f2;color:#1c2b22;overflow-
 
 <!-- MODAL OFERTA -->
 <div class="mbg" id="m-oferta">
-  <div class="modal" style="overflow:hidden">
+  <div class="modal">
     <div id="m-oin"></div>
     <div class="mft">
       <button class="bm2 bcn" onclick="cM('oferta')">Fechar</button>
@@ -684,6 +686,8 @@ var vagas = [
   {id:6,t:"Vendedor(a)",emp:"Loja do Lar",tp:"CLT",tu:"Comercial",sal:"R$ 1.320 + comissão",nv:false,desc:"Loja de decoração contrata vendedor comunicativo.",req:["Ensino médio","Experiência em vendas"],e:"🛍️"}
 ];
 
+var ofertasExemplo = ofertas.slice();
+var vagasExemplo = vagas.slice();
 var vagaAtual = null;
 var empresas = [];
 var catAtual = '', busca = '', view = 'inicio';
@@ -730,6 +734,78 @@ function carregarEmpresas() {
       document.getElementById('total-emp').textContent = empresas.length;
       rE();
     });
+}
+
+function carregarConteudoPublico() {
+  if (!firebaseDisponivel() || !window.guiaFirebase.carregarVagasPublicas || !window.guiaFirebase.carregarOfertasPublicas) {
+    ofertas = ofertasExemplo.slice();
+    vagas = vagasExemplo.slice();
+    rView();
+    return;
+  }
+
+  window.guiaFirebase.carregarOfertasPublicas()
+    .then(function(lista) {
+      if (Array.isArray(lista) && lista.length) {
+        ofertas = lista.map(mapOfertaPublica);
+      } else {
+        ofertas = ofertasExemplo.slice();
+      }
+      rView();
+    })
+    .catch(function(error) {
+      console.error('Erro ao carregar ofertas públicas:', error);
+      ofertas = ofertasExemplo.slice();
+      rView();
+    });
+
+  window.guiaFirebase.carregarVagasPublicas()
+    .then(function(lista) {
+      if (Array.isArray(lista) && lista.length) {
+        vagas = lista.map(mapVagaPublica);
+      } else {
+        vagas = vagasExemplo.slice();
+      }
+      rView();
+    })
+    .catch(function(error) {
+      console.error('Erro ao carregar vagas públicas:', error);
+      vagas = vagasExemplo.slice();
+      rView();
+    });
+}
+
+function mapOfertaPublica(item, idx) {
+  var cor = AV[getItemIndex(item.id || idx)].bg;
+  return {
+    id: item.id,
+    e: item.icone || '🔥',
+    n: item.titulo || 'Oferta',
+    emp: item.empresaNome || 'Empresa local',
+    de: Number(item.precoOriginal || 0),
+    por: Number(item.precoPromocional || 0),
+    desc: item.descricao || 'Oferta publicada no Guia Codoense.',
+    val: item.validade ? formatarDataCurta(item.validade) : 'Enquanto durar',
+    bg: cor,
+    tel: item.empresaWhatsapp || ''
+  };
+}
+
+function mapVagaPublica(item, idx) {
+  return {
+    id: item.id,
+    t: item.titulo || 'Vaga disponível',
+    emp: item.empresaNome || 'Empresa local',
+    tp: item.contrato || 'A combinar',
+    tu: item.turno || 'A combinar',
+    sal: item.salario || 'A combinar',
+    nv: true,
+    desc: item.descricao || 'Vaga publicada no Guia Codoense.',
+    req: ['Entrar em contato para mais detalhes'],
+    e: item.icone || '💼',
+    empresaId: item.empresaId || '',
+    empresaWhatsapp: item.empresaWhatsapp || ''
+  };
 }
 
 // ===== VALIDAÇÃO =====
@@ -1051,6 +1127,13 @@ function atualizarEstadoUsuario(){
   if (label) label.textContent = rotulo;
   if (icon) icon.textContent = nome ? '✅' : '👤';
 }
+function abrirAcessoUsuario(){
+  if (usuarioLogado()) {
+    window.location.href = 'usuario.html';
+    return;
+  }
+  oM('login');
+}
 function chaveUsuario(base){
   var email = localStorage.getItem('guia_usuario_email') || 'visitante';
   return base + '::' + email.toLowerCase();
@@ -1155,9 +1238,27 @@ function sincronizarUsuarioLogado(){
       atualizarEstadoUsuario();
     });
 }
-function avStyle(i,s){var c=AV[i%AV.length];return 'background:'+c.bg+';color:'+c.c+';width:'+s+'px;height:'+s+'px';}
+function getAvIndex(valor){
+  var idx = parseInt(valor, 10);
+  if (!isFinite(idx) || idx < 0) idx = 0;
+  return idx % AV.length;
+}
+function getItemIndex(valor){
+  var str = String(valor || '0');
+  var idx = parseInt(str, 10);
+  if (isFinite(idx)) return Math.abs(idx) % AV.length;
+  var soma = 0;
+  for (var i = 0; i < str.length; i++) soma += str.charCodeAt(i);
+  return soma % AV.length;
+}
+function formatarDataCurta(valor) {
+  var partes = String(valor || '').split('-');
+  if (partes.length !== 3) return valor || '';
+  return partes[2] + '/' + partes[1] + '/' + partes[0];
+}
+function avStyle(i,s){var c=AV[getAvIndex(i)];return 'background:'+c.bg+';color:'+c.c+';width:'+s+'px;height:'+s+'px';}
 function stars(r){var n=Math.max(0,Math.min(5,Math.floor(parseFloat(r)||0)));return '★'.repeat(n)+'☆'.repeat(5-n);}
-function pct(de,por){return Math.round((1-por/de)*100);}
+function pct(de,por){de=Number(de)||0;por=Number(por)||0;return de>0&&por>0?Math.max(0,Math.round((1-por/de)*100)):0;}
 function wppLink(tel,msg){return 'https://wa.me/55'+tel+'?text='+encodeURIComponent(msg);}
 function abrirWhatsApp(tel,msg){window.open(wppLink(String(tel || '').replace(/\D/g,''), msg || ''),'_blank','noopener');}
 function getTags(d){if(!d.tags)return[];if(Array.isArray(d.tags))return d.tags;return d.tags.split(',').map(function(t){return t.trim();});}
@@ -1181,16 +1282,25 @@ function abrirRotaInicial(){
   else if (hash === 'ofertas') irP('ofertas', null);
   else if (hash === 'empresas') irP('emp', null);
 }
+function abrirPrimeiraVaga(){
+  if (vagas.length) {
+    abrirVaga(vagas[0].id);
+    return;
+  }
+
+  irP('vagas', null);
+}
 
 // ===== RENDERS =====
 function rO(l){
   document.getElementById('oc').innerHTML=l.map(function(o){
-    return '<div class="ocard" onclick="abrirOferta('+o.id+')"><div class="oimg" style="background:'+esc(o.bg)+'22"><span style="font-size:32px">'+esc(o.e)+'</span><div class="obdg">-'+pct(o.de,o.por)+'%</div><div class="otmr">⏱ '+(Math.floor(Math.random()*5)+1)+'h</div></div><div class="obody"><div class="oemp">'+esc(o.emp)+'</div><div class="onome">'+esc(o.n)+'</div><div class="oprc"><span class="ode">R$ '+esc(o.de)+'</span><span class="opor">R$ '+esc(o.por)+'</span></div></div></div>';
+    var desconto = pct(o.de,o.por);
+    return '<div class="ocard" onclick="abrirOferta(\''+jsStr(o.id)+'\')"><div class="oimg" style="background:'+esc(o.bg)+'22"><span style="font-size:32px">'+esc(o.e)+'</span>'+(desconto?'<div class="obdg">-'+desconto+'%</div>':'')+'<div class="otmr">⏱ '+(Math.floor(Math.random()*5)+1)+'h</div></div><div class="obody"><div class="oemp">'+esc(o.emp)+'</div><div class="onome">'+esc(o.n)+'</div><div class="oprc">'+(Number(o.de)>0?'<span class="ode">R$ '+esc(o.de)+'</span>':'')+'<span class="opor">R$ '+esc(o.por)+'</span></div></div></div>';
   }).join('');
 }
 function rV(l){
   document.getElementById('vc').innerHTML=l.map(function(v){
-    return '<div class="vcard" data-vaga-id="'+esc(v.id)+'"><div class="vic" style="background:'+AV[v.id%AV.length].bg+'">'+esc(v.e)+'</div><div class="vif"><div class="vtit">'+esc(v.t)+'</div><div class="vemp">'+esc(v.emp)+'</div><div class="vtgs">'+(v.nv?'<span class="vtag nv">Nova</span>':'')+'<span class="vtag">'+esc(v.tp)+'</span><span class="vtag">'+esc(v.tu)+'</span></div></div><div class="vright"><div class="vsal">'+esc(v.sal)+'</div><div class="varr">Ver ›</div></div></div>';
+    return '<div class="vcard" data-vaga-id="'+esc(v.id)+'"><div class="vic" style="background:'+AV[getItemIndex(v.id)].bg+'">'+esc(v.e)+'</div><div class="vif"><div class="vtit">'+esc(v.t)+'</div><div class="vemp">'+esc(v.emp)+'</div><div class="vtgs">'+(v.nv?'<span class="vtag nv">Nova</span>':'')+'<span class="vtag">'+esc(v.tp)+'</span><span class="vtag">'+esc(v.tu)+'</span></div></div><div class="vright"><div class="vsal">'+esc(v.sal)+'</div><div class="varr">Ver ›</div></div></div>';
   }).join('');
 }
 function rE(){
@@ -1202,13 +1312,13 @@ function rE(){
     var c=!catAtual||cat===catAtual||(catAtual==='__favoritos__'&&ehFavorita(d.id));return b&&c;
   });
   var p=l.filter(function(d){return d.premium;});
-  var n=l.filter(function(d){return !d.premium;});
+  var n=l;
   document.getElementById('cd').innerHTML=p.map(function(d){
-    var tags=getTags(d);var ini=getIni(d);var av=d.av_index||0;var rating=getRatingEmpresa(d);var fav=ehFavorita(d.id);
+    var tags=getTags(d);var ini=getIni(d);var av=getAvIndex(d.av_index);var rating=getRatingEmpresa(d);var fav=ehFavorita(d.id);
     return '<div class="dcard" onclick="abrirEmpresa(\''+jsStr(d.id)+'\')"><div class="dacc"></div><div class="dbod"><div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px"><div><div class="dbdg">⭐ Destaque</div></div><button class="favb'+(fav?' on':'')+'" onclick="event.stopPropagation();toggleFavorito(\''+jsStr(d.id)+'\')">'+(fav?'❤':'♡')+'</button></div><div class="dh"><div class="dav" style="'+avStyle(av,32)+'">'+esc(ini)+'</div><div><div class="dn">'+esc(d.nome)+'</div><div class="dct">'+esc(getCat(d))+'</div></div></div><div class="ddesc">'+esc(d.descricao)+'</div><div class="dtgs">'+tags.map(function(t){return '<span class="dtag">'+esc(t)+'</span>';}).join('')+'</div><div class="df"><div class="drat">'+stars(rating)+' '+rating.toFixed(1)+'</div><button class="dbtn" onclick="event.stopPropagation();abrirEmpresa(\''+jsStr(d.id)+'\')">Ver perfil</button></div></div></div>';
   }).join('');
   document.getElementById('cn').innerHTML=n.map(function(d){
-    var tags=getTags(d);var ini=getIni(d);var av=d.av_index||0;var rating=getRatingEmpresa(d);var fav=ehFavorita(d.id);
+    var tags=getTags(d);var ini=getIni(d);var av=getAvIndex(d.av_index);var rating=getRatingEmpresa(d);var fav=ehFavorita(d.id);
     return '<div class="ncard" onclick="abrirEmpresa(\''+jsStr(d.id)+'\')"><div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px"><div class="nh" style="margin-bottom:0"><div class="nav" style="'+avStyle(av,30)+'">'+esc(ini)+'</div><div><div class="nn">'+esc(d.nome)+'</div><div class="nct">'+esc(getCat(d))+'</div></div></div><button class="favb-lite'+(fav?' on':'')+'" onclick="event.stopPropagation();toggleFavorito(\''+jsStr(d.id)+'\')">'+(fav?'❤':'♡')+'</button></div><div class="nrat">'+stars(rating)+' '+rating.toFixed(1)+'</div><div class="nds">'+esc(d.descricao)+'</div><div class="ntgs">'+tags.map(function(t){return '<span class="ntag">'+esc(t)+'</span>';}).join('')+'</div><div class="nft"><button class="nbtn" onclick="event.stopPropagation();abrirEmpresa(\''+jsStr(d.id)+'\')">Ver perfil</button></div></div>';
   }).join('');
   document.getElementById('sd').style.display=p.length?'':'none';
@@ -1223,7 +1333,7 @@ function rE(){
 // ===== ABRIR MODAIS DE CONTEÚDO =====
 function abrirEmpresa(id){
   var d=empresas.find(function(x){return String(x.id)===String(id);});if(!d)return false;
-  var av=d.av_index||0;var c=AV[av%AV.length];var ini=getIni(d);var tags=getTags(d);var rating=getRatingEmpresa(d);var fav=ehFavorita(d.id);
+  var av=getAvIndex(d.av_index);var c=AV[av];var ini=getIni(d);var tags=getTags(d);var rating=getRatingEmpresa(d);var fav=ehFavorita(d.id);
   var tel=d.whatsapp||'';var msg='Olá, '+d.nome+'! Vi seu perfil no Guia Codoense e gostaria de mais informações.';
   var contato = '<div class="crow"><div class="cico">📍</div>'+esc(d.endereco)+'</div>'+(d.horario?'<div class="crow"><div class="cico">⏰</div>'+esc(d.horario)+'</div>':'')+(d.instagram?'<div class="crow"><div class="cico">📷</div>'+esc(d.instagram)+'</div>':'');
   var secTags = tags.length ? '<div class="dsec" style="border-bottom:none"><h4>Especialidades</h4><div>'+tags.map(function(t){return '<span class="ntd">'+esc(t)+'</span>';}).join('')+'</div></div>' : '<div class="dsec" style="border-bottom:none"><h4>Categoria</h4><div><span class="ntd">'+esc(getCat(d))+'</span></div></div>';
@@ -1242,7 +1352,7 @@ function abrirOferta(id){
   var msg='Olá! Vi a oferta "'+o.n+'" no Guia Codoense e tenho interesse.';
   document.getElementById('m-oin').innerHTML=
     '<div style="background:'+esc(o.bg)+'22;padding:22px 18px;text-align:center;border-bottom:1px solid var(--bo)"><div style="font-size:50px;margin-bottom:8px">'+esc(o.e)+'</div><div style="display:inline-block;background:#e11d48;color:#fff;font-size:9px;font-weight:700;padding:3px 12px;border-radius:20px;margin-bottom:8px">OFERTA DO DIA</div><div style="font-family:var(--fd);font-size:18px;font-weight:700;color:var(--tx);margin-bottom:3px">'+esc(o.n)+'</div><div style="font-size:12px;color:var(--mu)">'+esc(o.emp)+'</div></div>'+
-    '<div style="padding:14px 18px"><div style="display:flex;align-items:baseline;gap:10px;margin-bottom:8px"><span style="font-size:13px;color:var(--mu);text-decoration:line-through">De R$ '+esc(o.de)+'</span><span style="font-family:var(--fd);font-size:28px;font-weight:700;color:#e11d48">Por R$ '+esc(o.por)+'</span></div><p style="font-size:13px;color:var(--tx);line-height:1.6;margin-bottom:10px">'+esc(o.desc)+'</p><div style="font-size:11px;color:var(--mu)">⏱ Válido: <strong style="color:var(--tx)">'+esc(o.val)+'</strong></div></div>';
+    '<div style="padding:14px 18px"><div style="display:flex;align-items:baseline;gap:10px;margin-bottom:8px">'+(Number(o.de)>0?'<span style="font-size:13px;color:var(--mu);text-decoration:line-through">De R$ '+esc(o.de)+'</span>':'')+'<span style="font-family:var(--fd);font-size:28px;font-weight:700;color:#e11d48">Por R$ '+esc(o.por)+'</span></div><p style="font-size:13px;color:var(--tx);line-height:1.6;margin-bottom:10px">'+esc(o.desc)+'</p><div style="font-size:11px;color:var(--mu)">⏱ Válido: <strong style="color:var(--tx)">'+esc(o.val)+'</strong></div></div>';
   document.getElementById('btn-oferta-w').onclick=function(){abrirWhatsApp(o.tel,msg);};
   oM('oferta');
 }
@@ -1250,7 +1360,7 @@ function abrirVaga(id){
   var v=vagas.find(function(x){return String(x.id)===String(id);});
   if(!v)return;
   vagaAtual=v;
-  var c=AV[v.id%AV.length];
+  var c=AV[getItemIndex(v.id)];
   var usuario = getUsuarioLocal();
   var aviso = document.getElementById('vaga-usuario-logado');
   // resetar formulário
@@ -1323,7 +1433,7 @@ function ativarTab(viewAtual, el){
   var idx = mapa[viewAtual];
   if (tabs[idx]) tabs[idx].classList.add('on');
 }
-function irP(v,el){view=v;ativarTab(v,el);catAtual='';document.querySelectorAll('.cp').forEach(function(c){c.classList.remove('on');});document.getElementById('cat-todas').classList.add('on');rView();window.scrollTo({top:0,behavior:'smooth'});}
+function irP(v,el){view=v;ativarTab(v,el);catAtual='';if(v==='emp'){busca='';var campoBusca=document.getElementById('si');if(campoBusca)campoBusca.value='';}document.querySelectorAll('.cp').forEach(function(c){c.classList.remove('on');});document.getElementById('cat-todas').classList.add('on');rView();window.scrollTo({top:0,behavior:'smooth'});}
 function sC(el,cat,v){document.querySelectorAll('.cp').forEach(function(c){c.classList.remove('on');});if(el)el.classList.add('on');view=v;catAtual=cat;ativarTab(v,null);rView();window.scrollTo({top:0,behavior:'smooth'});}
 function rView(){
   var so=document.getElementById('so'),sv=document.getElementById('sv'),sd=document.getElementById('sd'),sn=document.getElementById('sn');
@@ -1337,7 +1447,7 @@ function rView(){
 function oM(id){
   if(id==='login'){document.querySelectorAll('.ltb').forEach(function(t,i){t.classList.toggle('on',i===0);});document.querySelectorAll('.lpanel').forEach(function(p){p.classList.remove('on');p.classList.remove('hide');});document.getElementById('lp-e').classList.add('on');document.getElementById('fs-usuario').classList.remove('on');document.getElementById('fs-login-usuario').classList.remove('on');var lpc=document.getElementById('lp-c');lpc.classList.remove('on');selT('p');resetCadastroUsuario();resetLoginUsuario();}
   if(id==='cadastro'){esconderSucesso('cadastro');['c-nome','c-cat','c-desc','c-wpp','c-email','c-senha','c-senha2','c-end','c-tel','c-insta'].forEach(function(fid){var el=document.getElementById(fid);if(el){el.value='';el.classList.remove('erro');}});document.querySelectorAll('#fb-cadastro .err-msg').forEach(function(e){e.classList.remove('on');});document.getElementById('err-cadastro').classList.remove('on');document.getElementById('err-cadastro').textContent='Verifique os campos em vermelho antes de continuar.';document.getElementById('c-plano').value='Básico (Grátis)';btnReset('btn-cadastro','Enviar cadastro grátis ✓');}
-  if(id==='planos'){selPlano('Destaque R$49/mês','Destaque – R$ 49/mês','pl-dest');btnReset('btn-planos','Quero me destacar ✓');}
+  if(id==='planos'){selPlano('Destaque R$49/mês','Destaque – R$ 49/mês','pl-dest');btnReset('btn-planos','Continuar cadastro ✓');}
   document.getElementById('m-'+id).classList.add('on');
   document.body.style.overflow='hidden';
 }
@@ -1346,12 +1456,13 @@ document.querySelectorAll('.mbg').forEach(function(m){m.addEventListener('click'
 document.getElementById('vc').addEventListener('click', function(e){
   var card = e.target.closest('.vcard');
   if (!card) return;
-  var id = parseInt(card.getAttribute('data-vaga-id'), 10);
+  var id = card.getAttribute('data-vaga-id');
   if (id) abrirVaga(id);
 });
 
 // ===== INICIAR =====
 carregarEmpresas();
+carregarConteudoPublico();
 rO(ofertas);
 rV(vagas.slice(0,3));
 sincronizarUsuarioLogado();

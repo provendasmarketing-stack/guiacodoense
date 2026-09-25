@@ -21,6 +21,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--cr);color:var(--tx);overf
 .header-left h1 span{color:var(--gol)}
 .header-left p{font-size:10px;color:var(--gol);text-transform:uppercase;letter-spacing:2px;margin:0 0 4px}
 .header-right{display:flex;align-items:center;gap:16px}
+.menu-mobile{display:none;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:#fff;padding:8px 12px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif}
 .empresa-badge{background:var(--gl);color:#fff;padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600;display:flex;align-items:center;gap:6px}
 .btn-sair{background:transparent;border:1px solid rgba(255,255,255,.3);color:#fff;padding:8px 16px;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer;transition:all .2s}
 .btn-sair:hover{background:rgba(255,255,255,.1)}
@@ -28,6 +29,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--cr);color:var(--tx);overf
 /* Layout */
 .container{display:flex;min-height:calc(100vh - 80px)}
 .sidebar{width:240px;background:#fff;border-right:1px solid var(--bo);padding:24px 16px;position:sticky;top:0;height:calc(100vh - 80px);overflow-y:auto}
+.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(15,31,22,.35);z-index:90}
 .main-content{flex:1;padding:32px;max-width:1200px}
 
 /* Menu */
@@ -126,13 +128,17 @@ body{font-family:'DM Sans',sans-serif;background:var(--cr);color:var(--tx);overf
 
 /* Responsivo */
 @media(max-width:768px){
-  .sidebar{position:fixed;left:-240px;z-index:100;transition:left .3s;box-shadow:4px 0 20px rgba(0,0,0,.1)}
+  .menu-mobile{display:block}
+  .sidebar{position:fixed;left:-260px;top:0;height:100vh;z-index:100;transition:left .3s;box-shadow:4px 0 20px rgba(0,0,0,.1)}
   .sidebar.open{left:0}
+  .sidebar-overlay.show{display:block}
   .main-content{padding:20px}
   .metrics{grid-template-columns:1fr}
   .header{padding:16px 20px}
   .header-left h1{font-size:18px}
   .empresa-badge{font-size:11px;padding:6px 12px}
+  .header-right{gap:8px}
+  .btn-sair{padding:8px 10px;font-size:12px}
 }
 
 /* Modal */
@@ -161,12 +167,14 @@ body{font-family:'DM Sans',sans-serif;background:var(--cr);color:var(--tx);overf
     <h1>Guia <span>Codoense</span></h1>
   </div>
   <div class="header-right">
+    <button class="menu-mobile" onclick="toggleSidebar()">☰ Menu</button>
     <div class="empresa-badge">🏪 Carregando...</div>
     <button class="btn-sair" onclick="fazerLogout()">🚪 Sair</button>
   </div>
 </div>
 
 <div class="container">
+  <div class="sidebar-overlay" onclick="fecharSidebar()"></div>
   <!-- Sidebar -->
   <aside class="sidebar">
     <div class="menu-title">Menu</div>
@@ -594,7 +602,8 @@ function verificarAutenticacao() {
 function carregarDadosEmpresa() {
   if (!empresaLogada) return;
 
-  carregarDadosLocais();
+  vagasEmpresa = [];
+  ofertasEmpresa = [];
 
   const badge = document.querySelector('.empresa-badge');
   if (badge) {
@@ -612,11 +621,36 @@ function carregarDadosEmpresa() {
   preencherFormularioPerfil();
   renderVagas();
   renderOfertas();
+  carregarDadosOperacionais();
 
   const perfilTitulo = document.querySelector('#page-perfil .welcome p');
   if (perfilTitulo && empresaLogada.email) {
     perfilTitulo.textContent = 'Atualize as informações da sua empresa. Login vinculado a ' + empresaLogada.email;
   }
+}
+
+function carregarDadosOperacionais() {
+  if (!window.guiaFirebase.listarVagasEmpresa || !window.guiaFirebase.listarOfertasEmpresa) {
+    mostrarPainelAlert('Atualize o firebase-bridge.js para carregar vagas e ofertas da empresa.', 'erro');
+    return;
+  }
+
+  Promise.all([
+    window.guiaFirebase.listarVagasEmpresa(),
+    window.guiaFirebase.listarOfertasEmpresa()
+  ]).then(function(resultados) {
+    vagasEmpresa = Array.isArray(resultados[0]) ? resultados[0].filter(function(vaga) {
+      return vaga.ativa !== false;
+    }) : [];
+    ofertasEmpresa = Array.isArray(resultados[1]) ? resultados[1].filter(function(oferta) {
+      return oferta.ativa !== false;
+    }) : [];
+    renderVagas();
+    renderOfertas();
+  }).catch(function(error) {
+    console.error('Erro ao carregar vagas/ofertas:', error);
+    mostrarPainelAlert('Não foi possível carregar vagas e ofertas agora.', 'erro');
+  });
 }
 
 function atualizarStatusPublicacao() {
@@ -710,39 +744,7 @@ async function salvarPerfil() {
   }
 }
 
-function carregarDadosLocais() {
-  const chaveBase = getChaveEmpresa();
-  vagasEmpresa = lerJson(chaveBase + '_vagas');
-  ofertasEmpresa = lerJson(chaveBase + '_ofertas');
-}
-
-function salvarDadosLocais() {
-  const chaveBase = getChaveEmpresa();
-  try {
-    localStorage.setItem(chaveBase + '_vagas', JSON.stringify(vagasEmpresa));
-    localStorage.setItem(chaveBase + '_ofertas', JSON.stringify(ofertasEmpresa));
-    return true;
-  } catch (error) {
-    console.error('Erro ao salvar dados locais:', error);
-    mostrarPainelAlert('Não foi possível salvar neste navegador. Verifique permissões de armazenamento.', 'erro');
-    return false;
-  }
-}
-
-function getChaveEmpresa() {
-  return 'guia_empresa_' + (empresaLogada && (empresaLogada.id || empresaLogada.authUid || empresaLogada.email) || 'local');
-}
-
-function lerJson(chave) {
-  try {
-    const valor = JSON.parse(localStorage.getItem(chave) || '[]');
-    return Array.isArray(valor) ? valor : [];
-  } catch (error) {
-    return [];
-  }
-}
-
-function salvarVaga() {
+async function salvarVaga() {
   const titulo = document.getElementById('vaga-titulo').value.trim();
   const descricao = document.getElementById('vaga-descricao').value.trim();
 
@@ -751,23 +753,28 @@ function salvarVaga() {
     return;
   }
 
-  vagasEmpresa.unshift({
-    id: Date.now(),
+  const dados = {
     titulo: titulo,
     contrato: document.getElementById('vaga-contrato').value,
     salario: document.getElementById('vaga-salario').value.trim(),
     turno: document.getElementById('vaga-turno').value,
     descricao: descricao
-  });
+  };
 
-  if (!salvarDadosLocais()) return;
-  limparModalVaga();
-  closeModal('modal-vaga');
-  renderVagas();
-  mostrarPainelAlert('Vaga salva no painel da empresa.', 'sucesso');
+  try {
+    const vaga = await window.guiaFirebase.criarVagaEmpresa(dados);
+    vagasEmpresa.unshift(vaga);
+    limparModalVaga();
+    closeModal('modal-vaga');
+    renderVagas();
+    mostrarPainelAlert('Vaga publicada e salva no Firebase.', 'sucesso');
+  } catch (error) {
+    console.error('Erro ao salvar vaga:', error);
+    mostrarPainelAlert('Não foi possível publicar a vaga agora. Tente novamente.', 'erro');
+  }
 }
 
-function salvarOferta() {
+async function salvarOferta() {
   const titulo = document.getElementById('oferta-titulo').value.trim();
   const de = Number(document.getElementById('oferta-de').value);
   const por = Number(document.getElementById('oferta-por').value);
@@ -782,21 +789,26 @@ function salvarOferta() {
     return;
   }
 
-  ofertasEmpresa.unshift({
-    id: Date.now(),
+  const dados = {
     titulo: titulo,
     icone: document.getElementById('oferta-icone').value.trim() || '🔥',
-    de: de,
-    por: por,
+    precoOriginal: de,
+    precoPromocional: por,
     descricao: document.getElementById('oferta-descricao').value.trim(),
     validade: document.getElementById('oferta-validade').value
-  });
+  };
 
-  if (!salvarDadosLocais()) return;
-  limparModalOferta();
-  closeModal('modal-oferta');
-  renderOfertas();
-  mostrarPainelAlert('Oferta salva no painel da empresa.', 'sucesso');
+  try {
+    const oferta = await window.guiaFirebase.criarOfertaEmpresa(dados);
+    ofertasEmpresa.unshift(oferta);
+    limparModalOferta();
+    closeModal('modal-oferta');
+    renderOfertas();
+    mostrarPainelAlert('Oferta publicada e salva no Firebase.', 'sucesso');
+  } catch (error) {
+    console.error('Erro ao salvar oferta:', error);
+    mostrarPainelAlert('Não foi possível criar a oferta agora. Tente novamente.', 'erro');
+  }
 }
 
 function renderVagas() {
@@ -810,14 +822,15 @@ function renderVagas() {
   }
 
   const html = vagasEmpresa.map(function(vaga) {
+    const vagaId = jsString(vaga.id);
     return '<div class="vaga-card">' +
       '<div class="vaga-icon" style="background:#0f1a3d22">💼</div>' +
       '<div class="vaga-info">' +
-      '<div class="vaga-title">' + escapeHtml(vaga.titulo) + '<span class="badge badge-new">MVP</span></div>' +
+      '<div class="vaga-title">' + escapeHtml(vaga.titulo) + '<span class="badge badge-new">Ativa</span></div>' +
       '<div class="vaga-meta">' + escapeHtml(vaga.contrato || 'Contrato') + ' • ' + escapeHtml(vaga.salario || 'A combinar') + ' • 0 candidatos</div>' +
       '<div class="vaga-badges"><span class="badge badge-count">📍 Codó</span><span class="badge badge-count">⏰ ' + escapeHtml(vaga.turno || 'A combinar') + '</span></div>' +
       '</div>' +
-      '<div class="vaga-actions"><button class="btn btn-ghost" onclick="removerVaga(' + vaga.id + ')">Remover</button></div>' +
+      '<div class="vaga-actions"><button class="btn btn-ghost" onclick="removerVaga(\'' + vagaId + '\')">Remover</button></div>' +
       '</div>';
   }).join('');
 
@@ -836,19 +849,22 @@ function renderOfertas() {
   }
 
   const html = ofertasEmpresa.map(function(oferta) {
-    const desconto = oferta.de && oferta.por ? Math.round((1 - oferta.por / oferta.de) * 100) : 0;
+    const de = Number(oferta.precoOriginal || oferta.de || 0);
+    const por = Number(oferta.precoPromocional || oferta.por || 0);
+    const desconto = de && por ? Math.round((1 - por / de) * 100) : 0;
+    const ofertaId = jsString(oferta.id);
     return '<div class="oferta-card">' +
       '<div class="oferta-thumb">' + escapeHtml(oferta.icone || '🔥') + '</div>' +
       '<div class="oferta-info">' +
       '<div class="oferta-title">' + escapeHtml(oferta.titulo) + '</div>' +
       '<div class="oferta-preco">' +
-      (oferta.de ? '<span class="preco-de">R$ ' + formatarMoeda(oferta.de) + '</span>' : '') +
-      '<span class="preco-por">R$ ' + formatarMoeda(oferta.por) + '</span>' +
+      (de ? '<span class="preco-de">R$ ' + formatarMoeda(de) + '</span>' : '') +
+      '<span class="preco-por">R$ ' + formatarMoeda(por) + '</span>' +
       (desconto > 0 ? '<span class="oferta-desconto">-' + desconto + '%</span>' : '') +
       '</div>' +
       '<div class="oferta-meta">' + (oferta.validade ? 'Válido até ' + escapeHtml(formatarData(oferta.validade)) : 'Validade não informada') + '</div>' +
       '</div>' +
-      '<div class="vaga-actions"><button class="btn btn-ghost" onclick="removerOferta(' + oferta.id + ')">Remover</button></div>' +
+      '<div class="vaga-actions"><button class="btn btn-ghost" onclick="removerOferta(\'' + ofertaId + '\')">Remover</button></div>' +
       '</div>';
   }).join('');
 
@@ -873,15 +889,25 @@ function alternarEmptyPage(pageId, vazio) {
 }
 
 function removerVaga(id) {
-  vagasEmpresa = vagasEmpresa.filter(function(vaga) { return vaga.id !== id; });
-  if (!salvarDadosLocais()) return;
-  renderVagas();
+  window.guiaFirebase.removerVagaEmpresa(id).then(function() {
+    vagasEmpresa = vagasEmpresa.filter(function(vaga) { return String(vaga.id) !== String(id); });
+    renderVagas();
+    mostrarPainelAlert('Vaga removida do painel.', 'sucesso');
+  }).catch(function(error) {
+    console.error('Erro ao remover vaga:', error);
+    mostrarPainelAlert('Não foi possível remover a vaga agora.', 'erro');
+  });
 }
 
 function removerOferta(id) {
-  ofertasEmpresa = ofertasEmpresa.filter(function(oferta) { return oferta.id !== id; });
-  if (!salvarDadosLocais()) return;
-  renderOfertas();
+  window.guiaFirebase.removerOfertaEmpresa(id).then(function() {
+    ofertasEmpresa = ofertasEmpresa.filter(function(oferta) { return String(oferta.id) !== String(id); });
+    renderOfertas();
+    mostrarPainelAlert('Oferta removida do painel.', 'sucesso');
+  }).catch(function(error) {
+    console.error('Erro ao remover oferta:', error);
+    mostrarPainelAlert('Não foi possível remover a oferta agora.', 'erro');
+  });
 }
 
 function atualizarBadgeCandidatos() {
@@ -915,6 +941,7 @@ function showPage(pageId) {
     m.classList.toggle('active', m.getAttribute('href') === '#' + pageId);
   });
 
+  fecharSidebar();
   window.scrollTo({top: 0, behavior: 'smooth'});
 }
 
@@ -937,7 +964,19 @@ document.querySelectorAll('.modal').forEach(function(modal) {
 });
 
 function toggleSidebar() {
-  document.querySelector('.sidebar').classList.toggle('open');
+  const sidebar = document.querySelector('.sidebar');
+  const overlay = document.querySelector('.sidebar-overlay');
+  sidebar.classList.toggle('open');
+  if (overlay) {
+    overlay.classList.toggle('show', sidebar.classList.contains('open'));
+  }
+}
+
+function fecharSidebar() {
+  const sidebar = document.querySelector('.sidebar');
+  const overlay = document.querySelector('.sidebar-overlay');
+  if (sidebar) sidebar.classList.remove('open');
+  if (overlay) overlay.classList.remove('show');
 }
 
 function mostrarPainelAlert(mensagem, tipo) {
@@ -1028,6 +1067,10 @@ function formatarData(valor) {
   const partes = String(valor).split('-');
   if (partes.length !== 3) return valor;
   return partes[2] + '/' + partes[1] + '/' + partes[0];
+}
+
+function jsString(valor) {
+  return String(valor || '').replace(/\\/g, '\\\\').replace(/'/g, "\\'");
 }
 
 function escapeHtml(valor) {
